@@ -7,8 +7,8 @@ import json, os, shutil, datetime, html
 SITE = {
     "name": "Secblox AI",
     "domain": "https://ai.secblox.io",
-    "email": "hello@secblox.io",               # <-- public contact email
-    "booking": "https://calendly.com/secblox", # <-- your booking link
+    "email": "connect@secblox.io",
+    "booking": "mailto:connect@secblox.io?subject=Scoping%20call%20request",  # <-- swap for a Calendly/Cal.com link when ready
     "linkedin": "https://www.linkedin.com/company/secblox",  # <-- your LinkedIn
     "tagline": "SOC 2 & AI Governance for SaaS and AI Companies",
 }
@@ -99,7 +99,7 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 <div><a class="logo" href="/">{LOGO_SVG}Secblox<span>AI</span></a><p style="margin-top:14px;max-width:340px">SOC 2 and AI governance for SaaS and AI companies. Practitioner-led readiness, implementation and audit support.</p></div>
 <div><h3 class="fh">Services</h3><ul><li><a href="/soc-2-compliance/">SOC 2 Compliance</a></li><li><a href="/ai-governance/">AI Governance</a></li><li><a href="/iso-42001/">ISO 42001 Readiness</a></li><li><a href="/soc-2-for-ai-companies/">SOC 2 for AI Companies</a></li><li><a href="/services/penetration-testing/">Penetration Testing</a></li></ul></div>
 <div><h3 class="fh">Frameworks</h3><ul><li><a href="/ai-governance/#nist-ai-rmf">NIST AI RMF</a></li><li><a href="/ai-governance/#eu-ai-act">EU AI Act</a></li><li><a href="/iso-42001/">ISO/IEC 42001</a></li><li><a href="/soc-2-compliance/#trust-services-criteria">SOC 2 TSC</a></li></ul></div>
-<div><h3 class="fh">Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact/">Contact</a></li><li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li></ul></div>
+<div><h3 class="fh">Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact/">Contact</a></li><li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li><li><a href="{SITE["linkedin"]}" rel="noopener">LinkedIn</a></li></ul></div>
 </div>
 <div class="copy"><span>© {datetime.date.today().year} Secblox. All rights reserved.</span><span>SOC 2 · ISO/IEC 42001 · NIST AI RMF · EU AI Act</span></div>
 </div></footer>
@@ -429,7 +429,7 @@ PAGES["/contact/"] = page("/contact/", "Book a Free SOC 2 & AI Governance Call |
 f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">Contact</span><h1>Let's scope your <em>SOC 2 and AI governance</em> path.</h1>
 <p class="lead">30 minutes, no obligation. You'll get your likely gaps, a realistic timeline and a budget range.</p></div></div>
 <section><div class="wrap grid g2">
-<div class="card"><div class="icon">📅</div><h2 style="font-size:1.2rem">Book a call</h2><p>Pick a time that works for you.</p><a class="btn btn-primary" style="margin-top:16px" href="{SITE["booking"]}" rel="noopener">Open calendar</a></div>
+<div class="card"><div class="icon">📅</div><h2 style="font-size:1.2rem">Book a call</h2><p>Email us your preferred times and we will confirm within one business day.</p><a class="btn btn-primary" style="margin-top:16px" href="{SITE["booking"]}" rel="noopener">Request a call</a><p style="margin-top:10px;font-size:14px">{SITE["email"]}</p></div>
 <div class="card"><div class="icon">✉️</div><h2 style="font-size:1.2rem">Email us</h2><p>Tell us about your product, cloud provider, deadline and any customer requirements.</p><a class="btn btn-ghost" style="margin-top:16px" href="mailto:{SITE["email"]}?subject=SOC%202%20%2F%20AI%20governance%20enquiry">{SITE["email"]}</a></div>
 </div>
 <div class="wrap prose" style="margin-top:48px"><h2>Helpful to share</h2><ul><li>What you sell and who your customers are</li><li>Cloud provider(s) and team size</li><li>Which framework you need (SOC 2, ISO 42001, EU AI Act) and by when</li><li>Any compliance tooling you already use</li></ul></div></section>''',
