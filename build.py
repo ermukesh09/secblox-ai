@@ -469,10 +469,17 @@ def load_posts():
         if meta.get("draft", "").lower() == "true": continue
         slug = re.sub(r"^\d{4}-\d{2}-\d{2}-", "", os.path.basename(f)[:-3])
         html_body = _md.markdown(m.group(2), extensions=["tables", "fenced_code", "toc", "sane_lists"])
+        faqs = []
+        fm = re.search(r"^##\s+(FAQ|FAQs|Frequently asked questions)\s*$(.*?)(?=^##\s|\Z)", m.group(2), re.S | re.M | re.I)
+        if fm:
+            for q, ans in re.findall(r"^###\s+(.+?)\s*$\n(.*?)(?=^###\s|\Z)", fm.group(2), re.S | re.M):
+                text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", ans).replace("**", "").strip()
+                text = " ".join(l for l in text.splitlines() if l.strip() and not l.lstrip().startswith(("Want", "Need help")))
+                if text: faqs.append((q.strip(), text))
         words = len(re.sub("<[^>]+>", " ", html_body).split())
         posts.append({"slug": slug, "url": f"/blog/{slug}/", "title": meta["title"], "desc": meta["description"],
                       "date": meta["date"], "tags": [t.strip() for t in meta.get("tags", "").split(",") if t.strip()],
-                      "html": html_body, "mins": max(1, round(words / 220))})
+                      "html": html_body, "faqs": faqs, "mins": max(1, round(words / 220))})
     return posts
 
 POSTS = load_posts()
@@ -494,7 +501,8 @@ for i, p in enumerate(POSTS):
                  "dateModified": p["date"], "keywords": ", ".join(p["tags"]), "wordCount": len(p["html"].split()),
                  "author": {"@type": "Person", "name": "Mukesh Bhakar", "url": SITE["domain"] + "/about/"},
                  "publisher": {"@id": SITE["domain"] + "/#org"}, "image": SITE["domain"] + "/assets/og-image.png",
-                 "mainEntityOfPage": SITE["domain"] + p["url"]}],
+                 "mainEntityOfPage": SITE["domain"] + p["url"]}] + ([{"@type": "FAQPage", "mainEntity": [
+                 {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in p["faqs"]]}] if p["faqs"] else []),
         crumbs=[("/blog/", "Blog"), (p["url"], p["title"])], ptype="Article")
 
 PAGES["/blog/"] = page("/blog/", "SOC 2 & AI Governance Blog | Secblox",
