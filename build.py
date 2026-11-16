@@ -9,7 +9,8 @@ SITE = {
     "domain": "https://secblox.io",
     "email": "connect@secblox.io",
     "booking": "https://cal.com/mukesh-bhakar-vzmbyl/30min",  # Cal.com booking page
-    "linkedin": "https://www.linkedin.com/company/secblox",  # <-- your LinkedIn
+    "linkedin": "https://www.linkedin.com/company/secblox",
+    "indexnow_key": "2a4b273c96120af49169c533023737c6",  # IndexNow key (public by design; served at /<key>.txt)  # <-- your LinkedIn
     "tagline": "SOC 2 & AI Governance for SaaS and AI Companies",
 }
 OUT = "site"
@@ -588,7 +589,17 @@ def build():
     urls = "".join(f"<url><loc>{SITE['domain']}{p}</loc><lastmod>{pdates.get(p, TODAY)}</lastmod></url>" for p in PAGES)
     open(f"{OUT}/feed.xml", "w").write(rss())
     open(f"{OUT}/sitemap.xml", "w").write(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n')
-    open(f"{OUT}/robots.txt", "w").write(f"User-agent: *\nAllow: /\n\nSitemap: {SITE['domain']}/sitemap.xml\n")
+    bots = ["Googlebot", "Bingbot", "OAI-SearchBot", "ChatGPT-User", "GPTBot", "Claude-SearchBot", "Claude-User", "ClaudeBot",
+            "PerplexityBot", "Perplexity-User", "Google-Extended", "Applebot", "DuckDuckBot"]
+    robots = "".join(f"User-agent: {b}\nAllow: /\n\n" for b in bots) + "User-agent: *\nAllow: /\n\n"
+    open(f"{OUT}/robots.txt", "w").write(robots + f"Sitemap: {SITE['domain']}/sitemap.xml\n")
+    open(f"{OUT}/{SITE['indexnow_key']}.txt", "w").write(SITE["indexnow_key"])
+    # llms-full.txt: full plain-text of every blog post for AI assistants
+    full = [f"# {SITE['name']} — full content", f"> {SITE['tagline']}. Website: {SITE['domain']}. Contact: {SITE['email']}. Book a call: {SITE['booking']}", ""]
+    for p in POSTS:
+        txt = re.sub(r"<[^>]+>", "", p["html"]); txt = html.unescape(re.sub(r"\n{3,}", "\n\n", txt))
+        full += [f"## {p['title']}", f"URL: {SITE['domain']}{p['url']} | Published: {p['date']}", "", txt.strip(), ""]
+    open(f"{OUT}/llms-full.txt", "w").write("\n".join(full))
     open(f"{OUT}/CNAME", "w").write(SITE["domain"].replace("https://", "") + "\n")
     open(f"{OUT}/.nojekyll", "w").write("")
     # llms.txt for AI search engines
