@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Static site generator for Secblox AI.
+"""Static site generator for Secblox.
 Edit SITE settings + page content below, run `python3 build.py`, push the /docs folder (or repo root) to GitHub Pages.
 """
 import json, os, shutil, datetime, html
 
 SITE = {
-    "name": "Secblox AI",
+    "name": "Secblox",
     "domain": "https://secblox.io",
     "email": "connect@secblox.io",
     "booking": "mailto:connect@secblox.io?subject=Scoping%20call%20request",  # <-- swap for a Calendly/Cal.com link when ready
@@ -25,9 +25,9 @@ def org_schema():
     d = SITE["domain"]
     return {
         "@type": "ProfessionalService", "@id": d + "/#org", "name": SITE["name"],
-        "alternateName": "Secblox", "url": d + "/", "logo": d + "/assets/logo.png",
+        "url": d + "/", "logo": d + "/assets/logo.png",
         "image": d + "/assets/og-image.png", "email": SITE["email"],
-        "description": "Secblox AI helps SaaS and AI companies achieve SOC 2 and build AI governance programs aligned to ISO/IEC 42001, NIST AI RMF and the EU AI Act.",
+        "description": "Secblox helps SaaS and AI companies achieve SOC 2 and build AI governance programs aligned to ISO/IEC 42001, NIST AI RMF and the EU AI Act.",
         "areaServed": [{"@type": "Country", "name": "United States"}, {"@type": "Country", "name": "United Kingdom"},
                        {"@type": "Place", "name": "European Union"}, {"@type": "Country", "name": "India"}],
         "knowsAbout": ["SOC 2", "AI governance", "ISO/IEC 42001", "NIST AI RMF", "EU AI Act", "AI risk management",
@@ -82,13 +82,13 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 <link rel="icon" href="/assets/favicon-64.png" sizes="64x64" type="image/png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/style.css">
-<link rel="alternate" type="application/rss+xml" title="Secblox AI Blog" href="/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="Secblox Blog" href="/feed.xml">
 <script type="application/ld+json">{ld}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header"><div class="wrap nav">
-<a class="logo" href="/">{LOGO_SVG}Secblox<span>AI</span></a>
+<a class="logo" href="/">{LOGO_SVG}<span class="wordmark">Secblox</span></a>
 <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
 <ul id="menu">{nav}<li><a class="btn btn-primary" href="/contact/">Book a call</a></li></ul>
 </div></header>
@@ -97,7 +97,7 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 </main>
 <footer><div class="wrap">
 <div class="foot">
-<div><a class="logo" href="/">{LOGO_SVG}Secblox<span>AI</span></a><p style="margin-top:14px;max-width:340px">SOC 2 and AI governance for SaaS and AI companies. Practitioner-led readiness, implementation and audit support.</p></div>
+<div><a class="logo" href="/">{LOGO_SVG}<span class="wordmark">Secblox</span></a><p style="margin-top:14px;max-width:340px">SOC 2 and AI governance for SaaS and AI companies. Practitioner-led readiness, implementation and audit support.</p></div>
 <div><h3 class="fh">Services</h3><ul><li><a href="/soc-2-compliance/">SOC 2 Compliance</a></li><li><a href="/ai-governance/">AI Governance</a></li><li><a href="/iso-42001/">ISO 42001 Readiness</a></li><li><a href="/soc-2-for-ai-companies/">SOC 2 for AI Companies</a></li><li><a href="/services/penetration-testing/">Penetration Testing</a></li></ul></div>
 <div><h3 class="fh">Frameworks</h3><ul><li><a href="/ai-governance/#nist-ai-rmf">NIST AI RMF</a></li><li><a href="/ai-governance/#eu-ai-act">EU AI Act</a></li><li><a href="/iso-42001/">ISO/IEC 42001</a></li><li><a href="/soc-2-compliance/#trust-services-criteria">SOC 2 TSC</a></li></ul></div>
 <div><h3 class="fh">Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li><li><a href="{SITE["linkedin"]}" rel="noopener">LinkedIn</a></li></ul></div>
@@ -108,7 +108,7 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 </body>
 </html>'''
 
-LOGO_SVG = '<img src="/assets/logo-96.png" width="30" height="30" alt="">'
+LOGO_SVG = '<img src="/assets/logo-96.png" width="34" height="34" alt="">'
 
 def faq_block(faqs):
     h = "".join(f"<details><summary>{esc(q)}</summary><p>{a}</p></details>" for q, a in faqs)
@@ -136,7 +136,7 @@ PAGES = {}
 
 # ---------------- HOME ----------------
 home_faqs = [
- ("What does Secblox AI do?", "Secblox AI is a security and compliance consultancy that takes SaaS and AI companies from zero to a clean SOC 2 report and builds AI governance programs aligned to ISO/IEC 42001, the NIST AI Risk Management Framework and the EU AI Act."),
+ ("What does Secblox do?", "Secblox is a security and compliance consultancy that takes SaaS and AI companies from zero to a clean SOC 2 report and builds AI governance programs aligned to ISO/IEC 42001, the NIST AI Risk Management Framework and the EU AI Act."),
  ("How long does SOC 2 take?", "Most startups reach SOC 2 Type I readiness in 6–10 weeks. A Type II report adds an observation window, typically 3–6 months for a first report, before the auditor issues the opinion."),
  ("Do you replace compliance automation platforms?", "No — we make them work. We are platform-agnostic: we implement and operate the leading compliance automation platforms, and we will tell you honestly if a lighter, cheaper setup is enough for your stage."),
  ("Can you help us with AI governance if we already have SOC 2?", "Yes. Most of our AI governance work maps onto an existing SOC 2 control set, so you extend what you have — AI inventory, model risk assessments, AI policies and ISO 42001 controls — instead of starting a second program from scratch."),
@@ -148,7 +148,7 @@ PAGES["/"] = page("/", "SOC 2 & AI Governance Consulting for AI Companies | Secb
 f'''<section class="hero"><div class="wrap">
 <span class="eyebrow">SOC 2 · ISO 42001 · NIST AI RMF · EU AI Act</span>
 <h1>SOC 2 and <em>AI governance</em> for companies that ship AI.</h1>
-<p class="lead">Enterprise buyers now ask two questions: <strong>“Do you have SOC 2?”</strong> and <strong>“How do you govern your AI?”</strong> Secblox AI gets you a clean answer to both — with hands-on implementation, not slide decks.</p>
+<p class="lead">Enterprise buyers now ask two questions: <strong>“Do you have SOC 2?”</strong> and <strong>“How do you govern your AI?”</strong> Secblox gets you a clean answer to both — with hands-on implementation, not slide decks.</p>
 <div class="cta-row"><a class="btn btn-primary" href="/contact/">Book a free scoping call</a><a class="btn btn-ghost" href="/soc-2-for-ai-companies/">How SOC 2 works for AI products →</a></div>
 <div class="trust"><span><b>15+ years</b> in security</span><span><b>AWS · Azure · GCP</b></span><span><b>Platform-agnostic</b> compliance automation</span><span><b>In-house</b> penetration testing</span></div>
 </div></section>
@@ -177,7 +177,7 @@ f'''<section class="hero"><div class="wrap">
 
 <section><div class="wrap">
 <div class="grid g2" style="align-items:center">
-<div><h2>Why companies choose <em>Secblox AI</em></h2>
+<div><h2>Why companies choose <em>Secblox</em></h2>
 <p class="sub" style="margin-bottom:0">You get a practitioner who has built security programs from zero and taken SaaS platforms through SOC 2 end to end — not a junior consultant reading from a template.</p></div>
 <div class="grid g2">
 <div class="card"><h3>Hands-on</h3><p>We implement controls in AWS, Azure, GCP, Entra ID and your SaaS stack.</p></div>
@@ -203,7 +203,7 @@ soc_faqs = [
  ("Do we need a compliance automation platform?", "Not always. Compliance automation platforms save significant evidence effort for most SaaS teams, but very early-stage companies can sometimes start lighter. We recommend what fits your budget and stage."),
 ]
 fh, fs = faq_block(soc_faqs)
-PAGES["/soc-2-compliance/"] = page("/soc-2-compliance/", "SOC 2 Compliance Consulting: Type I & Type II | Secblox AI",
+PAGES["/soc-2-compliance/"] = page("/soc-2-compliance/", "SOC 2 Compliance Consulting: Type I & Type II | Secblox",
  "End-to-end SOC 2 consulting for SaaS and AI startups: gap assessment, controls, policies, evidence automation and audit support for Type I and II.",
 f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">SOC 2 Type I & Type II</span><h1>SOC 2 compliance consulting, <em>done with you</em> — not just for you.</h1>
 <p class="lead">From your first gap assessment to a clean Type II report and every renewal after. We implement the controls, build the evidence trail and manage the auditor.</p>
@@ -304,7 +304,7 @@ iso_faqs = [
  ("How long does ISO 42001 readiness take?", "It depends on the number of AI systems in scope and existing maturity. Organizations with an existing SOC 2 or ISO 27001 program usually move faster because core management processes already exist."),
 ]
 fh, fs = faq_block(iso_faqs)
-PAGES["/iso-42001/"] = page("/iso-42001/", "ISO 42001 Readiness & AIMS Implementation | Secblox AI",
+PAGES["/iso-42001/"] = page("/iso-42001/", "ISO 42001 Readiness & AIMS Implementation | Secblox",
  "ISO/IEC 42001 readiness: scope your AI Management System, run impact assessments, implement Annex A controls and prepare for certification.",
 f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">ISO/IEC 42001:2023</span><h1>ISO 42001 readiness for an <em>AI Management System</em> that certifies.</h1>
 <p class="lead">Build your AIMS, implement the controls and walk into your certification audit prepared — reusing the SOC 2 and ISO 27001 work you've already done.</p>
@@ -344,7 +344,7 @@ s4ai_faqs = [
  ("What AI risks do auditors and buyers ask about?", "Common questions cover customer data used for training, data retention by model providers, prompt injection, output data leakage, access to model and prompt configurations, change management for prompts and models, and monitoring of AI behaviour."),
 ]
 fh, fs = faq_block(s4ai_faqs)
-PAGES["/soc-2-for-ai-companies/"] = page("/soc-2-for-ai-companies/", "SOC 2 for AI Companies: LLM, RAG & Agents | Secblox AI",
+PAGES["/soc-2-for-ai-companies/"] = page("/soc-2-for-ai-companies/", "SOC 2 for AI Companies: LLM, RAG & Agents | Secblox",
  "How AI startups pass SOC 2: scoping LLM vendors, training data, prompt injection, model change management and the AI evidence auditors ask for.",
 f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">LLM apps · RAG · AI agents</span><h1>SOC 2 for <em>AI companies</em>: what changes when your product runs on models.</h1>
 <p class="lead">LLM providers, vector databases, prompts-as-code and autonomous agents all live inside your SOC 2 system boundary. Here's how to control them — and prove it.</p>
@@ -373,7 +373,7 @@ f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow"
  crumbs=[("/soc-2-for-ai-companies/", "SOC 2 for AI Companies")])
 
 # ---------------- PEN TEST ----------------
-PAGES["/services/penetration-testing/"] = page("/services/penetration-testing/", "Penetration Testing for SaaS & LLM Apps | Secblox AI",
+PAGES["/services/penetration-testing/"] = page("/services/penetration-testing/", "Penetration Testing for SaaS & LLM Apps | Secblox",
  "In-house web application, API, cloud and LLM penetration testing for SaaS and AI companies. Findings mapped to SOC 2 evidence, with retesting included.",
 f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">Web · API · Cloud · LLM</span><h1>Penetration testing that <em>feeds your SOC 2</em>.</h1>
 <p class="lead">Performed in-house by our principal consultant. Clear findings, practical fixes, retesting, and a report your auditor and customers will accept.</p>
@@ -391,7 +391,7 @@ f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow"
  crumbs=[("/services/penetration-testing/", "Penetration Testing")])
 
 # ---------------- CLOUD ----------------
-PAGES["/services/cloud-security-assessment/"] = page("/services/cloud-security-assessment/", "Cloud Security Assessment — AWS, Azure & GCP | Secblox AI",
+PAGES["/services/cloud-security-assessment/"] = page("/services/cloud-security-assessment/", "Cloud Security Assessment — AWS, Azure & GCP | Secblox",
  "AWS, Azure and GCP security assessments for SaaS and AI companies: IAM, network, logging, encryption and DR — mapped to SOC 2.",
 f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">AWS · Azure · GCP</span><h1>Cloud security assessments that <em>harden and simplify</em>.</h1>
 <p class="lead">An architecture-level review of your cloud environment, mapped to SOC 2 controls — with practical fixes that frequently reduce spend as well as risk.</p>
@@ -406,10 +406,10 @@ f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow"
  crumbs=[("/services/cloud-security-assessment/", "Cloud Security Assessment")])
 
 # ---------------- ABOUT ----------------
-PAGES["/about/"] = page("/about/", "About Secblox AI — Practitioner-Led SOC 2 & AI Governance",
- "Secblox AI is led by Mukesh Bhakar, a security practitioner with 15+ years building security programs and taking SaaS companies through SOC 2.",
+PAGES["/about/"] = page("/about/", "About Secblox — Practitioner-Led SOC 2 & AI Governance",
+ "Secblox is led by Mukesh Bhakar, a security practitioner with 15+ years building security programs and taking SaaS companies through SOC 2.",
 f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">About</span><h1>Built by a practitioner, <em>for builders</em>.</h1>
-<p class="lead">Secblox AI exists because compliance should make companies more secure and easier to buy from — not just generate paperwork.</p></div></div>
+<p class="lead">Secblox exists because compliance should make companies more secure and easier to buy from — not just generate paperwork.</p></div></div>
 <section><div class="wrap layout"><article class="prose">
 <h2>Mukesh Bhakar — Founder & Principal Consultant</h2>
 <p>Mukesh brings <strong>15+ years of security experience</strong> across cloud security architecture, identity, endpoint security and compliance. He has built security programs from zero — deploying EDR, email security, identity controls and MDM where no security tooling existed — and takes SaaS platforms on AWS through SOC 2 end to end, from readiness to report and through annual renewals.</p>
@@ -425,8 +425,8 @@ f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow"
  crumbs=[("/about/", "About")], ptype="AboutPage")
 
 # ---------------- CONTACT ----------------
-PAGES["/contact/"] = page("/contact/", "Book a Free SOC 2 & AI Governance Call | Secblox AI",
- "Book a free 30-minute scoping call with Secblox AI to discuss SOC 2, ISO 42001, AI governance, penetration testing or cloud security assessment.",
+PAGES["/contact/"] = page("/contact/", "Book a Free SOC 2 & AI Governance Call | Secblox",
+ "Book a free 30-minute scoping call with Secblox to discuss SOC 2, ISO 42001, AI governance, penetration testing or cloud security assessment.",
 f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">Contact</span><h1>Let's scope your <em>SOC 2 and AI governance</em> path.</h1>
 <p class="lead">30 minutes, no obligation. You'll get your likely gaps, a realistic timeline and a budget range.</p></div></div>
 <section><div class="wrap grid g2">
@@ -476,7 +476,7 @@ for i, p in enumerate(POSTS):
     related = [q for q in POSTS if q is not p and set(q["tags"]) & set(p["tags"])][:3] or [q for q in POSTS if q is not p][:3]
     rel_html = "".join(f'<a href="{q["url"]}">{esc(q["title"])}</a><br>' for q in related)
     tags_html = " ".join(f'<span class="tag">{esc(t)}</span>' for t in p["tags"])
-    PAGES[p["url"]] = page(p["url"], f'{p["title"]} | Secblox AI', p["desc"],
+    PAGES[p["url"]] = page(p["url"], f'{p["title"]} | Secblox', p["desc"],
         f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}{tags_html}<h1>{esc(p["title"])}</h1><p class="lead">{esc(p["desc"])}</p>
 <p style="color:var(--muted);font-size:14px">By Mukesh Bhakar · <time datetime="{p["date"]}">{p["date"]}</time> · {p["mins"]} min read</p></div></div>
 <section><div class="wrap layout"><article class="prose">{p["html"]}</article>{aside('<div class="card"><h3>More articles</h3><p>' + rel_html + '</p></div>')}</div></section>{cta()}''',
@@ -487,12 +487,12 @@ for i, p in enumerate(POSTS):
                  "mainEntityOfPage": SITE["domain"] + p["url"]}],
         crumbs=[("/blog/", "Blog"), (p["url"], p["title"])], ptype="Article")
 
-PAGES["/blog/"] = page("/blog/", "SOC 2 & AI Governance Blog | Secblox AI",
+PAGES["/blog/"] = page("/blog/", "SOC 2 & AI Governance Blog | Secblox",
  "Practical guides on SOC 2, ISO 42001, NIST AI RMF and the EU AI Act for SaaS and AI companies.",
  f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">Blog</span><h1>Guides on SOC 2 and <em>AI governance</em>.</h1><p class="lead">Practical, practitioner-written guidance for founders, CTOs and security leads.</p>
 <p><a href="/feed.xml">RSS feed</a></p></div></div>
 <section><div class="wrap"><h2>All articles</h2><p class="sub">{len(POSTS)} guides and counting.</p><div class="grid g3">{"".join(post_card(p) for p in POSTS)}</div></div></section>''',
- schema=[{"@type": "Blog", "name": "Secblox AI Blog", "url": SITE["domain"] + "/blog/",
+ schema=[{"@type": "Blog", "name": "Secblox Blog", "url": SITE["domain"] + "/blog/",
           "blogPost": [{"@type": "BlogPosting", "headline": p["title"], "url": SITE["domain"] + p["url"], "datePublished": p["date"]} for p in POSTS]}],
  crumbs=[("/blog/", "Blog")], ptype="CollectionPage")
 
@@ -503,13 +503,13 @@ def rss():
         f"<pubDate>{format_datetime(datetime.datetime.fromisoformat(p['date']).replace(tzinfo=datetime.timezone.utc))}</pubDate>"
         f"<description>{esc(p['desc'])}</description></item>" for p in POSTS)
     return (f'<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>'
-            f'<title>Secblox AI Blog</title><link>{d}/blog/</link><description>SOC 2 and AI governance guides</description>'
+            f'<title>Secblox Blog</title><link>{d}/blog/</link><description>SOC 2 and AI governance guides</description>'
             f'<language>en-us</language><atom:link href="{d}/feed.xml" rel="self" type="application/rss+xml"/>{items}</channel></rss>\n')
 
 
 
 # ---------------- PRIVACY ----------------
-PAGES["/privacy-policy/"] = page("/privacy-policy/", "Privacy Policy | Secblox AI",
+PAGES["/privacy-policy/"] = page("/privacy-policy/", "Privacy Policy | Secblox",
  "How Secblox handles personal information shared through this website and by email.",
  f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<h1>Privacy Policy</h1><p class="lead">Last updated: {TODAY}</p></div></div>
 <section><div class="wrap prose">
@@ -560,7 +560,7 @@ def build():
         os.makedirs(OUT + old, exist_ok=True)
         open(OUT + old + "index.html", "w").write(redirect_page(new))
     # 404
-    open(f"{OUT}/404.html", "w").write(page("/404.html", "Page not found | Secblox AI", "The page you were looking for doesn't exist.",
+    open(f"{OUT}/404.html", "w").write(page("/404.html", "Page not found | Secblox", "The page you were looking for doesn't exist.",
         '<section class="hero"><div class="wrap"><h1>Page not found</h1><p class="lead">That page has moved or never existed.</p><a class="btn btn-primary" href="/">Go home</a></div></section>', noindex=True))
     # favicon
     shutil.copy("assets/favicon-32.png", f"{OUT}/favicon.ico")  # browsers that request /favicon.ico get the PNG

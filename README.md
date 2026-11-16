@@ -1,4 +1,4 @@
-# Secblox AI — static website + blog
+# Secblox — static website + blog
 
 Static, SEO-first site. Hosted free on GitHub Pages and rebuilt automatically every time you push.
 

@@ -16,9 +16,10 @@ img,svg{max-width:100%;display:block}
 /* header */
 .site-header{position:sticky;top:0;z-index:50;background:rgba(7,11,20,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
-.logo{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:800;font-size:20px;letter-spacing:-.02em}
+.logo{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:700;font-size:22px;letter-spacing:-.025em;line-height:1}
+.logo img{flex:none}
 .logo:hover{text-decoration:none}
-.logo span{color:var(--accent)}
+
 .nav ul{display:flex;gap:26px;list-style:none;align-items:center}
 .nav ul a{color:var(--muted);font-size:15px;font-weight:500}
 .nav ul a:hover,.nav ul a[aria-current=page]{color:var(--text);text-decoration:none}
