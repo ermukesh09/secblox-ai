@@ -490,7 +490,7 @@ for i, p in enumerate(POSTS):
 PAGES["/blog/"] = page("/blog/", "SOC 2 & AI Governance Blog | Secblox",
  "Practical guides on SOC 2, ISO 42001, NIST AI RMF and the EU AI Act for SaaS and AI companies.",
  f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">Blog</span><h1>Guides on SOC 2 and <em>AI governance</em>.</h1><p class="lead">Practical, practitioner-written guidance for founders, CTOs and security leads.</p>
-<p><a href="/feed.xml">RSS feed</a></p></div></div>
+<p style="font-size:14px;color:var(--muted)">Prefer a feed reader? Add <code>https://secblox.io/feed.xml</code> to Feedly, Inoreader or Outlook.</p></div></div>
 <section><div class="wrap"><h2>All articles</h2><p class="sub">{len(POSTS)} guides and counting.</p><div class="grid g3">{"".join(post_card(p) for p in POSTS)}</div></div></section>''',
  schema=[{"@type": "Blog", "name": "Secblox Blog", "url": SITE["domain"] + "/blog/",
           "blogPost": [{"@type": "BlogPosting", "headline": p["title"], "url": SITE["domain"] + p["url"], "datePublished": p["date"]} for p in POSTS]}],
