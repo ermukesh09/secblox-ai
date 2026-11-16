@@ -32,8 +32,8 @@ Keep the domain registered at Hostinger; only change DNS records in Hostinger's 
 - `www`: **CNAME** → `<your-github-username>.github.io`
 - Do **not** touch MX records — your Hostinger email keeps working.
 
-Option: launch on a subdomain first (e.g. `ai.secblox.io` → CNAME to `<username>.github.io`) while the WordPress site stays on the main domain.
-If you do, change `domain` in `build.py` to `https://ai.secblox.io`.
+
+
 
 ## Before launch — edit the `SITE` block in `build.py`
 `domain`, `email`, `booking` (Calendly), `linkedin`.

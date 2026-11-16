@@ -6,7 +6,7 @@ import json, os, shutil, datetime, html
 
 SITE = {
     "name": "Secblox AI",
-    "domain": "https://ai.secblox.io",
+    "domain": "https://secblox.io",
     "email": "connect@secblox.io",
     "booking": "mailto:connect@secblox.io?subject=Scoping%20call%20request",  # <-- swap for a Calendly/Cal.com link when ready
     "linkedin": "https://www.linkedin.com/company/secblox",  # <-- your LinkedIn
@@ -99,7 +99,7 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 <div><a class="logo" href="/">{LOGO_SVG}Secblox<span>AI</span></a><p style="margin-top:14px;max-width:340px">SOC 2 and AI governance for SaaS and AI companies. Practitioner-led readiness, implementation and audit support.</p></div>
 <div><h3 class="fh">Services</h3><ul><li><a href="/soc-2-compliance/">SOC 2 Compliance</a></li><li><a href="/ai-governance/">AI Governance</a></li><li><a href="/iso-42001/">ISO 42001 Readiness</a></li><li><a href="/soc-2-for-ai-companies/">SOC 2 for AI Companies</a></li><li><a href="/services/penetration-testing/">Penetration Testing</a></li></ul></div>
 <div><h3 class="fh">Frameworks</h3><ul><li><a href="/ai-governance/#nist-ai-rmf">NIST AI RMF</a></li><li><a href="/ai-governance/#eu-ai-act">EU AI Act</a></li><li><a href="/iso-42001/">ISO/IEC 42001</a></li><li><a href="/soc-2-compliance/#trust-services-criteria">SOC 2 TSC</a></li></ul></div>
-<div><h3 class="fh">Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact/">Contact</a></li><li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li><li><a href="{SITE["linkedin"]}" rel="noopener">LinkedIn</a></li></ul></div>
+<div><h3 class="fh">Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li><li><a href="{SITE["linkedin"]}" rel="noopener">LinkedIn</a></li></ul></div>
 </div>
 <div class="copy"><span>© {datetime.date.today().year} Secblox. All rights reserved.</span><span>SOC 2 · ISO/IEC 42001 · NIST AI RMF · EU AI Act</span></div>
 </div></footer>
@@ -506,6 +506,43 @@ def rss():
             f'<language>en-us</language><atom:link href="{d}/feed.xml" rel="self" type="application/rss+xml"/>{items}</channel></rss>\n')
 
 
+
+# ---------------- PRIVACY ----------------
+PAGES["/privacy-policy/"] = page("/privacy-policy/", "Privacy Policy | Secblox AI",
+ "How Secblox handles personal information shared through this website and by email.",
+ f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<h1>Privacy Policy</h1><p class="lead">Last updated: {TODAY}</p></div></div>
+<section><div class="wrap prose">
+<h2>Who we are</h2><p>This website is operated by Secblox. Contact: <a href="mailto:{SITE["email"]}">{SITE["email"]}</a>.</p>
+<h2>What we collect</h2><p>This site does not use forms, tracking cookies or third-party analytics. If you email us, we receive your name, email address and whatever you choose to include in your message.</p>
+<h2>How we use it</h2><p>We use information you send only to respond to your enquiry and, if we work together, to deliver our services. We do not sell or rent personal information.</p>
+<h2>Retention</h2><p>We keep correspondence only as long as needed for the purpose it was shared and to meet legal or contractual obligations.</p>
+<h2>Hosting</h2><p>The site is hosted on GitHub Pages, which may log technical data such as IP addresses for security purposes under GitHub's own privacy statement.</p>
+<h2>Your rights</h2><p>You can ask us to access, correct or delete personal information we hold about you by emailing <a href="mailto:{SITE["email"]}">{SITE["email"]}</a>.</p>
+</div></section>''', crumbs=[("/privacy-policy/", "Privacy Policy")])
+
+# ---------------- REDIRECTS (old WordPress URLs -> new pages) ----------------
+REDIRECTS = {
+    "/contact-us/": "/contact/",
+    "/privacy-policy-2/": "/privacy-policy/",
+    "/service-post/compliance/": "/soc-2-compliance/",
+    "/service-post/cloud-security/": "/services/cloud-security-assessment/",
+    "/service-post/security-architecture/": "/services/cloud-security-assessment/",
+    "/service-post/cyber-security/": "/services/penetration-testing/",
+    "/service-post/disaster-planning/": "/soc-2-compliance/",
+    "/service-post/secure-awareness-training/": "/soc-2-compliance/",
+    "/service-post/secure-managed-it/": "/",
+    "/cloud-security/": "/services/cloud-security-assessment/",
+    "/security-in-a-fragment-world-of-workload/": "/blog/",
+    "/security-in-a-fragment-world-of-workload-for-your-business-2/": "/blog/",
+}
+
+def redirect_page(target):
+    t = SITE["domain"] + target
+    return (f'<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Moved</title>'
+            f'<link rel="canonical" href="{t}">'
+            f'<meta http-equiv="refresh" content="0; url={target}"><script>location.replace("{target}")</script></head>'
+            f'<body><p>This page has moved to <a href="{target}">{t}</a>.</p></body></html>')
+
 # ---------------- BUILD ----------------
 def build():
     if os.path.exists(OUT): shutil.rmtree(OUT)
@@ -518,6 +555,9 @@ def build():
         d = OUT + path
         os.makedirs(d, exist_ok=True)
         open(d + "index.html", "w").write(content)
+    for old, new in REDIRECTS.items():
+        os.makedirs(OUT + old, exist_ok=True)
+        open(OUT + old + "index.html", "w").write(redirect_page(new))
     # 404
     open(f"{OUT}/404.html", "w").write(page("/404.html", "Page not found | Secblox AI", "The page you were looking for doesn't exist.",
         '<section class="hero"><div class="wrap"><h1>Page not found</h1><p class="lead">That page has moved or never existed.</p><a class="btn btn-primary" href="/">Go home</a></div></section>', noindex=True))
