@@ -8,7 +8,7 @@ SITE = {
     "name": "Secblox",
     "domain": "https://secblox.io",
     "email": "connect@secblox.io",
-    "booking": "mailto:connect@secblox.io?subject=Scoping%20call%20request",  # <-- swap for a Calendly/Cal.com link when ready
+    "booking": "https://cal.com/mukesh-bhakar-vzmbyl/30min",  # Cal.com booking page
     "linkedin": "https://www.linkedin.com/company/secblox",  # <-- your LinkedIn
     "tagline": "SOC 2 & AI Governance for SaaS and AI Companies",
 }
@@ -90,7 +90,7 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 <header class="site-header"><div class="wrap nav">
 <a class="logo" href="/">{LOGO_SVG}<span class="wordmark">Secblox</span></a>
 <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
-<ul id="menu">{nav}<li><a class="btn btn-primary" href="/contact/">Book a call</a></li></ul>
+<ul id="menu">{nav}<li><a class="btn btn-primary" href="{SITE["booking"]}" target="_blank" rel="noopener">Book a call</a></li></ul>
 </div></header>
 <main id="main">
 {body}
@@ -123,7 +123,7 @@ def service_schema(name, desc, path, stype):
 
 def cta(h="Ready to get audit-ready — and AI-ready?", p="Book a free 30-minute scoping call. You'll leave with a clear view of your gaps, timeline and realistic budget — no obligation."):
     return f'''<section><div class="wrap"><div class="cta-band"><h2>{h}</h2><p>{p}</p>
-<div class="cta-row" style="justify-content:center"><a class="btn btn-primary" href="/contact/">Book a free scoping call</a><a class="btn btn-ghost" href="/soc-2-for-ai-companies/">SOC 2 for AI companies →</a></div></div></div></section>'''
+<div class="cta-row" style="justify-content:center"><a class="btn btn-primary" href="{SITE["booking"]}" target="_blank" rel="noopener">Book a free scoping call</a><a class="btn btn-ghost" href="/soc-2-for-ai-companies/">SOC 2 for AI companies →</a></div></div></div></section>'''
 
 def aside(extra=""):
     return f'''<aside class="aside">
@@ -149,7 +149,7 @@ f'''<section class="hero"><div class="wrap">
 <span class="eyebrow">SOC 2 · ISO 42001 · NIST AI RMF · EU AI Act</span>
 <h1>SOC 2 and <em>AI governance</em> for companies that ship AI.</h1>
 <p class="lead">Enterprise buyers now ask two questions: <strong>“Do you have SOC 2?”</strong> and <strong>“How do you govern your AI?”</strong> Secblox gets you a clean answer to both — with hands-on implementation, not slide decks.</p>
-<div class="cta-row"><a class="btn btn-primary" href="/contact/">Book a free scoping call</a><a class="btn btn-ghost" href="/soc-2-for-ai-companies/">How SOC 2 works for AI products →</a></div>
+<div class="cta-row"><a class="btn btn-primary" href="{SITE["booking"]}" target="_blank" rel="noopener">Book a free scoping call</a><a class="btn btn-ghost" href="/soc-2-for-ai-companies/">How SOC 2 works for AI products →</a></div>
 <div class="trust"><span><b>15+ years</b> in security</span><span><b>AWS · Azure · GCP</b></span><span><b>Platform-agnostic</b> compliance automation</span><span><b>In-house</b> penetration testing</span></div>
 </div></section>
 
@@ -207,7 +207,7 @@ PAGES["/soc-2-compliance/"] = page("/soc-2-compliance/", "SOC 2 Compliance Consu
  "End-to-end SOC 2 consulting for SaaS and AI startups: gap assessment, controls, policies, evidence automation and audit support for Type I and II.",
 f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">SOC 2 Type I & Type II</span><h1>SOC 2 compliance consulting, <em>done with you</em> — not just for you.</h1>
 <p class="lead">From your first gap assessment to a clean Type II report and every renewal after. We implement the controls, build the evidence trail and manage the auditor.</p>
-<div class="cta-row"><a class="btn btn-primary" href="/contact/">Get a SOC 2 scoping call</a></div></div></div>
+<div class="cta-row"><a class="btn btn-primary" href="{SITE["booking"]}" target="_blank" rel="noopener">Get a SOC 2 scoping call</a></div></div></div>
 <section><div class="wrap layout"><article class="prose">
 <h2>What is SOC 2?</h2>
 <p><strong>SOC 2</strong> (System and Organization Controls 2) is an attestation framework developed by the AICPA. An independent CPA firm examines how your company protects customer data against the <strong>Trust Services Criteria</strong> and issues a report your customers can rely on. For B2B SaaS and AI companies selling to US enterprises, SOC 2 has become a standard procurement requirement.</p>
@@ -259,7 +259,7 @@ PAGES["/ai-governance/"] = page("/ai-governance/", "AI Governance Consulting: NI
  "AI governance consulting: AI inventory, risk assessments, policies and controls aligned to NIST AI RMF, the EU AI Act and ISO 42001.",
 f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">Responsible AI · AI Risk Management</span><h1>AI governance that <em>passes buyer scrutiny</em> — and holds up in production.</h1>
 <p class="lead">Your customers' security questionnaires now ask about training data, model risk, prompt injection and human oversight. We build the governance program that answers them with evidence.</p>
-<div class="cta-row"><a class="btn btn-primary" href="/contact/">Talk about AI governance</a></div></div></div>
+<div class="cta-row"><a class="btn btn-primary" href="{SITE["booking"]}" target="_blank" rel="noopener">Talk about AI governance</a></div></div></div>
 <section><div class="wrap layout"><article class="prose">
 <h2>Why AI governance now</h2>
 <p>AI adoption has outpaced the controls around it. Enterprise procurement teams, regulators and boards increasingly expect companies to show <strong>which AI systems they use, what risks those systems carry and how those risks are controlled</strong>. A governance program turns that expectation into a repeatable, auditable process.</p>
@@ -308,7 +308,7 @@ PAGES["/iso-42001/"] = page("/iso-42001/", "ISO 42001 Readiness & AIMS Implement
  "ISO/IEC 42001 readiness: scope your AI Management System, run impact assessments, implement Annex A controls and prepare for certification.",
 f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">ISO/IEC 42001:2023</span><h1>ISO 42001 readiness for an <em>AI Management System</em> that certifies.</h1>
 <p class="lead">Build your AIMS, implement the controls and walk into your certification audit prepared — reusing the SOC 2 and ISO 27001 work you've already done.</p>
-<div class="cta-row"><a class="btn btn-primary" href="/contact/">Plan your ISO 42001 path</a></div></div></div>
+<div class="cta-row"><a class="btn btn-primary" href="{SITE["booking"]}" target="_blank" rel="noopener">Plan your ISO 42001 path</a></div></div></div>
 <section><div class="wrap layout"><article class="prose">
 <h2>What ISO 42001 requires</h2>
 <p>ISO/IEC 42001 follows the harmonized management-system structure (Clauses 4–10) used by ISO 27001, plus AI-specific controls in Annex A. In practice you need to show:</p>
@@ -348,7 +348,7 @@ PAGES["/soc-2-for-ai-companies/"] = page("/soc-2-for-ai-companies/", "SOC 2 for 
  "How AI startups pass SOC 2: scoping LLM vendors, training data, prompt injection, model change management and the AI evidence auditors ask for.",
 f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">LLM apps · RAG · AI agents</span><h1>SOC 2 for <em>AI companies</em>: what changes when your product runs on models.</h1>
 <p class="lead">LLM providers, vector databases, prompts-as-code and autonomous agents all live inside your SOC 2 system boundary. Here's how to control them — and prove it.</p>
-<div class="cta-row"><a class="btn btn-primary" href="/contact/">Scope SOC 2 for your AI product</a></div></div></div>
+<div class="cta-row"><a class="btn btn-primary" href="{SITE["booking"]}" target="_blank" rel="noopener">Scope SOC 2 for your AI product</a></div></div></div>
 <section><div class="wrap layout"><article class="prose">
 <h2>Where AI products trip up SOC 2</h2>
 <div class="table-wrap"><table><thead><tr><th>AI component</th><th>SOC 2 concern</th><th>Control approach</th></tr></thead><tbody>
@@ -377,7 +377,7 @@ PAGES["/services/penetration-testing/"] = page("/services/penetration-testing/",
  "In-house web application, API, cloud and LLM penetration testing for SaaS and AI companies. Findings mapped to SOC 2 evidence, with retesting included.",
 f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">Web · API · Cloud · LLM</span><h1>Penetration testing that <em>feeds your SOC 2</em>.</h1>
 <p class="lead">Performed in-house by our principal consultant. Clear findings, practical fixes, retesting, and a report your auditor and customers will accept.</p>
-<div class="cta-row"><a class="btn btn-primary" href="/contact/">Request a pen test quote</a></div></div></div>
+<div class="cta-row"><a class="btn btn-primary" href="{SITE["booking"]}" target="_blank" rel="noopener">Request a pen test quote</a></div></div></div>
 <section><div class="wrap layout"><article class="prose">
 <h2>What we test</h2>
 <ul><li><strong>Web applications</strong> — authentication, authorization, session handling, injection and business-logic flaws (OWASP Top 10).</li>
@@ -395,7 +395,7 @@ PAGES["/services/cloud-security-assessment/"] = page("/services/cloud-security-a
  "AWS, Azure and GCP security assessments for SaaS and AI companies: IAM, network, logging, encryption and DR — mapped to SOC 2.",
 f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">AWS · Azure · GCP</span><h1>Cloud security assessments that <em>harden and simplify</em>.</h1>
 <p class="lead">An architecture-level review of your cloud environment, mapped to SOC 2 controls — with practical fixes that frequently reduce spend as well as risk.</p>
-<div class="cta-row"><a class="btn btn-primary" href="/contact/">Book a cloud review</a></div></div></div>
+<div class="cta-row"><a class="btn btn-primary" href="{SITE["booking"]}" target="_blank" rel="noopener">Book a cloud review</a></div></div></div>
 <section><div class="wrap layout"><article class="prose">
 <h2>Assessment areas</h2>
 <ul><li>Identity and access management, SSO, MFA and privileged access</li><li>Network segmentation, ingress and egress controls</li><li>Logging, monitoring and alerting (CloudTrail, GuardDuty, Defender, Security Command Center)</li><li>Encryption at rest and in transit, key management</li><li>Backup, cross-region recovery, RTO/RPO testing</li><li>Security for AI workloads: Bedrock, Azure OpenAI, Vertex AI</li><li>Cost and resource hygiene that reduces attack surface</li></ul>
@@ -424,15 +424,25 @@ f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow"
           "knowsAbout": ["SOC 2", "AI governance", "ISO/IEC 42001", "NIST AI RMF", "EU AI Act", "Cloud security", "Penetration testing"]}],
  crumbs=[("/about/", "About")], ptype="AboutPage")
 
+
+CAL_EMBED = """<script>
+(function(){function load(){(function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+Cal("init", "30min", {origin: "https://app.cal.com"});
+Cal.ns["30min"]("inline", {elementOrSelector: "#cal-inline", config: {layout: "month_view", theme: "dark"}, calLink: "mukesh-bhakar-vzmbyl/30min"});
+Cal.ns["30min"]("ui", {theme: "dark", hideEventTypeDetails: false, layout: "month_view", cssVarsPerTheme: {dark: {"cal-brand": "#3ee6c4"}}});}
+if ("requestIdleCallback" in window) requestIdleCallback(load, {timeout: 2000}); else setTimeout(load, 800);})();
+</script>"""
+
 # ---------------- CONTACT ----------------
 PAGES["/contact/"] = page("/contact/", "Book a Free SOC 2 & AI Governance Call | Secblox",
  "Book a free 30-minute scoping call with Secblox to discuss SOC 2, ISO 42001, AI governance, penetration testing or cloud security assessment.",
 f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">Contact</span><h1>Let's scope your <em>SOC 2 and AI governance</em> path.</h1>
 <p class="lead">30 minutes, no obligation. You'll get your likely gaps, a realistic timeline and a budget range.</p></div></div>
 <section><div class="wrap grid g2">
-<div class="card"><div class="icon">📅</div><h2 style="font-size:1.2rem">Book a call</h2><p>Email us your preferred times and we will confirm within one business day.</p><a class="btn btn-primary" style="margin-top:16px" href="{SITE["booking"]}" rel="noopener">Request a call</a><p style="margin-top:10px;font-size:14px">{SITE["email"]}</p></div>
+<div class="card"><div class="icon">📅</div><h2 style="font-size:1.2rem">Book a call</h2><p>Pick a 30-minute slot that suits you — the calendar shows times in your own time zone.</p><a class="btn btn-primary" style="margin-top:16px" href="{SITE["booking"]}" target="_blank" rel="noopener">Open booking page</a></div>
 <div class="card"><div class="icon">✉️</div><h2 style="font-size:1.2rem">Email us</h2><p>Tell us about your product, cloud provider, deadline and any customer requirements.</p><a class="btn btn-ghost" style="margin-top:16px" href="mailto:{SITE["email"]}?subject=SOC%202%20%2F%20AI%20governance%20enquiry">{SITE["email"]}</a></div>
 </div>
+<div class="wrap" style="margin-top:48px"><h2>Book your scoping call</h2><p class="sub" style="margin-bottom:20px">Choose a time below. If the calendar doesn't load, <a style="text-decoration:underline" href="{SITE["booking"]}" target="_blank" rel="noopener">open the booking page</a>.</p><div id="cal-inline" style="width:100%;min-height:640px;border:1px solid var(--line);border-radius:14px;overflow:auto;background:var(--card)"></div></div>{CAL_EMBED}
 <div class="wrap prose" style="margin-top:48px"><h2>Helpful to share</h2><ul><li>What you sell and who your customers are</li><li>Cloud provider(s) and team size</li><li>Which framework you need (SOC 2, ISO 42001, EU AI Act) and by when</li><li>Any compliance tooling you already use</li></ul></div></section>''',
  crumbs=[("/contact/", "Contact")], ptype="ContactPage")
 
