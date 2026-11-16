@@ -78,8 +78,9 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 <meta name="twitter:title" content="{esc(title)}">
 <meta name="twitter:description" content="{esc(desc)}">
 <meta name="twitter:image" content="{d}/assets/og-image.png">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/assets/logo.png">
+<link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/assets/favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/style.css">
 <link rel="alternate" type="application/rss+xml" title="Secblox AI Blog" href="/feed.xml">
 <script type="application/ld+json">{ld}</script>
@@ -107,7 +108,7 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 </body>
 </html>'''
 
-LOGO_SVG = '<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3ee6c4"/><stop offset="1" stop-color="#7c8cff"/></linearGradient></defs><path d="M16 2 4 7v8c0 7.5 5.1 13.2 12 15 6.9-1.8 12-7.5 12-15V7L16 2z" fill="url(#lg)"/><rect x="10" y="10" width="5" height="5" rx="1" fill="#070b14"/><rect x="17" y="10" width="5" height="5" rx="1" fill="#070b14" opacity=".7"/><rect x="10" y="17" width="5" height="5" rx="1" fill="#070b14" opacity=".7"/><rect x="17" y="17" width="5" height="5" rx="1" fill="#070b14"/></svg>'
+LOGO_SVG = '<img src="/assets/logo-96.png" width="30" height="30" alt="">'
 
 def faq_block(faqs):
     h = "".join(f"<details><summary>{esc(q)}</summary><p>{a}</p></details>" for q, a in faqs)
@@ -562,7 +563,7 @@ def build():
     open(f"{OUT}/404.html", "w").write(page("/404.html", "Page not found | Secblox AI", "The page you were looking for doesn't exist.",
         '<section class="hero"><div class="wrap"><h1>Page not found</h1><p class="lead">That page has moved or never existed.</p><a class="btn btn-primary" href="/">Go home</a></div></section>', noindex=True))
     # favicon
-    open(f"{OUT}/favicon.svg", "w").write(LOGO_SVG.replace('width="30" height="30" ', 'xmlns="http://www.w3.org/2000/svg" ').replace(' aria-hidden="true"', ''))
+    shutil.copy("assets/favicon-32.png", f"{OUT}/favicon.ico")  # browsers that request /favicon.ico get the PNG
     # sitemap
     pri = {"/": "1.0"}
     pdates = {p["url"]: p["date"] for p in POSTS}
