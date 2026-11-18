@@ -15,7 +15,7 @@ SITE = {
     # Google Ads conversion tracking — leave blank to disable all tracking.
     "google_ads_id": "AW-18579239124",  # Google Ads account 839-854-9045
     "ads_label_booking": "KieaCN_5_LodENThoptF",  # "Booked call" (primary)
-    "ads_label_click": "",          # conversion label for "Clicked Book a call" (secondary)
+    "ads_label_click": "W5KeCI6W_bodENThoptF",  # "Clicked Book a call" (secondary)
 }
 OUT = "site"
 TODAY = datetime.date.today().isoformat()
