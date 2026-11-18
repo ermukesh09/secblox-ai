@@ -13,8 +13,8 @@ SITE = {
     "indexnow_key": "2a4b273c96120af49169c533023737c6",  # IndexNow key (public by design; served at /<key>.txt)  # <-- your LinkedIn
     "tagline": "SOC 2 & AI Governance for SaaS and AI Companies",
     # Google Ads conversion tracking — leave blank to disable all tracking.
-    "google_ads_id": "",            # e.g. "AW-123456789"
-    "ads_label_booking": "",        # conversion label for "Booked call (Cal.com)"
+    "google_ads_id": "AW-18579239124",  # Google Ads account 839-854-9045
+    "ads_label_booking": "KieaCN_5_LodENThoptF",  # "Booked call" (primary)
     "ads_label_click": "",          # conversion label for "Clicked Book a call" (secondary)
 }
 OUT = "site"
