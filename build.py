@@ -12,6 +12,10 @@ SITE = {
     "linkedin": "https://www.linkedin.com/company/secblox",
     "indexnow_key": "2a4b273c96120af49169c533023737c6",  # IndexNow key (public by design; served at /<key>.txt)  # <-- your LinkedIn
     "tagline": "SOC 2 & AI Governance for SaaS and AI Companies",
+    # Google Ads conversion tracking — leave blank to disable all tracking.
+    "google_ads_id": "",            # e.g. "AW-123456789"
+    "ads_label_booking": "",        # conversion label for "Booked call (Cal.com)"
+    "ads_label_click": "",          # conversion label for "Clicked Book a call" (secondary)
 }
 OUT = "site"
 TODAY = datetime.date.today().isoformat()
@@ -37,7 +41,7 @@ def org_schema():
         "sameAs": [SITE["linkedin"]],
     }
 
-def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noindex=False):
+def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noindex=False, minimal=False):
     d = SITE["domain"]; url = d + path
     graph = [org_schema(), {"@type": "WebSite", "@id": d + "/#website", "url": d + "/", "name": SITE["name"],
                             "publisher": {"@id": d + "/#org"}},
@@ -50,7 +54,7 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
         graph.append({"@type": "BreadcrumbList", "itemListElement": items})
     if schema: graph.extend(schema)
     ld = json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False)
-    nav = "".join(f'<li><a href="{u}"{" aria-current=page" if path.startswith(u) else ""}>{n}</a></li>' for u, n in NAV)
+    nav = "" if minimal else "".join(f'<li><a href="{u}"{" aria-current=page" if path.startswith(u) else ""}>{n}</a></li>' for u, n in NAV)
     crumb_html = ""
     if crumbs:
         crumb_html = '<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a>' + "".join(
@@ -85,13 +89,14 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 <link rel="stylesheet" href="/assets/style.css">
 <link rel="alternate" type="application/rss+xml" title="Secblox Blog" href="/feed.xml">
 <script type="application/ld+json">{ld}</script>
+{tracking_head()}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header"><div class="wrap nav">
 <a class="logo" href="/">{LOGO_SVG}<span class="wordmark">Secblox</span></a>
-<button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
-<ul id="menu">{nav}<li><a class="btn btn-primary" href="{SITE["booking"]}" target="_blank" rel="noopener">Book a call</a></li></ul>
+{"" if minimal else '<button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>'}
+{f'<a class="btn btn-primary" href="#book">Book a call</a>' if minimal else f'<ul id="menu">{nav}<li><a class="btn btn-primary" href="{SITE["booking"]}" target="_blank" rel="noopener">Book a call</a></li></ul>'}
 </div></header>
 <main id="main">
 {body}
@@ -105,9 +110,21 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 </div>
 <div class="copy"><span>© {datetime.date.today().year} Secblox. All rights reserved.</span><span>SOC 2 · ISO/IEC 42001 · NIST AI RMF · EU AI Act</span></div>
 </div></footer>
-<script>const b=document.querySelector('.menu-btn'),m=document.getElementById('menu');b.onclick=()=>{{const o=m.classList.toggle('open');b.setAttribute('aria-expanded',o)}};</script>
+<script>const b=document.querySelector('.menu-btn'),m=document.getElementById('menu');if(b)b.onclick=()=>{{const o=m.classList.toggle('open');b.setAttribute('aria-expanded',o)}};</script>
 </body>
 </html>'''
+
+def tracking_head():
+    """Google Ads tag + conversion events. Emits nothing unless SITE['google_ads_id'] is set."""
+    aw = SITE["google_ads_id"]
+    if not aw:
+        return ""
+    click = f"'{aw}/{SITE['ads_label_click']}'" if SITE["ads_label_click"] else "null"
+    book = f"'{aw}/{SITE['ads_label_booking']}'" if SITE["ads_label_booking"] else "null"
+    return f"""<script async src="https://www.googletagmanager.com/gtag/js?id={aw}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','{aw}');
+window.SBX_CONV={{click:{click},book:{book}}};
+document.addEventListener('click',function(e){{var a=e.target.closest&&e.target.closest('a[href*="cal.com/"]');if(a&&SBX_CONV.click)gtag('event','conversion',{{send_to:SBX_CONV.click}});}});</script>"""
 
 LOGO_SVG = '<img src="/assets/logo-96.png" width="34" height="34" alt="">'
 
@@ -430,7 +447,10 @@ CAL_EMBED = """<script>
 (function(){function load(){(function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
 Cal("init", "30min", {origin: "https://app.cal.com"});
 Cal.ns["30min"]("inline", {elementOrSelector: "#cal-inline", config: {layout: "month_view", theme: "dark"}, calLink: "mukesh-bhakar-vzmbyl/30min"});
-Cal.ns["30min"]("ui", {theme: "dark", hideEventTypeDetails: false, layout: "month_view", cssVarsPerTheme: {dark: {"cal-brand": "#3ee6c4"}}});}
+Cal.ns["30min"]("ui", {theme: "dark", hideEventTypeDetails: false, layout: "month_view", cssVarsPerTheme: {dark: {"cal-brand": "#3ee6c4"}}});
+var sent=false;function conv(){if(sent)return;sent=true;if(window.gtag&&window.SBX_CONV&&SBX_CONV.book)gtag('event','conversion',{send_to:SBX_CONV.book});}
+Cal.ns["30min"]("on", {action: "bookingSuccessfulV2", callback: conv});
+Cal.ns["30min"]("on", {action: "bookingSuccessful", callback: conv});}
 if ("requestIdleCallback" in window) requestIdleCallback(load, {timeout: 2000}); else setTimeout(load, 800);})();
 </script>"""
 
@@ -528,17 +548,97 @@ def rss():
 
 
 # ---------------- PRIVACY ----------------
+ADS_PRIVACY = ("<h2>Advertising and analytics</h2><p>We use Google Ads conversion tracking to understand which of our ads lead to enquiries. "
+               "When you visit from an ad, Google may set cookies and process technical data such as your IP address, browser and the pages you view, "
+               "under Google's own privacy policy. We see aggregated results, not your identity. You can manage ad personalisation at "
+               "<a href=\"https://adssettings.google.com\" rel=\"noopener\">adssettings.google.com</a> or block cookies in your browser.</p>"
+               if SITE["google_ads_id"] else "<p>This site does not use tracking cookies or third-party analytics.</p>")
+ADS_PRIVACY += ("<h2>Booking calls</h2><p>Calls are scheduled through Cal.com, which processes the details you enter when booking "
+                "under its own privacy policy.</p>")
 PAGES["/privacy-policy/"] = page("/privacy-policy/", "Privacy Policy | Secblox",
  "How Secblox handles personal information shared through this website and by email.",
  f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<h1>Privacy Policy</h1><p class="lead">Last updated: {TODAY}</p></div></div>
 <section><div class="wrap prose">
 <h2>Who we are</h2><p>This website is operated by Secblox. Contact: <a href="mailto:{SITE["email"]}">{SITE["email"]}</a>.</p>
-<h2>What we collect</h2><p>This site does not use forms, tracking cookies or third-party analytics. If you email us, we receive your name, email address and whatever you choose to include in your message.</p>
+<h2>What we collect</h2><p>This site does not use forms. If you email us or book a call, we receive your name, email address and whatever you choose to include.</p>
+{ADS_PRIVACY}
 <h2>How we use it</h2><p>We use information you send only to respond to your enquiry and, if we work together, to deliver our services. We do not sell or rent personal information.</p>
 <h2>Retention</h2><p>We keep correspondence only as long as needed for the purpose it was shared and to meet legal or contractual obligations.</p>
 <h2>Hosting</h2><p>The site is hosted on GitHub Pages, which may log technical data such as IP addresses for security purposes under GitHub's own privacy statement.</p>
 <h2>Your rights</h2><p>You can ask us to access, correct or delete personal information we hold about you by emailing <a href="mailto:{SITE["email"]}">{SITE["email"]}</a>.</p>
 </div></section>''', crumbs=[("/privacy-policy/", "Privacy Policy")])
+
+# ---------------- AD LANDING PAGES (noindex; not in sitemap, llms.txt or IndexNow) ----------------
+def landing(path, title, desc, eyebrow, h1, lead, gets, steps, why, faqs):
+    gets_html = "".join(f'<div class="card"><h3>{esc(t)}</h3><p>{esc(d)}</p></div>' for t, d in gets)
+    steps_html = "".join(f'<div class="step"><h3>{esc(t)}</h3><p>{esc(d)}</p></div>' for t, d in steps)
+    why_html = "".join(f"<li>{w}</li>" for w in why)
+    fh, _ = faq_block(faqs)
+    body = f'''<section class="hero"><div class="wrap">
+<span class="eyebrow">{esc(eyebrow)}</span><h1>{h1}</h1><p class="lead">{lead}</p>
+<div class="cta-row"><a class="btn btn-primary" href="#book">Book a free 30-minute call</a></div>
+<div class="trust"><span><b>15+ years</b> in security</span><span><b>Hands-on</b> implementation</span><span><b>AWS · Azure · GCP</b></span><span><b>Remote</b> · US time zones</span></div>
+</div></section>
+<section><div class="wrap"><h2>What you get</h2><div class="grid g3" style="margin-top:28px">{gets_html}</div></div></section>
+<section class="alt"><div class="wrap"><h2>How it works</h2><div class="steps" style="margin-top:28px">{steps_html}</div></div></section>
+<section id="book"><div class="wrap"><h2>Book your free call</h2>
+<p class="sub" style="margin-bottom:20px">Pick a time that suits you — the calendar shows your local time zone. If it doesn't load, <a style="text-decoration:underline" href="{SITE["booking"]}" target="_blank" rel="noopener">open the booking page</a>.</p>
+<div id="cal-inline" style="width:100%;min-height:640px;border:1px solid var(--line);border-radius:14px;overflow:auto;background:var(--card)"></div></div>{CAL_EMBED}</section>
+<section class="alt"><div class="wrap grid g2" style="align-items:start">
+<div><h2>Why Secblox</h2><ul class="prose" style="padding-left:22px;margin-top:16px;color:#c9d2e3">{why_html}</ul></div>
+<div><h2>Questions</h2><div style="margin-top:16px">{fh}</div></div></div></section>'''
+    return page(path, title, desc, body, noindex=True, minimal=True)
+
+WHY = ["Practitioner-led: you work directly with a consultant who has taken SaaS platforms from readiness to report and through renewals.",
+       "We implement the controls with your team — not just a gap report.",
+       "Platform-agnostic and budget-conscious: tooling sized to your stage.",
+       "Penetration testing in-house, so findings feed straight into your evidence.",
+       "Fully remote, with meeting times that work for US teams."]
+
+LANDING = {}
+LANDING["/lp/soc-2-readiness/"] = landing("/lp/soc-2-readiness/",
+ "SOC 2 Readiness for SaaS Startups | Secblox",
+ "Get audit-ready for SOC 2 with hands-on help: gap assessment, policies, controls and auditor support. Book a free 30-minute scoping call.",
+ "SOC 2 for SaaS & AI startups",
+ "Get <em>SOC 2-ready</em> without slowing your roadmap.",
+ "A customer is asking for your SOC 2 report. We scope it, close the gaps, implement the controls with your team and walk you through the audit — so you can answer “yes” and close the deal.",
+ [("Clear scope", "System boundary, Trust Services Criteria and in-scope tools agreed in week one."),
+  ("Gap assessment", "A prioritised list of what's missing, with effort estimates — no guesswork."),
+  ("Right-sized policies", "A complete policy set written for how your team actually works."),
+  ("Controls implemented", "Access, logging, change management, vulnerability management, backups and vendor risk across your cloud."),
+  ("Evidence that collects itself", "Automation set up so the Type II window runs smoothly."),
+  ("Audit support", "Auditor selection, system description and evidence requests handled.")],
+ [("Free scoping call", "30 minutes: your deadline, stack and likely gaps."),
+  ("Readiness", "Gap assessment, policies and control implementation."),
+  ("Audit", "Type I if you need it fast, then Type II."),
+  ("Renewal", "Recurring controls kept running year after year.")],
+ WHY,
+ [("How long does SOC 2 take?", "Readiness for a typical SaaS startup takes about 6–10 weeks. A first Type II report usually follows a 3-month or longer observation window."),
+  ("What does it cost?", "It depends on scope, team size and how much is already in place. On the call we give you a realistic range for your situation."),
+  ("Do we need a compliance automation platform?", "Usually it helps, but not always. We are platform-agnostic and recommend what fits your stage and budget."),
+  ("We use AI or LLMs in our product. Is that a problem?", "No — but AI components sit inside your SOC 2 scope. We cover model-provider reviews, prompt change management and data isolation as part of readiness.")])
+
+LANDING["/lp/ai-governance/"] = landing("/lp/ai-governance/",
+ "AI Governance & ISO 42001 Readiness | Secblox",
+ "Practical AI governance for AI companies: AI inventory, risk assessments, policies and ISO 42001 readiness, aligned to NIST AI RMF and the EU AI Act.",
+ "ISO 42001 · NIST AI RMF · EU AI Act",
+ "<em>AI governance</em> your enterprise buyers will accept.",
+ "Buyers now ask how you govern your AI — training data, model risk, prompt injection, human oversight. We build the program that answers with evidence, on top of the security controls you already have.",
+ [("AI inventory", "Every model, AI feature and AI tool, with owners and data flows."),
+  ("AI risk assessments", "Security, privacy, accuracy, fairness and legal risk for each system."),
+  ("AI policies", "Acceptable use, AI development lifecycle and AI vendor policies."),
+  ("Technical controls", "Prompt-injection defences, data isolation, change management and monitoring."),
+  ("EU AI Act readiness", "Role, risk classification and transparency obligations mapped to your products."),
+  ("ISO 42001 readiness", "An AI Management System ready for certification, reusing your SOC 2 work.")],
+ [("Free scoping call", "30 minutes: your AI systems, buyers' questions and deadlines."),
+  ("Assess", "AI inventory plus a NIST AI RMF-aligned gap assessment."),
+  ("Build", "Policies, controls and evidence; questionnaire-ready answers."),
+  ("Certify", "ISO 42001 internal audit and certification support, if you need a certificate.")],
+ WHY,
+ [("Do we need ISO 42001?", "Not always. Many companies start with a NIST AI RMF-aligned program and move to ISO 42001 when customers ask for a certificate."),
+  ("Does the EU AI Act apply to US companies?", "It can, if your AI system is offered in the EU or its output is used there. We help you work out your role and obligations alongside your legal counsel."),
+  ("We already have SOC 2. Do we start again?", "No. Access control, change management, vendor risk and incident response carry over; we add the AI-specific pieces."),
+  ("How long does it take?", "An initial AI governance program typically takes around 90 days; ISO 42001 certification depends on scope and existing maturity.")])
 
 # ---------------- REDIRECTS (old WordPress URLs -> new pages) ----------------
 REDIRECTS = {
@@ -575,6 +675,9 @@ def build():
         d = OUT + path
         os.makedirs(d, exist_ok=True)
         open(d + "index.html", "w").write(content)
+    for path, content in LANDING.items():  # ad landing pages: built but kept out of sitemap/llms/IndexNow
+        os.makedirs(OUT + path, exist_ok=True)
+        open(OUT + path + "index.html", "w").write(content)
     for old, new in REDIRECTS.items():
         os.makedirs(OUT + old, exist_ok=True)
         open(OUT + old + "index.html", "w").write(redirect_page(new))
