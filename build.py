@@ -124,7 +124,7 @@ def tracking_head():
     return f"""<script async src="https://www.googletagmanager.com/gtag/js?id={aw}"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','{aw}');
 window.SBX_CONV={{click:{click},book:{book}}};
-document.addEventListener('click',function(e){{var a=e.target.closest&&e.target.closest('a[href*="cal.com/"]');if(a&&SBX_CONV.click)gtag('event','conversion',{{send_to:SBX_CONV.click}});}});</script>"""
+var sbxClicked=false;document.addEventListener('click',function(e){{var a=e.target.closest&&e.target.closest('a[href*="cal.com/"],a[href="#book"]');if(a&&SBX_CONV.click&&!sbxClicked){{sbxClicked=true;gtag('event','conversion',{{send_to:SBX_CONV.click}});}}}});</script>"""
 
 LOGO_SVG = '<img src="/assets/logo-96.png" width="34" height="34" alt="">'
 
