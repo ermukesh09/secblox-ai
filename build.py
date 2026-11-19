@@ -13,6 +13,7 @@ SITE = {
     "indexnow_key": "2a4b273c96120af49169c533023737c6",  # IndexNow key (public by design; served at /<key>.txt)  # <-- your LinkedIn
     "tagline": "SOC 2 & AI Governance for SaaS and AI Companies",
     # Google Ads conversion tracking — leave blank to disable all tracking.
+    "ga4_id": "G-QLRDW036PD",  # Google Analytics 4 property (secblox.io)
     "google_ads_id": "AW-18579239124",  # Google Ads account 839-854-9045
     "ads_label_booking": "KieaCN_5_LodENThoptF",  # "Booked call" (primary)
     "ads_label_click": "W5KeCI6W_bodENThoptF",  # "Clicked Book a call" (secondary)
@@ -115,14 +116,17 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 </html>'''
 
 def tracking_head():
-    """Google Ads tag + conversion events. Emits nothing unless SITE['google_ads_id'] is set."""
+    """GA4 + Google Ads tag + conversion events. Emits nothing unless an ID is set."""
     aw = SITE["google_ads_id"]
-    if not aw:
+    ga = SITE.get("ga4_id", "")
+    if not aw and not ga:
         return ""
     click = f"'{aw}/{SITE['ads_label_click']}'" if SITE["ads_label_click"] else "null"
     book = f"'{aw}/{SITE['ads_label_booking']}'" if SITE["ads_label_booking"] else "null"
-    return f"""<script async src="https://www.googletagmanager.com/gtag/js?id={aw}"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','{aw}');
+    first = ga or aw
+    configs = "".join(f"gtag('config','{i}');" for i in (ga, aw) if i)
+    return f"""<script async src="https://www.googletagmanager.com/gtag/js?id={first}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());{configs}
 window.SBX_CONV={{click:{click},book:{book}}};
 var sbxClicked=false;document.addEventListener('click',function(e){{var a=e.target.closest&&e.target.closest('a[href*="cal.com/"],a[href="#book"]');if(a&&SBX_CONV.click&&!sbxClicked){{sbxClicked=true;gtag('event','conversion',{{send_to:SBX_CONV.click}});}}}});</script>"""
 
