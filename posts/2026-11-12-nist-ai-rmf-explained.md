@@ -1,5 +1,5 @@
 ---
-title: NIST AI RMF Explained: Govern, Map, Measure, Manage
+title: NIST AI RMF Explained: The Four Functions
 description: A plain-English guide to the NIST AI Risk Management Framework — the four functions, the Generative AI Profile and how SaaS companies apply it in practice.
 date: 2026-11-12
 tags: NIST AI RMF, AI governance, AI risk

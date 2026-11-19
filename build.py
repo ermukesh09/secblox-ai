@@ -527,7 +527,7 @@ for i, p in enumerate(POSTS):
         crumbs=[("/blog/", "Blog"), (p["url"], p["title"])], ptype="Article")
 
 PAGES["/blog/"] = page("/blog/", "SOC 2 & AI Governance Blog | Secblox",
- "Practical guides on SOC 2, ISO 42001, NIST AI RMF and the EU AI Act for SaaS and AI companies.",
+ "Practical guides on SOC 2, ISO 42001, NIST AI RMF and the EU AI Act for SaaS and AI companies: checklists, comparisons, timelines and templates.",
  f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">Blog</span><h1>Guides on SOC 2 and <em>AI governance</em>.</h1><p class="lead">Practical, practitioner-written guidance for founders, CTOs and security leads.</p>
 <p style="font-size:14px;color:var(--muted)">Prefer a feed reader? Add <code>https://secblox.io/feed.xml</code> to Feedly, Inoreader or Outlook.</p></div></div>
 <section><div class="wrap"><h2>All articles</h2><p class="sub">{len(POSTS)} guides and counting.</p><div class="grid g3">{"".join(post_card(p) for p in POSTS)}</div></div></section>''',
@@ -556,7 +556,7 @@ ADS_PRIVACY = ("<h2>Advertising and analytics</h2><p>We use Google Ads conversio
 ADS_PRIVACY += ("<h2>Booking calls</h2><p>Calls are scheduled through Cal.com, which processes the details you enter when booking "
                 "under its own privacy policy.</p>")
 PAGES["/privacy-policy/"] = page("/privacy-policy/", "Privacy Policy | Secblox",
- "How Secblox handles personal information shared through this website and by email.",
+ "How Secblox handles personal information shared through this website, our booking calendar, Google Ads measurement and email, and how to contact us.",
  f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<h1>Privacy Policy</h1><p class="lead">Last updated: {TODAY}</p></div></div>
 <section><div class="wrap prose">
 <h2>Who we are</h2><p>This website is operated by Secblox. Contact: <a href="mailto:{SITE["email"]}">{SITE["email"]}</a>.</p>
