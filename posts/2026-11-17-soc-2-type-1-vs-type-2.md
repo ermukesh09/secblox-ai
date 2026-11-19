@@ -3,6 +3,8 @@ title: SOC 2 Type I vs Type II: Which to Get First?
 description: SOC 2 Type I vs Type II explained for startups: what each report proves, timelines, when Type I makes sense, and how to move to Type II without rework.
 date: 2026-11-17
 tags: SOC 2, startups
+updated: 2026-11-19
+takeaways: A SOC 2 Type I report tests control design at one point in time; a Type II tests that controls operated over a period, usually 3–12 months.|Most enterprise buyers ultimately want a Type II.|Start with Type I only when a deal needs evidence quickly; otherwise go straight to Type II with a short first window.|Implement controls you can operate continuously so moving from Type I to Type II needs no rework.
 ---
 
 **A SOC 2 Type I report shows your controls are properly designed at one point in time; a Type II report shows they actually worked over a period, usually 3–12 months.** Most enterprise buyers ultimately want Type II. Start with Type I only when a deal needs evidence quickly; otherwise, go straight to a Type II with a short first observation window.
@@ -66,4 +68,4 @@ There's no formal expiry, but buyers expect a report covering a recent period �
 
 There's no fixed minimum in the standard, but very short windows carry little weight. Three months is the common floor for a first report.
 
-See the full approach on our [SOC 2 compliance page](/soc-2-compliance/), check [how long SOC 2 takes](/blog/how-long-does-soc-2-take/), or [book a free scoping call](/contact/).
+See the full approach on our [SOC 2 compliance page](/soc-2-compliance/), check [how long SOC 2 takes](/blog/how-long-does-soc-2-take/), start with a [SOC 2 readiness assessment](/blog/soc-2-readiness-assessment/), or [book a free scoping call](/contact/).

@@ -3,6 +3,8 @@ title: Prompt Injection: What Auditors and Buyers Expect
 description: Prompt injection explained for SaaS teams: direct and indirect attacks, the controls buyers and auditors expect, how to test them and how to evidence them.
 date: 2026-11-17
 tags: AI security, LLM, SOC 2
+updated: 2026-11-19
+takeaways: Prompt injection is crafted input that makes an AI system ignore its instructions — leaking data, misusing tools or producing harmful output.|There is no single fix, so buyers and auditors expect layered controls rather than immunity.|Limit what the model can see and do, filter inputs and outputs, test regularly and monitor for abuse.|Keep evidence that each control operates, so it can support SOC 2 and customer security reviews.
 ---
 
 **Prompt injection is when crafted input makes an AI system ignore its instructions — leaking data, misusing tools or producing harmful output.** There is no single fix, so buyers and auditors don't expect immunity. They expect **layered controls**: limit what the model can see and do, filter inputs and outputs, test regularly, and monitor for abuse — with evidence that all of it actually operates.
@@ -78,4 +80,4 @@ No. Instructions like "never reveal X" help a little but are bypassable. Real pr
 
 Yes, for data leakage and cross-tenant exposure. The action-related risks are smaller, but retrieval and output controls still matter.
 
-See how this fits a wider program in [SOC 2 for AI companies](/soc-2-for-ai-companies/), or [book a free scoping call](/contact/).
+See how this fits a wider program in [SOC 2 for AI companies](/soc-2-for-ai-companies/), [does SOC 2 cover AI and LLM vendors](/blog/does-soc-2-cover-ai-llm-vendors/) and the [SOC 2 checklist for AI startups](/blog/soc-2-checklist-for-ai-startups/), or [book a free scoping call](/contact/).

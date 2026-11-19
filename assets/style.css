@@ -120,3 +120,10 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 .prose p a,.prose li a,.card p a{text-decoration:underline;text-underline-offset:3px}
+.takeaways{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--radius);padding:18px 22px;margin:0 0 28px}
+.takeaways .kt-title{font-weight:700;color:var(--text);margin:0 0 8px}
+.takeaways ul{margin:0}
+.refs li{font-size:15px}
+.author-box{margin-top:36px;padding:20px 22px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg2)}
+.author-box p{font-size:15px;color:var(--muted);margin:0 0 8px}
+.author-box .ab-name{color:var(--text);font-weight:700}

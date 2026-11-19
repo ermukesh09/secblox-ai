@@ -1,31 +1,56 @@
 ---
-title: EU AI Act for US SaaS Companies: What Applies to You
-description: Does the EU AI Act apply to your US SaaS product? Provider vs deployer roles, risk categories and the first steps to take.
+title: Primary Keyword First: Clear Promise (max 50 chars)
+description: 120–155 characters. Include the primary keyword once, say who it is for and what they get. No vendor names.
 date: 2026-12-01
-tags: EU AI Act, AI governance
-draft: false
+updated: 2026-12-01
+tags: SOC 2, startups
+keyword: primary keyword phrase (must be unique across all posts)
+takeaways: One self-contained fact that names the subject.|Second fact.|Third fact.|Optional fourth fact.
+draft: true
 ---
 
-Opening paragraph: answer the title's question directly in 2–3 sentences.
-AI assistants and Google both quote the first clear answer they find.
+**Bolded direct answer to the title's question in 1–2 sentences, using the primary keyword.** Then one or two sentences of context. AI assistants and Google quote the first clear answer they find.
 
-## Short answer
+## Question-style H2 people actually search?
+
+Short paragraphs. At least one table or checklist somewhere in the post.
+Link to the pillar service page, e.g. [SOC 2 compliance](/soc-2-compliance/).
+
+## Second question-style H2?
 
 ...
 
-## Section heading phrased like a question people search
+## Third question-style H2?
 
-Normal paragraphs, **bold**, [links to your service pages](/ai-governance/).
+...
 
-- Bullet lists work
-- So do numbered lists
+## In practice
 
-| Column | Column |
-|---|---|
-| Tables | work too |
+3–5 sentences from real engagements: one observation, why it happens, what to do. No client names, no invented numbers.
 
 ## FAQ
 
-### A question buyers ask?
+### First real question people search?
 
-Answer in 2–4 sentences.
+Answer in 1–3 sentences.
+
+### Second question?
+
+Answer.
+
+### Third question?
+
+Answer.
+
+Related: [another post](/blog/soc-2-type-1-vs-type-2/) and [another post](/blog/how-long-does-soc-2-take/). See our [SOC 2 compliance service](/soc-2-compliance/) or [book a free scoping call](/contact/).
+
+<!--
+Automatic (do not add by hand): author box, key-takeaways box, references to official sources,
+published/updated dates, structured data (Article, FAQ, Breadcrumb, citations), sitemap, RSS,
+llms.txt, llms-full.txt, Markdown copy at /blog/<slug>.md, IndexNow ping.
+
+The build FAILS if any of these are missing: title ≤ 60 incl. " | Secblox"; description 120–160;
+3–5 takeaways; bolded first paragraph; ≥ 4 H2s; FAQ with ≥ 3 questions; link to a pillar page;
+links to ≥ 2 other posts; link to /contact/; an official reference matched; no vendor names;
+unique keyword. Set draft: false to publish.
+-->

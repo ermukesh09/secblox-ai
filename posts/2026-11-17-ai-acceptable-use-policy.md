@@ -3,6 +3,8 @@ title: AI Acceptable Use Policy: What to Include (2026)
 description: What a practical AI acceptable use policy should cover: approved tools, data rules, human review, prohibited uses, AI agents, training and enforcement.
 date: 2026-11-17
 tags: AI governance, AI policy, SOC 2
+updated: 2026-11-19
+takeaways: An AI acceptable use policy defines which AI tools staff may use, what data they may enter, and what needs human review.|It is usually the first AI policy a company needs because staff already use AI tools, approved or not.|Keep it short, specific and enforceable, with an approved-tools list and clear data rules.|It fits into an existing SOC 2 policy set and supports AI governance frameworks.
 ---
 
 **An AI acceptable use policy tells your team which AI tools they may use, what data they may put into them, and what must be reviewed by a human before it is used.** It is usually the first AI policy a company needs, because staff are already using AI tools — approved or not. A good one is short, specific and enforceable, and it fits neatly into your existing SOC 2 policy set.

@@ -3,6 +3,8 @@ title: SOC 2 Trust Services Criteria: Which Do You Need?
 description: The five SOC 2 Trust Services Criteria explained — Security, Availability, Confidentiality, Processing Integrity, Privacy — and how to pick your scope.
 date: 2026-11-17
 tags: SOC 2, scoping
+updated: 2026-11-19
+takeaways: Every SOC 2 report must include Security (the Common Criteria).|Availability, Confidentiality, Processing Integrity and Privacy are optional — add them only when customers or contracts ask.|Most SaaS startups start with Security alone, or Security plus Availability and Confidentiality.|Adding criteria nobody requested makes the audit bigger and costlier without helping sales.
 ---
 
 **Every SOC 2 report must include Security. The other four Trust Services Criteria — Availability, Confidentiality, Processing Integrity and Privacy — are optional, and you should add them only when customers or contracts ask for them.** Most SaaS startups get a strong first report with Security alone, or Security plus Availability and Confidentiality. Adding criteria nobody requested makes the audit longer and more expensive without winning more deals.

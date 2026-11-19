@@ -20,6 +20,7 @@ SITE = {
 }
 OUT = "site"
 TODAY = datetime.date.today().isoformat()
+PAGES_UPDATED = "2026-11-19"  # bump when service/static page content changes (used in sitemap + schema)
 
 NAV = [("/soc-2-compliance/", "SOC 2"), ("/ai-governance/", "AI Governance"),
        ("/iso-42001/", "ISO 42001"), ("/soc-2-for-ai-companies/", "SOC 2 for AI"),
@@ -42,12 +43,12 @@ def org_schema():
         "sameAs": [SITE["linkedin"]],
     }
 
-def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noindex=False, minimal=False):
+def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noindex=False, minimal=False, modified=None, alt_md=None):
     d = SITE["domain"]; url = d + path
     graph = [org_schema(), {"@type": "WebSite", "@id": d + "/#website", "url": d + "/", "name": SITE["name"],
                             "publisher": {"@id": d + "/#org"}},
              {"@type": ptype, "@id": url + "#page", "url": url, "name": title, "description": desc,
-              "isPartOf": {"@id": d + "/#website"}, "inLanguage": "en-US", "dateModified": TODAY}]
+              "isPartOf": {"@id": d + "/#website"}, "inLanguage": "en-US", "dateModified": modified or PAGES_UPDATED}]
     if crumbs:
         items = [{"@type": "ListItem", "position": 1, "name": "Home", "item": d + "/"}]
         for i, (u, n) in enumerate(crumbs, 2):
@@ -71,7 +72,7 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 <meta name="description" content="{esc(desc)}">
 <meta name="robots" content="{robots}">
 <link rel="canonical" href="{url}">
-<meta name="theme-color" content="#070b14">
+{f'<link rel="alternate" type="text/markdown" href="{d}{alt_md}">' + chr(10) if alt_md else ""}<meta name="theme-color" content="#070b14">
 <meta property="og:type" content="{"article" if ptype == "Article" else "website"}">
 <meta property="og:site_name" content="{SITE["name"]}">
 <meta property="og:title" content="{esc(title)}">
@@ -225,8 +226,8 @@ soc_faqs = [
  ("Do we need a compliance automation platform?", "Not always. Compliance automation platforms save significant evidence effort for most SaaS teams, but very early-stage companies can sometimes start lighter. We recommend what fits your budget and stage."),
 ]
 fh, fs = faq_block(soc_faqs)
-PAGES["/soc-2-compliance/"] = page("/soc-2-compliance/", "SOC 2 Compliance Consulting: Type I & Type II | Secblox",
- "End-to-end SOC 2 consulting for SaaS and AI startups: gap assessment, controls, policies, evidence automation and audit support for Type I and II.",
+PAGES["/soc-2-compliance/"] = page("/soc-2-compliance/", "SOC 2 Compliance & Audit Readiness Consulting | Secblox",
+ "SOC 2 consulting and audit preparation for SaaS and AI startups: gap assessment, controls, policies, evidence and audit support for Type I and II.",
 f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">SOC 2 Type I & Type II</span><h1>SOC 2 compliance consulting, <em>done with you</em> — not just for you.</h1>
 <p class="lead">From your first gap assessment to a clean Type II report and every renewal after. We implement the controls, build the evidence trail and manage the auditor.</p>
 <div class="cta-row"><a class="btn btn-primary" href="{SITE["booking"]}" target="_blank" rel="noopener">Get a SOC 2 scoping call</a></div></div></div>
@@ -483,6 +484,28 @@ f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow"
 import glob, re, markdown as _md
 from email.utils import format_datetime
 
+REFS = [  # official sources auto-cited on posts that mention them (keyword match, case-insensitive)
+    (("soc 2",), "AICPA — 2017 Trust Services Criteria (revised points of focus, 2022)",
+     "https://www.aicpa-cima.com/resources/download/2017-trust-services-criteria-with-revised-points-of-focus-2022"),
+    (("42001",), "ISO/IEC 42001:2023 — Artificial intelligence management system (ISO)", "https://www.iso.org/standard/81230.html"),
+    (("ai rmf", "ai risk management framework"), "NIST AI Risk Management Framework (AI RMF 1.0)", "https://www.nist.gov/itl/ai-risk-management-framework"),
+    (("generative ai profile", "600-1"), "NIST AI 600-1 — Generative Artificial Intelligence Profile", "https://doi.org/10.6028/NIST.AI.600-1"),
+    (("eu ai act", "article 50"), "Regulation (EU) 2024/1689 — the EU Artificial Intelligence Act (EUR-Lex)", "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"),
+    (("27001",), "ISO/IEC 27001 — Information security management systems (ISO)", "https://www.iso.org/standard/27001"),
+    (("prompt injection",), "OWASP Top 10 for Large Language Model Applications", "https://genai.owasp.org/llm-top-10/"),
+]
+AUTHOR = {"name": "Mukesh Bhakar", "role": "Founder, Secblox",
+          "bio": ("Mukesh Bhakar is the founder of Secblox, with 15+ years in security. He works hands-on with SaaS and AI companies "
+                  "on SOC 2 — from readiness to the audit report and annual renewals — AI governance (ISO/IEC 42001, NIST AI RMF, "
+                  "the EU AI Act), cloud security across AWS, Azure and GCP, and penetration testing."),
+          "knows": ["SOC 2", "ISO/IEC 42001", "NIST AI Risk Management Framework", "EU AI Act", "AI governance",
+                    "Cloud security", "Penetration testing"]}
+
+def author_schema():
+    d = SITE["domain"]
+    return {"@type": "Person", "@id": d + "/#mukesh", "name": AUTHOR["name"], "jobTitle": "Founder",
+            "url": d + "/about/", "worksFor": {"@id": d + "/#org"}, "knowsAbout": AUTHOR["knows"], "description": AUTHOR["bio"]}
+
 def load_posts():
     posts = []
     for f in sorted(glob.glob("posts/*.md"), reverse=True):
@@ -502,9 +525,13 @@ def load_posts():
                 text = " ".join(l for l in text.splitlines() if l.strip() and not l.lstrip().startswith(("Want", "Need help")))
                 if text: faqs.append((q.strip(), text))
         words = len(re.sub("<[^>]+>", " ", html_body).split())
+        low = m.group(2).lower() + " " + meta.get("title", "").lower()
+        refs = [(n, u) for keys, n, u in REFS if any(k in low for k in keys)]
+        takeaways = [t.strip() for t in meta.get("takeaways", "").split("|") if t.strip()]
         posts.append({"slug": slug, "url": f"/blog/{slug}/", "title": meta["title"], "desc": meta["description"],
                       "date": meta["date"], "tags": [t.strip() for t in meta.get("tags", "").split(",") if t.strip()],
-                      "html": html_body, "faqs": faqs, "mins": max(1, round(words / 220))})
+                      "html": html_body, "faqs": faqs, "mins": max(1, round(words / 220)),
+                      "updated": meta.get("updated") or meta["date"], "keyword": meta.get("keyword", ""), "refs": refs, "takeaways": takeaways, "md": m.group(2).strip()})
     return posts
 
 POSTS = load_posts()
@@ -518,17 +545,30 @@ for i, p in enumerate(POSTS):
     related = [q for q in POSTS if q is not p and set(q["tags"]) & set(p["tags"])][:3] or [q for q in POSTS if q is not p][:3]
     rel_html = "".join(f'<a href="{q["url"]}">{esc(q["title"])}</a><br>' for q in related)
     tags_html = " ".join(f'<span class="tag">{esc(t)}</span>' for t in p["tags"])
+    upd = f' · Updated <time datetime="{p["updated"]}">{p["updated"]}</time>' if p["updated"] != p["date"] else ""
+    kt = ('<div class="takeaways"><p class="kt-title">Key takeaways</p><ul>' + "".join(f"<li>{esc(t)}</li>" for t in p["takeaways"])
+          + '</ul></div>') if p["takeaways"] else ""
+    refs_html = ('<h2 id="references">References</h2><ul class="refs">' + "".join(
+        f'<li><a href="{u}" rel="noopener" target="_blank">{esc(n)}</a></li>' for n, u in p["refs"]) + "</ul>") if p["refs"] else ""
+    author_box = (f'<div class="author-box"><p class="ab-name"><a href="/about/">{AUTHOR["name"]}</a> · {AUTHOR["role"]}</p>'
+                  f'<p>{esc(AUTHOR["bio"])}</p><p><a href="{SITE["linkedin"]}" rel="noopener">Secblox on LinkedIn</a> · '
+                  f'<a href="/contact/">Book a free scoping call</a></p></div>')
+    md_url = p["url"].rstrip("/") + ".md"
     PAGES[p["url"]] = page(p["url"], f'{p["title"]} | Secblox', p["desc"],
         f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}{tags_html}<h1>{esc(p["title"])}</h1><p class="lead">{esc(p["desc"])}</p>
-<p style="color:var(--muted);font-size:14px">By Mukesh Bhakar · <time datetime="{p["date"]}">{p["date"]}</time> · {p["mins"]} min read</p></div></div>
-<section><div class="wrap layout"><article class="prose">{p["html"]}</article>{aside('<div class="card"><h3>More articles</h3><p>' + rel_html + '</p></div>')}</div></section>{cta()}''',
-        schema=[{"@type": "BlogPosting", "headline": p["title"], "description": p["desc"], "datePublished": p["date"],
-                 "dateModified": p["date"], "keywords": ", ".join(p["tags"]), "wordCount": len(p["html"].split()),
-                 "author": {"@type": "Person", "name": "Mukesh Bhakar", "url": SITE["domain"] + "/about/"},
-                 "publisher": {"@id": SITE["domain"] + "/#org"}, "image": SITE["domain"] + "/assets/og-image.png",
-                 "mainEntityOfPage": SITE["domain"] + p["url"]}] + ([{"@type": "FAQPage", "mainEntity": [
+<p style="color:var(--muted);font-size:14px">By <a href="/about/">{AUTHOR["name"]}</a>, {AUTHOR["role"]} · Published <time datetime="{p["date"]}">{p["date"]}</time>{upd} · {p["mins"]} min read</p></div></div>
+<section><div class="wrap layout"><article class="prose">{kt}{p["html"]}{refs_html}{author_box}</article>{aside('<div class="card"><h3>More articles</h3><p>' + rel_html + '</p></div>')}</div></section>{cta()}''',
+        schema=[{"@type": "BlogPosting", "@id": SITE["domain"] + p["url"] + "#article", "headline": p["title"], "description": p["desc"],
+                 "datePublished": p["date"], "dateModified": p["updated"], "keywords": ", ".join(p["tags"]),
+                 "about": [{"@type": "Thing", "name": t} for t in p["tags"]], "inLanguage": "en-US",
+                 "wordCount": len(re.sub("<[^>]+>", " ", p["html"]).split()),
+                 "author": author_schema(), "publisher": {"@id": SITE["domain"] + "/#org"}, "image": SITE["domain"] + "/assets/og-image.png",
+                 "mainEntityOfPage": SITE["domain"] + p["url"]}
+                | ({"abstract": " ".join(p["takeaways"])} if p["takeaways"] else {})
+                | ({"citation": [{"@type": "CreativeWork", "name": n, "url": u} for n, u in p["refs"]]} if p["refs"] else {})]
+               + ([{"@type": "FAQPage", "mainEntity": [
                  {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in p["faqs"]]}] if p["faqs"] else []),
-        crumbs=[("/blog/", "Blog"), (p["url"], p["title"])], ptype="Article")
+        crumbs=[("/blog/", "Blog"), (p["url"], p["title"])], ptype="Article", modified=p["updated"], alt_md=md_url)
 
 PAGES["/blog/"] = page("/blog/", "SOC 2 & AI Governance Blog | Secblox",
  "Practical guides on SOC 2, ISO 42001, NIST AI RMF and the EU AI Act for SaaS and AI companies: checklists, comparisons, timelines and templates.",
@@ -667,8 +707,46 @@ def redirect_page(target):
             f'<meta http-equiv="refresh" content="0; url={target}"><script>location.replace("{target}")</script></head>'
             f'<body><p>This page has moved to <a href="{target}">{t}</a>.</p></body></html>')
 
+
+# ---------------- CONTENT STANDARD CHECK (build fails if a post misses the SEO + LLM standard) ----------------
+VENDOR_BLOCKLIST = ["vanta", "sprinto", "scrut", "drata", "secureframe", "thoropass"]
+PILLARS = ["/soc-2-compliance/", "/ai-governance/", "/iso-42001/", "/soc-2-for-ai-companies/",
+           "/services/penetration-testing/", "/services/cloud-security-assessment/", "/gdpr-compliance/"]
+
+def validate_content():
+    errs = []
+    for p in POSTS:
+        u = p["url"]; md = p["md"]; low = md.lower()
+        t = f'{p["title"]} | Secblox'
+        if len(t) > 60: errs.append(f"{u}: title {len(t)} chars (max 60 incl. ' | Secblox')")
+        if not 120 <= len(p["desc"]) <= 160: errs.append(f"{u}: description {len(p['desc'])} chars (need 120-160)")
+        if not re.match(r"^\d{4}-\d{2}-\d{2}$", p["date"]) or not re.match(r"^\d{4}-\d{2}-\d{2}$", p["updated"]):
+            errs.append(f"{u}: date/updated must be YYYY-MM-DD")
+        if not 3 <= len(p["takeaways"]) <= 5: errs.append(f"{u}: needs 3-5 takeaways (front matter 'takeaways:' separated by |)")
+        first = next((l for l in md.splitlines() if l.strip()), "")
+        if not first.startswith("**"): errs.append(f"{u}: first paragraph must open with a bolded direct answer")
+        if len(p["faqs"]) < 3: errs.append(f"{u}: needs a '## FAQ' with at least 3 '### question' entries")
+        if not any(f"]({x})" in md for x in PILLARS): errs.append(f"{u}: must link to a service (pillar) page")
+        if len(set(re.findall(r"\]\((/blog/[^)]+)\)", md))) < 2: errs.append(f"{u}: must link to at least 2 other blog posts")
+        if "](/contact/)" not in md: errs.append(f"{u}: must end with a link to /contact/")
+        if not p["refs"]: errs.append(f"{u}: no official reference matched (add a REFS entry or mention the framework)")
+        if len(re.findall(r"^## ", md, re.M)) < 4: errs.append(f"{u}: needs at least 4 H2 sections")
+        if re.search(r"^# ", md, re.M): errs.append(f"{u}: no H1 in body (the title is the H1)")
+        for v in VENDOR_BLOCKLIST:
+            if re.search(rf"\b{v}\b", low + " " + p["title"].lower() + " " + p["desc"].lower()): errs.append(f"{u}: vendor name '{v}' not allowed")
+    seen = {}
+    for p in POSTS:
+        k = p.get("keyword", "").lower()
+        if k:
+            if k in seen: errs.append(f"{p['url']}: primary keyword '{k}' already used by {seen[k]}")
+            seen[k] = p["url"]
+    if errs:
+        raise SystemExit("CONTENT STANDARD FAILED:\n  - " + "\n  - ".join(errs))
+    print(f"Content standard: {len(POSTS)} posts passed")
+
 # ---------------- BUILD ----------------
 def build():
+    validate_content()
     if os.path.exists(OUT): shutil.rmtree(OUT)
     os.makedirs(OUT)
     shutil.copytree("assets", f"{OUT}/assets")
@@ -692,8 +770,8 @@ def build():
     shutil.copy("assets/favicon-32.png", f"{OUT}/favicon.ico")  # browsers that request /favicon.ico get the PNG
     # sitemap
     pri = {"/": "1.0"}
-    pdates = {p["url"]: p["date"] for p in POSTS}
-    urls = "".join(f"<url><loc>{SITE['domain']}{p}</loc><lastmod>{pdates.get(p, TODAY)}</lastmod></url>" for p in PAGES)
+    pdates = {p["url"]: p["updated"] for p in POSTS}
+    urls = "".join(f"<url><loc>{SITE['domain']}{p}</loc><lastmod>{pdates.get(p, PAGES_UPDATED)}</lastmod></url>" for p in PAGES)
     open(f"{OUT}/feed.xml", "w").write(rss())
     open(f"{OUT}/sitemap.xml", "w").write(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n')
     bots = ["Googlebot", "Bingbot", "OAI-SearchBot", "ChatGPT-User", "GPTBot", "Claude-SearchBot", "Claude-User", "ClaudeBot",
@@ -701,17 +779,44 @@ def build():
     robots = "".join(f"User-agent: {b}\nAllow: /\n\n" for b in bots) + "User-agent: *\nAllow: /\n\n"
     open(f"{OUT}/robots.txt", "w").write(robots + f"Sitemap: {SITE['domain']}/sitemap.xml\n")
     open(f"{OUT}/{SITE['indexnow_key']}.txt", "w").write(SITE["indexnow_key"])
-    # llms-full.txt: full plain-text of every blog post for AI assistants
+    # per-post Markdown copies (for AI assistants) + llms-full.txt
+    def post_md(p):
+        out = [f"# {p['title']}", "", f"> {p['desc']}", "",
+               f"- URL: {SITE['domain']}{p['url']}", f"- Author: {AUTHOR['name']}, {AUTHOR['role']}",
+               f"- Published: {p['date']}", f"- Updated: {p['updated']}", ""]
+        if p["takeaways"]:
+            out += ["## Key takeaways", ""] + [f"- {t}" for t in p["takeaways"]] + [""]
+        body = re.sub(r"\]\((/[^)]*)\)", lambda mm: "](" + SITE["domain"] + mm.group(1) + ")", p["md"])
+        out += [body, ""]
+        if p["refs"]:
+            out += ["## References", ""] + [f"- [{n}]({u})" for n, u in p["refs"]] + [""]
+        out += ["## About the author", "", AUTHOR["bio"], f"Contact: {SITE['email']} · Book a call: {SITE['booking']}", ""]
+        return "\n".join(out)
     full = [f"# {SITE['name']} — full content", f"> {SITE['tagline']}. Website: {SITE['domain']}. Contact: {SITE['email']}. Book a call: {SITE['booking']}", ""]
     for p in POSTS:
-        txt = re.sub(r"<[^>]+>", "", p["html"]); txt = html.unescape(re.sub(r"\n{3,}", "\n\n", txt))
-        full += [f"## {p['title']}", f"URL: {SITE['domain']}{p['url']} | Published: {p['date']}", "", txt.strip(), ""]
+        md = post_md(p)
+        open(OUT + p["url"].rstrip("/") + ".md", "w").write(md)
+        full += [md.replace("\n# ", "\n## ", 1), "---", ""]
     open(f"{OUT}/llms-full.txt", "w").write("\n".join(full))
     open(f"{OUT}/CNAME", "w").write(SITE["domain"].replace("https://", "") + "\n")
     open(f"{OUT}/.nojekyll", "w").write("")
-    # llms.txt for AI search engines
-    lines = [f"# {SITE['name']}", f"> {SITE['tagline']}. SOC 2 readiness, AI governance (NIST AI RMF, EU AI Act), ISO/IEC 42001, penetration testing and cloud security assessments.", ""]
-    lines += [f"- [{p}]({SITE['domain']}{p})" for p in PAGES]
+    # llms.txt for AI assistants (llmstxt.org format: title, summary, then linked sections with descriptions)
+    def meta_of(h):
+        t = re.search(r"<title>(.*?)</title>", h); dd = re.search(r'name="description" content="([^"]*)"', h)
+        return html.unescape(t.group(1)).replace(" | Secblox", "") if t else "", html.unescape(dd.group(1)) if dd else ""
+    lines = [f"# {SITE['name']}",
+             f"> {SITE['tagline']}. Secblox helps US and UK SaaS and AI companies get SOC 2 (readiness to report and renewals), "
+             "AI governance (ISO/IEC 42001, NIST AI RMF, EU AI Act), penetration testing and cloud security assessments.", "",
+             f"Founded and led by {AUTHOR['name']} (15+ years in security). Fully remote, platform-agnostic, hands-on implementation. "
+             f"Contact: {SITE['email']}. Book a call: {SITE['booking']}. LinkedIn: {SITE['linkedin']}", "", "## Services", ""]
+    post_urls = {p["url"] for p in POSTS}
+    for u, h in PAGES.items():
+        if u in post_urls or u in ("/blog/", "/privacy-policy/"): continue
+        t, dsc = meta_of(h); lines.append(f"- [{t}]({SITE['domain']}{u}): {dsc}")
+    lines += ["", "## Guides", ""]
+    lines += [f"- [{p['title']}]({SITE['domain']}{p['url']}): {p['desc']} Markdown: {SITE['domain']}{p['url'].rstrip('/')}.md" for p in POSTS]
+    lines += ["", "## Optional", "", f"- [Full text of all guides]({SITE['domain']}/llms-full.txt)",
+              f"- [Blog index]({SITE['domain']}/blog/)", f"- [RSS feed]({SITE['domain']}/feed.xml)", f"- [Privacy policy]({SITE['domain']}/privacy-policy/)"]
     open(f"{OUT}/llms.txt", "w").write("\n".join(lines) + "\n")
     print(f"Built {len(PAGES)} pages into ./{OUT}")
 

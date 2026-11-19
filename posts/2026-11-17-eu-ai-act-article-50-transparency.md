@@ -3,6 +3,8 @@ title: EU AI Act Article 50: Transparency for AI Features
 description: What EU AI Act Article 50 requires for chatbots, AI-generated content, emotion recognition and deepfakes — who it applies to, dates, fines and steps.
 date: 2026-11-17
 tags: EU AI Act, AI governance, transparency
+updated: 2026-11-19
+takeaways: Article 50 of the EU AI Act requires that people know when they are dealing with AI.|It has applied since 2 August 2026 to chatbots and AI assistants, AI-generated content, emotion recognition, biometric categorisation and deepfakes.|Unlike the high-risk rules, which were delayed to December 2027, Article 50 applies now to everyday AI features.|Breaches can be fined up to €15 million or 3% of worldwide annual turnover.
 ---
 
 **Article 50 of the EU AI Act requires that people know when they are dealing with AI.** Since 2 August 2026 it has applied to chatbots and AI assistants, AI-generated content, emotion recognition and biometric categorisation, and deepfakes. Unlike the high-risk rules — delayed to December 2027 — Article 50 applies **now**, to everyday AI features, and breaches can be fined up to €15 million or 3% of worldwide annual turnover.
@@ -65,4 +67,4 @@ Clear disclosure, done well, builds trust. Keep it short and friendly and offer 
 
 No. It's a practical overview; confirm your obligations with EU legal counsel. We help build the inventory, controls and evidence.
 
-Need an Article 50 readiness check? [Book a free scoping call](/contact/).
+See our [AI governance service](/ai-governance/) and [the EU AI Act for US SaaS companies](/blog/eu-ai-act-for-us-saas-companies/). Need an Article 50 readiness check? [Book a free scoping call](/contact/).

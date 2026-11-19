@@ -3,6 +3,8 @@ title: ISO 42001 Certification: Cost, Timeline and Steps
 description: What ISO/IEC 42001 certification involves: the steps, Stage 1 and Stage 2 audits, typical timelines, what drives cost, and how SOC 2 work speeds it up.
 date: 2026-11-17
 tags: ISO 42001, AI governance, certification
+updated: 2026-11-19
+takeaways: ISO/IEC 42001 certification proves that you run a managed, auditable AI Management System (AIMS).|The path is: scope your AI systems, build the required management-system processes, operate them to produce evidence, then pass a two-stage audit.|Certification is issued by an accredited certification body and maintained with surveillance audits.|An existing SOC 2 or ISO 27001 program makes it noticeably faster.
 ---
 
 **ISO/IEC 42001 certification proves that your company runs a managed, auditable AI Management System (AIMS).** Getting there means scoping your AI systems, building the management-system processes the standard requires, running them for long enough to produce evidence, and passing a two-stage audit by an accredited certification body. Companies with an existing SOC 2 or ISO 27001 program move noticeably faster, because much of the operational groundwork already exists.

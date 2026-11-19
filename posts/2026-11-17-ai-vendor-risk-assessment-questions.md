@@ -3,6 +3,8 @@ title: AI Vendor Risk Assessment: 25 Questions to Ask
 description: 25 practical questions for assessing AI vendors and model providers: data use, training, retention, security, model behaviour, compliance and exit.
 date: 2026-11-17
 tags: AI governance, vendor risk, SOC 2
+updated: 2026-11-19
+takeaways: Standard security questionnaires miss most AI-specific risks.|Ask AI vendors how they use your data, whether they train on it, how they protect it, how their models behave and what happens in an incident.|Use the 25 questions for model providers, AI features inside SaaS tools and AI startups you buy from.|Red flags include training on customer data by default with no contractual opt-out, and vague answers on retention or sub-processors.
 ---
 
 **Before you let an AI vendor touch your data, ask how it uses that data, how it protects it, how its models behave, and what happens when something goes wrong.** Standard security questionnaires miss most AI-specific risks. These 25 questions fill the gap — use them for model providers, AI features inside SaaS tools, and AI startups you buy from.
@@ -72,4 +74,8 @@ No. Tier your vendors. Use the full list for high-risk vendors and a short subse
 
 At least annually, and whenever the vendor changes models, terms or sub-processors, or you expand what data you send.
 
-Want an AI vendor risk process that fits your SOC 2 program? [Book a free scoping call](/contact/) or see our [AI governance service](/ai-governance/).
+### Do AI vendors need to be in our SOC 2 scope?
+
+If they process customer data or support your product, yes. See [does SOC 2 cover AI and LLM vendors](/blog/does-soc-2-cover-ai-llm-vendors/).
+
+Related: [shadow AI governance](/blog/shadow-ai-governance/) and the [AI risk assessment template](/blog/ai-risk-assessment-template/). Want an AI vendor risk process that fits your SOC 2 program? [Book a free scoping call](/contact/) or see our [AI governance service](/ai-governance/).

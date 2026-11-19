@@ -3,6 +3,7 @@ title: ISO 42001 vs NIST AI RMF: Which First?
 description: ISO 42001 vs NIST AI RMF: certifiable standard vs voluntary framework, what each requires, where they overlap and which an AI startup should start with.
 date: 2026-11-19
 tags: ISO 42001, NIST AI RMF, AI governance
+takeaways: ISO/IEC 42001 is a certifiable AI management system standard; NIST AI RMF is a free, voluntary framework with no certification.|NIST AI RMF helps you build an AI risk practice; ISO 42001 lets an external auditor certify it.|Most AI startups start with NIST AI RMF, then formalise into ISO 42001 when customers ask for proof.|Either way, keep SOC 2 as the security baseline — AI governance sits on top of it.
 ---
 
 **ISO/IEC 42001 is a certifiable management system standard for AI; the NIST AI Risk Management Framework is a free, voluntary framework for managing AI risk.** NIST AI RMF tells you how to think about AI risk. ISO 42001 gives you a system an external auditor can certify. Most AI startups get the best result by using NIST AI RMF to build the risk practice, then formalising it into ISO 42001 when customers start asking for proof.

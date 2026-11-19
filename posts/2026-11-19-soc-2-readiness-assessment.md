@@ -3,6 +3,7 @@ title: SOC 2 Readiness Assessment: What It Covers
 description: What a SOC 2 readiness assessment covers, what you should get at the end, how long it takes and how to tell if your startup is ready for the audit.
 date: 2026-11-19
 tags: SOC 2, startups, readiness
+takeaways: A SOC 2 readiness assessment compares your current controls against the Trust Services Criteria before the auditor does.|It should deliver a gap list, a prioritised remediation plan with owners, a scope recommendation, a target audit date and evidence guidance.|The assessment usually takes one to two weeks; remediation typically takes four to eight weeks.|It is optional, but skipping it is the most common reason first audits run late or come back with exceptions.
 ---
 
 **A SOC 2 readiness assessment is a pre-audit review that compares your current security controls against the SOC 2 Trust Services Criteria, then tells you exactly what to fix before an auditor looks.** Done well, it turns "we need SOC 2" into a scoped, prioritised plan with a realistic audit date, so you don't pay for an audit you aren't ready to pass.
