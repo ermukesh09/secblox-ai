@@ -10,6 +10,7 @@ SITE = {
     "email": "connect@secblox.io",
     "booking": "https://cal.com/mukesh-bhakar-vzmbyl/30min",  # Cal.com booking page
     "linkedin": "https://www.linkedin.com/company/secblox",
+    "linkedin_personal": "https://www.linkedin.com/in/mukeshbhakar/",
     "indexnow_key": "2a4b273c96120af49169c533023737c6",  # IndexNow key (public by design; served at /<key>.txt)  # <-- your LinkedIn
     "tagline": "SOC 2 & AI Governance for SaaS and AI Companies",
     # Google Ads conversion tracking — leave blank to disable all tracking.
@@ -458,7 +459,8 @@ f'''<div class="page-hero"><div class="wrap profile-hero">
 <div><div>{{{{CRUMBS}}}}</div><span class="eyebrow">Founder & Principal Consultant, Secblox</span>
 <h1>Mukesh Bhakar — <em>SOC 2 & AI governance</em> consultant</h1>
 <p class="lead"><strong>I help SaaS and AI companies get SOC 2-ready, keep it running and answer the AI governance questions enterprise buyers now ask.</strong> Hands-on implementation — not slide decks — with tooling sized to your budget.</p>
-<div class="cta-row"><a class="btn btn-primary" href="/contact/">Book a free 30-minute call</a><a class="btn btn-ghost" href="/soc-2-readiness-checklist/">Take the SOC 2 readiness check →</a></div></div>
+<div class="cta-row"><a class="btn btn-primary" href="/contact/">Book a free 30-minute call</a><a class="btn btn-ghost" href="/soc-2-readiness-checklist/">Take the SOC 2 readiness check →</a></div>
+<p style="margin-top:18px;font-size:15px"><a style="text-decoration:underline" href="{SITE["linkedin_personal"]}" rel="noopener me">Connect with Mukesh on LinkedIn</a></p></div>
 <img class="profile-photo" src="/assets/mukesh-bhakar.jpg" srcset="/assets/mukesh-bhakar-320.jpg 320w, /assets/mukesh-bhakar.jpg 600w" sizes="(max-width: 760px) 220px, 320px" width="320" height="320" alt="Mukesh Bhakar, SOC 2 and AI governance consultant and founder of Secblox">
 </div></div>
 <section><div class="wrap"><h2>What I help with</h2><div class="grid g3" style="margin-top:28px">
@@ -497,7 +499,7 @@ f'''<div class="page-hero"><div class="wrap profile-hero">
 </article>{aside()}</div></section>{cta("Let's talk about your SOC 2 or AI governance plans", "Book a free 30-minute call with me. You'll leave with a clear scope, a realistic timeline and a budget range — no sales pitch.")}''',
  schema=[{"@type": "ProfilePage", "mainEntity": {"@type": "Person", "@id": SITE["domain"] + "/#mukesh", "name": "Mukesh Bhakar",
           "jobTitle": "Founder & Principal Consultant", "url": SITE["domain"] + "/mukesh-bhakar/", "image": SITE["domain"] + "/assets/mukesh-bhakar.jpg",
-          "worksFor": {"@id": SITE["domain"] + "/#org"}, "sameAs": [SITE["linkedin"]],
+          "worksFor": {"@id": SITE["domain"] + "/#org"}, "sameAs": [SITE["linkedin_personal"], SITE["linkedin"]],
           "knowsAbout": ["SOC 2", "AI governance", "ISO/IEC 42001", "NIST AI RMF", "EU AI Act", "GDPR", "Cloud security", "Penetration testing"]}},
          _mfsch],
  crumbs=[("/mukesh-bhakar/", "Mukesh Bhakar")], ptype="ProfilePage")
@@ -559,7 +561,7 @@ AUTHOR = {"name": "Mukesh Bhakar", "role": "Founder, Secblox",
 def author_schema():
     d = SITE["domain"]
     return {"@type": "Person", "@id": d + "/#mukesh", "name": AUTHOR["name"], "jobTitle": "Founder",
-            "url": d + "/mukesh-bhakar/", "image": d + "/assets/mukesh-bhakar.jpg", "worksFor": {"@id": d + "/#org"}, "knowsAbout": AUTHOR["knows"], "description": AUTHOR["bio"]}
+            "url": d + "/mukesh-bhakar/", "image": d + "/assets/mukesh-bhakar.jpg", "sameAs": [SITE["linkedin_personal"]], "worksFor": {"@id": d + "/#org"}, "knowsAbout": AUTHOR["knows"], "description": AUTHOR["bio"]}
 
 def load_posts():
     posts = []
