@@ -4,6 +4,7 @@ description: 25 practical questions for assessing AI vendors and model providers
 date: 2026-11-17
 tags: AI governance, vendor risk, SOC 2
 updated: 2026-11-19
+keyword: ai vendor risk assessment questions
 takeaways: Standard security questionnaires miss most AI-specific risks.|Ask AI vendors how they use your data, whether they train on it, how they protect it, how their models behave and what happens in an incident.|Use the 25 questions for model providers, AI features inside SaaS tools and AI startups you buy from.|Red flags include training on customer data by default with no contractual opt-out, and vague answers on retention or sub-processors.
 ---
 

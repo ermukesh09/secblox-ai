@@ -4,6 +4,7 @@ description: How SOC 2 treats model providers like OpenAI or Anthropic: subservi
 date: 2026-11-17
 tags: SOC 2, AI vendors, LLM
 updated: 2026-11-19
+keyword: soc 2 ai llm vendors
 takeaways: Yes — if your product sends customer data to an AI or LLM provider, that provider is part of your SOC 2 scope.|SOC 2 has no AI-specific criteria, but the Trust Services Criteria apply to every component that processes customer data.|Most reports treat the model provider as a subservice organization using the carve-out method.|You must show how you selected, reviewed and monitor the provider, and describe it in your system description.
 ---
 

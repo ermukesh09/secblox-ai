@@ -4,6 +4,7 @@ description: A practical AI risk assessment template aligned to the NIST AI RMF:
 date: 2026-11-17
 tags: AI governance, NIST AI RMF, risk assessment
 updated: 2026-11-19
+keyword: ai risk assessment template
 takeaways: An AI risk assessment records what an AI system does, what could go wrong, how likely and severe it is, and how you treat it.|This template follows the four NIST AI RMF functions: Govern, Map, Measure and Manage.|It takes about an hour per AI system and can be reused for SOC 2, ISO 42001 and customer questionnaires.|Review each assessment when the model, data or use case changes, and at least once a year.
 ---
 

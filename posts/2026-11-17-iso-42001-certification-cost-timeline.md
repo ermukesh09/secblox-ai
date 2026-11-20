@@ -4,6 +4,7 @@ description: What ISO/IEC 42001 certification involves: the steps, Stage 1 and S
 date: 2026-11-17
 tags: ISO 42001, AI governance, certification
 updated: 2026-11-19
+keyword: iso 42001 certification cost
 takeaways: ISO/IEC 42001 certification proves that you run a managed, auditable AI Management System (AIMS).|The path is: scope your AI systems, build the required management-system processes, operate them to produce evidence, then pass a two-stage audit.|Certification is issued by an accredited certification body and maintained with surveillance audits.|An existing SOC 2 or ISO 27001 program makes it noticeably faster.
 ---
 

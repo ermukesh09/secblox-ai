@@ -4,6 +4,7 @@ description: A practical SOC 2 checklist for AI startups: scoping LLM vendors, p
 date: 2026-11-14
 tags: SOC 2, AI startups, checklist
 updated: 2026-11-19
+keyword: soc 2 audit checklist
 takeaways: AI startups need the standard SOC 2 foundations plus a short list of AI-specific controls.|Put AI features and model providers inside the SOC 2 system boundary and treat prompts like code: versioned, peer-reviewed and tested.|Isolate tenant data in vector stores and RAG retrieval, and get no-training or limited-retention terms from model providers.|Include LLM attack paths such as prompt injection in your annual penetration test.
 ---
 

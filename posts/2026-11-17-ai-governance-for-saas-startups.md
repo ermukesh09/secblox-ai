@@ -4,6 +4,7 @@ description: A practical AI governance starter plan for SaaS startups: inventory
 date: 2026-11-17
 tags: AI governance, NIST AI RMF, SaaS
 updated: 2026-11-19
+keyword: ai governance for startups
 takeaways: AI governance for a startup means knowing what AI you use, who owns it, what could go wrong and how you control it — and proving it to customers.|The minimum program is five things: an AI inventory, a policy, a risk assessment, vendor review and a few technical controls.|An existing SOC 2 program already covers much of the groundwork.|Consider ISO 42001 when customers start asking for certified AI governance.
 ---
 

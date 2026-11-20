@@ -4,6 +4,7 @@ description: Does the EU AI Act apply to your US SaaS product? Who is in scope, 
 date: 2026-11-17
 tags: EU AI Act, AI governance, SaaS
 updated: 2026-11-19
+keyword: eu ai act for us companies
 takeaways: The EU AI Act can apply to a US SaaS company with no EU office if its AI system or its output is used in the EU.|The heaviest high-risk obligations were delayed to 2 December 2027 by the Digital Omnibus.|Transparency obligations under Article 50 already apply and are enforceable.|Start with an AI inventory, a risk classification of each system and clear AI disclosures in your product.
 ---
 

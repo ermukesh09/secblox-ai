@@ -4,6 +4,7 @@ description: SOC 2 Type I vs Type II explained for startups: what each report pr
 date: 2026-11-17
 tags: SOC 2, startups
 updated: 2026-11-19
+keyword: soc 2 type 1 vs type 2
 takeaways: A SOC 2 Type I report tests control design at one point in time; a Type II tests that controls operated over a period, usually 3–12 months.|Most enterprise buyers ultimately want a Type II.|Start with Type I only when a deal needs evidence quickly; otherwise go straight to Type II with a short first window.|Implement controls you can operate continuously so moving from Type I to Type II needs no rework.
 ---
 

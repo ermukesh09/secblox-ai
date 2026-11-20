@@ -4,6 +4,7 @@ description: Shadow AI explained for SaaS teams: where unapproved AI tools hide,
 date: 2026-11-17
 tags: AI governance, shadow AI, SOC 2
 updated: 2026-11-19
+keyword: shadow ai governance
 takeaways: Shadow AI is any AI tool staff use without security or IT review, such as browser extensions, meeting bots, personal chatbot accounts and AI features inside SaaS apps.|It is usually well-intentioned but sends company and customer data to places you haven't assessed.|The fix is not a ban: discover what is in use, offer a fast approval path and keep a short list of approved tools.|Shadow AI controls map to SOC 2 vendor management (CC9), logical access (CC6), monitoring (CC4) and incident response (CC7).
 ---
 

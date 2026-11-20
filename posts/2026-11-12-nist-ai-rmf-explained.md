@@ -4,6 +4,7 @@ description: A plain-English guide to the NIST AI Risk Management Framework — 
 date: 2026-11-12
 tags: NIST AI RMF, AI governance, AI risk
 updated: 2026-11-19
+keyword: nist ai rmf
 takeaways: NIST AI RMF 1.0 is a free, voluntary US framework for managing AI risk across the AI lifecycle — there is no certification.|It has four functions: Govern (policies and accountability), Map (context and impacts), Measure (testing and tracking) and Manage (treating risks).|The Generative AI Profile (NIST AI 600-1) applies the framework to LLM and generative AI risks.|For a SaaS company, start with an AI inventory, assess each system against the four functions, and map the resulting controls into SOC 2.
 ---
 

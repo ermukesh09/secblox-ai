@@ -87,4 +87,4 @@ A letter from management covering the gap between the end of your last SOC 2 per
 
 Usually auditors review screenshots, exports, tickets and walkthroughs rather than taking direct access. Some may ask for read-only access or observe live during a call.
 
-Related: [how to choose a SOC 2 auditor](/blog/how-to-choose-a-soc-2-auditor/). See our [SOC 2 compliance and audit readiness service](/soc-2-compliance/) or [book a free scoping call](/contact/).
+Related: [how to choose a SOC 2 auditor](/blog/how-to-choose-a-soc-2-auditor/) and how to keep it running with [continuous SOC 2 compliance](/blog/continuous-soc-2-compliance/). See our [SOC 2 compliance and audit readiness service](/soc-2-compliance/) or [book a free scoping call](/contact/).

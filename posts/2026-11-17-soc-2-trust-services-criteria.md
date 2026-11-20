@@ -4,6 +4,7 @@ description: The five SOC 2 Trust Services Criteria explained — Security, Avai
 date: 2026-11-17
 tags: SOC 2, scoping
 updated: 2026-11-19
+keyword: soc 2 trust services criteria
 takeaways: Every SOC 2 report must include Security (the Common Criteria).|Availability, Confidentiality, Processing Integrity and Privacy are optional — add them only when customers or contracts ask.|Most SaaS startups start with Security alone, or Security plus Availability and Confidentiality.|Adding criteria nobody requested makes the audit bigger and costlier without helping sales.
 ---
 

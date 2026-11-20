@@ -57,7 +57,7 @@ Internal time is the line nobody budgets for. Engineers fix configurations, mana
 
 ## Year one vs year two
 
-Year one carries one-off costs: readiness, remediation, policies and setup. Year two should be cheaper — but only if access reviews, scans, backups and evidence collection kept running. Companies that stop after the first report often pay for a second round of remediation at renewal.
+Year one carries one-off costs: readiness, remediation, policies and setup. Year two should be cheaper — but only if access reviews, scans, backups and evidence collection kept running. Companies that stop after the first report often pay for a second round of remediation at renewal. See [continuous SOC 2 compliance](/blog/continuous-soc-2-compliance/) for a year-round control calendar.
 
 ## In practice
 

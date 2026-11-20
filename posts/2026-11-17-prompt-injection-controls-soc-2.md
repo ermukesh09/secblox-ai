@@ -4,6 +4,7 @@ description: Prompt injection explained for SaaS teams: direct and indirect atta
 date: 2026-11-17
 tags: AI security, LLM, SOC 2
 updated: 2026-11-19
+keyword: prompt injection controls
 takeaways: Prompt injection is crafted input that makes an AI system ignore its instructions — leaking data, misusing tools or producing harmful output.|There is no single fix, so buyers and auditors expect layered controls rather than immunity.|Limit what the model can see and do, filter inputs and outputs, test regularly and monitor for abuse.|Keep evidence that each control operates, so it can support SOC 2 and customer security reviews.
 ---
 

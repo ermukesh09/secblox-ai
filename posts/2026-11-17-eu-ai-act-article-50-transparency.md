@@ -4,6 +4,7 @@ description: What EU AI Act Article 50 requires for chatbots, AI-generated conte
 date: 2026-11-17
 tags: EU AI Act, AI governance, transparency
 updated: 2026-11-19
+keyword: eu ai act article 50
 takeaways: Article 50 of the EU AI Act requires that people know when they are dealing with AI.|It has applied since 2 August 2026 to chatbots and AI assistants, AI-generated content, emotion recognition, biometric categorisation and deepfakes.|Unlike the high-risk rules, which were delayed to December 2027, Article 50 applies now to everyday AI features.|Breaches can be fined up to €15 million or 3% of worldwide annual turnover.
 ---
 
