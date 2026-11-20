@@ -25,7 +25,7 @@ PAGES_UPDATED = "2026-11-21"  # bump when service/static page content changes (u
 
 NAV = [("/soc-2-compliance/", "SOC 2"), ("/ai-governance/", "AI Governance"),
        ("/iso-42001/", "ISO 42001"), ("/soc-2-for-ai-companies/", "SOC 2 for AI"),
-       ("/blog/", "Blog"), ("/about/", "About")]
+       ("/soc-2-readiness-checklist/", "Readiness Check"), ("/blog/", "Blog"), ("/about/", "About")]
 
 def esc(s): return html.escape(s, quote=True)
 
@@ -45,6 +45,21 @@ def org_schema():
     }
 
 def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noindex=False, minimal=False, modified=None, alt_md=None):
+    yr = datetime.date.today().year
+    if minimal:
+        footer_html = (f'<footer><div class="wrap"><div class="copy" style="border-top:0;padding-top:0"><span>© {yr} Secblox · '
+                       f'<a href="mailto:{SITE["email"]}">{SITE["email"]}</a></span><span><a href="/privacy-policy/">Privacy Policy</a> · '
+                       f'<a href="{SITE["linkedin"]}" rel="noopener">LinkedIn</a></span></div></div></footer>')
+    else:
+        footer_html = f'''<footer><div class="wrap">
+<div class="foot">
+<div><a class="logo" href="/">{LOGO_SVG}<span class="wordmark">Secblox</span></a><p style="margin-top:14px;max-width:340px">SOC 2 and AI governance for SaaS and AI companies. Practitioner-led readiness, implementation and audit support.</p></div>
+<div><h3 class="fh">Services</h3><ul><li><a href="/soc-2-compliance/">SOC 2 Compliance</a></li><li><a href="/soc-2-readiness-checklist/">Free SOC 2 Readiness Check</a></li><li><a href="/ai-governance/">AI Governance</a></li><li><a href="/iso-42001/">ISO 42001 Readiness</a></li><li><a href="/soc-2-for-ai-companies/">SOC 2 for AI Companies</a></li><li><a href="/services/penetration-testing/">Penetration Testing</a></li></ul></div>
+<div><h3 class="fh">Frameworks</h3><ul><li><a href="/ai-governance/#nist-ai-rmf">NIST AI RMF</a></li><li><a href="/ai-governance/#eu-ai-act">EU AI Act</a></li><li><a href="/iso-42001/">ISO/IEC 42001</a></li><li><a href="/soc-2-compliance/#trust-services-criteria">SOC 2 TSC</a></li></ul></div>
+<div><h3 class="fh">Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li><li><a href="{SITE["linkedin"]}" rel="noopener">LinkedIn</a></li></ul></div>
+</div>
+<div class="copy"><span>© {yr} Secblox. All rights reserved.</span><span>SOC 2 · ISO/IEC 42001 · NIST AI RMF · EU AI Act</span></div>
+</div></footer>'''
     d = SITE["domain"]; url = d + path
     graph = [org_schema(), {"@type": "WebSite", "@id": d + "/#website", "url": d + "/", "name": SITE["name"],
                             "publisher": {"@id": d + "/#org"}},
@@ -104,15 +119,7 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 <main id="main">
 {body}
 </main>
-<footer><div class="wrap">
-{('<div class="copy" style="border-top:0;padding-top:0"><span>© ' + str(datetime.date.today().year) + ' Secblox · <a href="mailto:' + SITE["email"] + '">' + SITE["email"] + '</a></span><span><a href="/privacy-policy/">Privacy Policy</a> · <a href="' + SITE["linkedin"] + '" rel="noopener">LinkedIn</a></span></div></div></footer>') if minimal else ""}{"" if minimal else """<div class="foot">
-<div><a class="logo" href="/">{LOGO_SVG}<span class="wordmark">Secblox</span></a><p style="margin-top:14px;max-width:340px">SOC 2 and AI governance for SaaS and AI companies. Practitioner-led readiness, implementation and audit support.</p></div>
-<div><h3 class="fh">Services</h3><ul><li><a href="/soc-2-compliance/">SOC 2 Compliance</a></li><li><a href="/ai-governance/">AI Governance</a></li><li><a href="/iso-42001/">ISO 42001 Readiness</a></li><li><a href="/soc-2-for-ai-companies/">SOC 2 for AI Companies</a></li><li><a href="/services/penetration-testing/">Penetration Testing</a></li></ul></div>
-<div><h3 class="fh">Frameworks</h3><ul><li><a href="/ai-governance/#nist-ai-rmf">NIST AI RMF</a></li><li><a href="/ai-governance/#eu-ai-act">EU AI Act</a></li><li><a href="/iso-42001/">ISO/IEC 42001</a></li><li><a href="/soc-2-compliance/#trust-services-criteria">SOC 2 TSC</a></li></ul></div>
-<div><h3 class="fh">Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li><li><a href="{SITE["linkedin"]}" rel="noopener">LinkedIn</a></li></ul></div>
-</div>
-<div class="copy"><span>© """ + str(datetime.date.today().year) + """ Secblox. All rights reserved.</span><span>SOC 2 · ISO/IEC 42001 · NIST AI RMF · EU AI Act</span></div>
-</div></footer>"""}
+{footer_html}
 <script>const b=document.querySelector('.menu-btn'),m=document.getElementById('menu');if(b)b.onclick=()=>{{const o=m.classList.toggle('open');b.setAttribute('aria-expanded',o)}};</script>
 </body>
 </html>'''
@@ -173,7 +180,7 @@ f'''<section class="hero"><div class="wrap">
 <span class="eyebrow">SOC 2 · ISO 42001 · NIST AI RMF · EU AI Act</span>
 <h1>SOC 2 and <em>AI governance</em> for companies that ship AI.</h1>
 <p class="lead">Enterprise buyers now ask two questions: <strong>“Do you have SOC 2?”</strong> and <strong>“How do you govern your AI?”</strong> Secblox gets you a clean answer to both — with hands-on implementation, not slide decks.</p>
-<div class="cta-row"><a class="btn btn-primary" href="{SITE["booking"]}" target="_blank" rel="noopener">Book a free scoping call</a><a class="btn btn-ghost" href="/soc-2-for-ai-companies/">How SOC 2 works for AI products →</a></div>
+<div class="cta-row"><a class="btn btn-primary" href="{SITE["booking"]}" target="_blank" rel="noopener">Book a free scoping call</a><a class="btn btn-ghost" href="/soc-2-readiness-checklist/">Take the free SOC 2 readiness check →</a></div>
 <div class="trust"><span><b>15+ years</b> in security</span><span><b>AWS · Azure · GCP</b></span><span><b>Platform-agnostic</b> compliance automation</span><span><b>In-house</b> penetration testing</span></div>
 </div></section>
 
@@ -915,6 +922,15 @@ def build():
     lines += ["", "## Optional", "", f"- [Full text of all guides]({SITE['domain']}/llms-full.txt)",
               f"- [Blog index]({SITE['domain']}/blog/)", f"- [RSS feed]({SITE['domain']}/feed.xml)", f"- [Privacy policy]({SITE['domain']}/privacy-policy/)"]
     open(f"{OUT}/llms.txt", "w").write("\n".join(lines) + "\n")
+    # Safety check: fail the build if any template placeholder leaked into the output
+    import glob as _g
+    leaks = []
+    for _f in _g.glob(f"{OUT}/**/*.html", recursive=True):
+        _t = open(_f).read()
+        for _pat in ("{LOGO_SVG}", "{SITE[", "{CRUMBS}", "{{CRUMBS}}", "{yr}", "{LATEST}", "{body}", "{footer_html}"):
+            if _pat in _t: leaks.append(f"{_f}: {_pat}")
+    if leaks:
+        raise SystemExit("TEMPLATE PLACEHOLDER LEAKED INTO SITE:\n  - " + "\n  - ".join(leaks[:20]))
     print(f"Built {len(PAGES)} pages into ./{OUT}")
 
 if __name__ == "__main__":
