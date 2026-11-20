@@ -104,14 +104,14 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 {body}
 </main>
 <footer><div class="wrap">
-<div class="foot">
+{('<div class="copy" style="border-top:0;padding-top:0"><span>© ' + str(datetime.date.today().year) + ' Secblox · <a href="mailto:' + SITE["email"] + '">' + SITE["email"] + '</a></span><span><a href="/privacy-policy/">Privacy Policy</a> · <a href="' + SITE["linkedin"] + '" rel="noopener">LinkedIn</a></span></div></div></footer>') if minimal else ""}{"" if minimal else """<div class="foot">
 <div><a class="logo" href="/">{LOGO_SVG}<span class="wordmark">Secblox</span></a><p style="margin-top:14px;max-width:340px">SOC 2 and AI governance for SaaS and AI companies. Practitioner-led readiness, implementation and audit support.</p></div>
 <div><h3 class="fh">Services</h3><ul><li><a href="/soc-2-compliance/">SOC 2 Compliance</a></li><li><a href="/ai-governance/">AI Governance</a></li><li><a href="/iso-42001/">ISO 42001 Readiness</a></li><li><a href="/soc-2-for-ai-companies/">SOC 2 for AI Companies</a></li><li><a href="/services/penetration-testing/">Penetration Testing</a></li></ul></div>
 <div><h3 class="fh">Frameworks</h3><ul><li><a href="/ai-governance/#nist-ai-rmf">NIST AI RMF</a></li><li><a href="/ai-governance/#eu-ai-act">EU AI Act</a></li><li><a href="/iso-42001/">ISO/IEC 42001</a></li><li><a href="/soc-2-compliance/#trust-services-criteria">SOC 2 TSC</a></li></ul></div>
 <div><h3 class="fh">Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li><li><a href="{SITE["linkedin"]}" rel="noopener">LinkedIn</a></li></ul></div>
 </div>
-<div class="copy"><span>© {datetime.date.today().year} Secblox. All rights reserved.</span><span>SOC 2 · ISO/IEC 42001 · NIST AI RMF · EU AI Act</span></div>
-</div></footer>
+<div class="copy"><span>© """ + str(datetime.date.today().year) + """ Secblox. All rights reserved.</span><span>SOC 2 · ISO/IEC 42001 · NIST AI RMF · EU AI Act</span></div>
+</div></footer>"""}
 <script>const b=document.querySelector('.menu-btn'),m=document.getElementById('menu');if(b)b.onclick=()=>{{const o=m.classList.toggle('open');b.setAttribute('aria-expanded',o)}};</script>
 </body>
 </html>'''
@@ -628,11 +628,13 @@ def landing(path, title, desc, eyebrow, h1, lead, gets, steps, why, faqs):
     body = f'''<section class="hero"><div class="wrap">
 <span class="eyebrow">{esc(eyebrow)}</span><h1>{h1}</h1><p class="lead">{lead}</p>
 <div class="cta-row"><a class="btn btn-primary" href="#book">Book a free 30-minute call</a></div>
-<div class="trust"><span><b>15+ years</b> in security</span><span><b>Hands-on</b> implementation</span><span><b>AWS · Azure · GCP</b></span><span><b>Remote</b> · US time zones</span></div>
+<div class="trust"><span><b>Hands-on</b> implementation</span><span><b>Audit support</b> included</span><span><b>In-house</b> pen testing</span><span><b>AWS · Azure · GCP</b></span></div>
 </div></section>
-<section><div class="wrap"><h2>What you get</h2><div class="grid g3" style="margin-top:28px">{gets_html}</div></div></section>
+<section><div class="wrap"><h2>What you get</h2><div class="grid g3" style="margin-top:28px">{gets_html}</div>
+<div class="cta-row" style="margin-top:32px"><a class="btn btn-primary" href="#book">Book a free 30-minute call</a></div></div></section>
 <section class="alt"><div class="wrap"><h2>How it works</h2><div class="steps" style="margin-top:28px">{steps_html}</div></div></section>
 <section id="book"><div class="wrap"><h2>Book your free call</h2>
+<p class="sub" style="margin-bottom:8px"><strong style="color:var(--text)">30 minutes, no sales pitch.</strong> You'll leave with a clear scope, a realistic timeline and a budget range.</p>
 <p class="sub" style="margin-bottom:20px">Pick a time that suits you — the calendar shows your local time zone. If it doesn't load, <a style="text-decoration:underline" href="{SITE["booking"]}" target="_blank" rel="noopener">open the booking page</a>.</p>
 <div id="cal-inline" style="width:100%;min-height:640px;border:1px solid var(--line);border-radius:14px;overflow:auto;background:var(--card)"></div></div>{CAL_EMBED}</section>
 <section class="alt"><div class="wrap grid g2" style="align-items:start">
@@ -644,15 +646,15 @@ WHY = ["Practitioner-led: you work directly with a consultant who has taken SaaS
        "We implement the controls with your team — not just a gap report.",
        "Platform-agnostic and budget-conscious: tooling sized to your stage.",
        "Penetration testing in-house, so findings feed straight into your evidence.",
-       "Fully remote, with meeting times that work for US teams."]
+       "Audit support included: auditor selection, system description and evidence requests handled with you."]
 
 LANDING = {}
 LANDING["/lp/soc-2-readiness/"] = landing("/lp/soc-2-readiness/",
  "SOC 2 Readiness for SaaS Startups | Secblox",
  "Get audit-ready for SOC 2 with hands-on help: gap assessment, policies, controls and auditor support. Book a free 30-minute scoping call.",
- "SOC 2 for SaaS & AI startups",
+ "SOC 2 readiness & implementation",
  "Get <em>SOC 2-ready</em> without slowing your roadmap.",
- "A customer is asking for your SOC 2 report. We scope it, close the gaps, implement the controls with your team and walk you through the audit — so you can answer “yes” and close the deal.",
+ "A customer is asking for your SOC 2 report. We handle SOC 2 readiness and implementation for SaaS startups: we scope it, close the gaps, implement the controls with your team and walk you through the audit — so you can answer “yes” and close the deal.",
  [("Clear scope", "System boundary, Trust Services Criteria and in-scope tools agreed in week one."),
   ("Gap assessment", "A prioritised list of what's missing, with effort estimates — no guesswork."),
   ("Right-sized policies", "A complete policy set written for how your team actually works."),
@@ -674,7 +676,7 @@ LANDING["/lp/ai-governance/"] = landing("/lp/ai-governance/",
  "Practical AI governance for AI companies: AI inventory, risk assessments, policies and ISO 42001 readiness, aligned to NIST AI RMF and the EU AI Act.",
  "ISO 42001 · NIST AI RMF · EU AI Act",
  "<em>AI governance</em> your enterprise buyers will accept.",
- "Buyers now ask how you govern your AI — training data, model risk, prompt injection, human oversight. We build the program that answers with evidence, on top of the security controls you already have.",
+ "Buyers now ask how you govern your AI — training data, model risk, prompt injection, human oversight. We handle ISO 42001 implementation, NIST AI RMF assessments and EU AI Act compliance, building the program that answers with evidence on top of the security controls you already have.",
  [("AI inventory", "Every model, AI feature and AI tool, with owners and data flows."),
   ("AI risk assessments", "Security, privacy, accuracy, fairness and legal risk for each system."),
   ("AI policies", "Acceptable use, AI development lifecycle and AI vendor policies."),
