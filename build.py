@@ -16,11 +16,12 @@ SITE = {
     "ga4_id": "G-QLRDW036PD",  # Google Analytics 4 property (secblox.io)
     "google_ads_id": "AW-18579239124",  # Google Ads account 839-854-9045
     "ads_label_booking": "KieaCN_5_LodENThoptF",  # "Booked call" (primary)
-    "ads_label_click": "W5KeCI6W_bodENThoptF",  # "Clicked Book a call" (secondary)
+    "ads_label_click": "W5KeCI6W_bodENThoptF",
+  "brevo_form_action": "https://2ba31f1a.sibforms.com/serve/MUIFABKPg0jcW0xgwwUqQL5n_mcraInvHJwhqEdNVY0DbaPYnGwsW-7flRUaHe3d5WLgWNCH3V7TVAR7E5aSMwxFtu4aGsEA6ZRjWG2cndjketLoW4IINa6qZ4eCEBZijkW141Fe7QETnjWXTpdw39OXy3Ea-VulNpfw4BIsL7rMG8jRynsrJU3DWBdS6Fj6475sf2GX_IeJSfPqug==",  # "Clicked Book a call" (secondary)
 }
 OUT = "site"
 TODAY = datetime.date.today().isoformat()
-PAGES_UPDATED = "2026-11-20"  # bump when service/static page content changes (used in sitemap + schema)
+PAGES_UPDATED = "2026-11-21"  # bump when service/static page content changes (used in sitemap + schema)
 
 NAV = [("/soc-2-compliance/", "SOC 2"), ("/ai-governance/", "AI Governance"),
        ("/iso-42001/", "ISO 42001"), ("/soc-2-for-ai-companies/", "SOC 2 for AI"),
@@ -269,7 +270,8 @@ f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow"
 <li><a href="/blog/soc-2-audit-process/">The SOC 2 audit process, step by step</a></li>
 <li><a href="/blog/how-to-choose-a-soc-2-auditor/">How to choose a SOC 2 auditor</a></li>
 <li><a href="/blog/soc-2-consultant-vs-compliance-platform/">SOC 2 consultant vs compliance platform</a></li>
-<li><a href="/blog/soc-2-readiness-assessment/">What a SOC 2 readiness assessment covers</a></li></ul>
+<li><a href="/blog/soc-2-readiness-assessment/">What a SOC 2 readiness assessment covers</a></li>
+<li><a href="/soc-2-readiness-checklist/">Free SOC 2 readiness checklist and self-assessment</a></li></ul>
 
 <h2>Frequently asked questions</h2>
 {fh}
@@ -598,6 +600,89 @@ def rss():
 
 
 
+# ---------------- SOC 2 READINESS CHECKLIST (lead magnet; email via Brevo) ----------------
+CHECK_ITEMS = [
+ ("Scope & governance", "We know which product, systems and Trust Services Criteria will be in scope.", "Define your scope and criteria first — most startups start with Security only."),
+ ("Scope & governance", "Security policies are written, approved and acknowledged by staff.", "Write a right-sized policy set and collect staff acknowledgements."),
+ ("Scope & governance", "We have a documented risk assessment from the last 12 months.", "Run and document a risk assessment; auditors expect one every year."),
+ ("Access control", "SSO and MFA protect production systems and key SaaS tools.", "Enforce SSO and MFA on production and critical SaaS tools."),
+ ("Access control", "User access is reviewed at least quarterly, with evidence kept.", "Schedule quarterly access reviews and keep dated evidence."),
+ ("Access control", "Joiners and leavers follow a documented onboarding and offboarding process.", "Document onboarding/offboarding and remove leaver access promptly."),
+ ("Change & operations", "Code changes are peer-reviewed and production deployments are approved.", "Require pull-request reviews and approvals before production deploys."),
+ ("Change & operations", "Logging and alerting cover production infrastructure.", "Centralise logs and alert on security-relevant events."),
+ ("Change & operations", "Vulnerability scanning runs regularly and findings are tracked to closure.", "Scan regularly and track findings to closure with target dates."),
+ ("Data & resilience", "Customer data is encrypted at rest and in transit.", "Turn on encryption at rest and enforce TLS everywhere."),
+ ("Data & resilience", "Backups run automatically and a restore has been tested.", "Automate backups and test a restore — keep the evidence."),
+ ("Data & resilience", "We have an incident response plan and have tested it.", "Write an incident response plan and run a tabletop exercise."),
+ ("Vendors & people", "We keep a vendor inventory and review critical vendors, including AI/LLM providers.", "Build a vendor inventory and review critical vendors annually."),
+ ("Vendors & people", "Staff complete security awareness training.", "Roll out annual security awareness training and track completion."),
+ ("Vendors & people", "We have had a penetration test in the last 12 months.", "Book a penetration test scoped to your product and cloud."),
+]
+
+def checklist_page():
+    groups = {}
+    for i, (g, q, _) in enumerate(CHECK_ITEMS):
+        groups.setdefault(g, []).append((i, q))
+    qhtml = "".join(f'<fieldset class="chk-group"><legend>{esc(g)}</legend>' + "".join(
+        f'<label class="chk"><input type="checkbox" name="q{i}" value="1"><span>{esc(q)}</span></label>' for i, q in items)
+        + "</fieldset>" for g, items in groups.items())
+    gaps_js = json.dumps([g for _, _, g in CHECK_ITEMS])
+    faqs = [("What is a SOC 2 readiness checklist?", "A list of the controls and evidence an auditor will expect to see, used to find gaps before the audit starts. This one covers the 15 areas where startups most often fall short."),
+            ("Is a high score a guarantee I will pass?", "No. It shows how much of the groundwork is in place. The auditor tests whether each control is designed properly and, for a Type II, operated consistently over the whole period."),
+            ("What should I do with my gaps?", "Fix the biggest gaps first — scope, access and evidence collection — then run a fuller <a href=\"/blog/soc-2-readiness-assessment/\">SOC 2 readiness assessment</a> before booking the audit."),
+            ("Will you share my email?", "No. We use it to send your results and occasional SOC 2 guidance. You can unsubscribe at any time.")]
+    fh, fsch = faq_block(faqs)
+    action = SITE["brevo_form_action"]
+    body = f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">Free tool</span><h1>SOC 2 Readiness Checklist &amp; <em>Self-Assessment</em></h1>
+<p class="lead"><strong>Tick what's already in place to see how close you are to a SOC 2 audit.</strong> 15 questions, about 3 minutes — you'll get a readiness score and your top gaps to fix first.</p></div></div>
+<section><div class="wrap" style="max-width:860px">
+<form id="chk-form" onsubmit="return false">{qhtml}
+<div class="cta-row" style="margin-top:28px"><button type="button" class="btn btn-primary" id="chk-next">See my readiness score</button></div></form>
+<div id="chk-gate" class="card" style="display:none;margin-top:28px">
+<h2 style="font-size:1.4rem">Where should we send your results?</h2>
+<p class="sub">Enter your work email to see your score and your top gaps. We'll also send occasional SOC 2 guidance — unsubscribe any time. See our <a style="text-decoration:underline" href="/privacy-policy/">privacy policy</a>.</p>
+<form id="chk-email" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px">
+<label for="chk-mail" class="sr-only">Work email</label>
+<input id="chk-mail" type="email" required autocomplete="email" placeholder="you@company.com" style="flex:1;min-width:220px;padding:14px 16px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);color:var(--text);font:inherit">
+<button class="btn btn-primary" type="submit">Show my results</button></form></div>
+<div id="chk-result" class="card" style="display:none;margin-top:28px" aria-live="polite"></div>
+</div></section>
+<section class="alt"><div class="wrap prose" style="max-width:860px">
+<h2>What does the SOC 2 readiness checklist cover?</h2>
+<p>The 15 questions map to the areas auditors test most and where startups most often have gaps: scope and governance, access control, change management and operations, data protection and resilience, and vendors and people. Together they reflect the core of the AICPA Trust Services Criteria for Security.</p>
+<h2>How should you read your score?</h2>
+<ul><li><strong>13–15:</strong> close to audit-ready — confirm evidence exists for each control and pick an auditor.</li>
+<li><strong>8–12:</strong> a solid foundation with focused gaps — a readiness project of a few weeks usually closes them.</li>
+<li><strong>0–7:</strong> early stage — start with scope, policies and access control before choosing tools or an auditor.</li></ul>
+<p>Next steps: read <a href="/blog/soc-2-readiness-assessment/">what a SOC 2 readiness assessment covers</a>, <a href="/blog/soc-2-audit-process/">how the SOC 2 audit process works</a> and <a href="/blog/soc-2-cost-for-startups/">what SOC 2 costs for startups</a>.</p>
+<h2>Frequently asked questions</h2>{fh}
+</div></section>{cta("Want help closing your gaps?", "Book a free 30-minute scoping call. Bring your score — you'll leave with a clear scope, a realistic timeline and a budget range.")}
+<script>
+(function(){{
+var GAPS={gaps_js},N=GAPS.length,f=document.getElementById('chk-form'),gate=document.getElementById('chk-gate'),res=document.getElementById('chk-result');
+document.getElementById('chk-next').onclick=function(){{gate.style.display='block';gate.scrollIntoView({{behavior:'smooth',block:'center'}});document.getElementById('chk-mail').focus();}};
+function show(){{
+ var yes=0,miss=[];for(var i=0;i<N;i++){{if(f['q'+i].checked)yes++;else miss.push(GAPS[i]);}}
+ var band=yes>=13?['Close to audit-ready','Confirm evidence exists for every control, then choose your auditor.']:yes>=8?['Solid foundation, focused gaps','A short readiness project usually closes these gaps.']:['Early stage','Start with scope, policies and access control before choosing tools or an auditor.'];
+ var top=miss.slice(0,5).map(function(g){{return '<li>'+g+'</li>';}}).join('');
+ res.innerHTML='<p class="eyebrow">Your result</p><h2 style="font-size:2rem;margin:6px 0">'+yes+' / '+N+' — '+band[0]+'</h2><p>'+band[1]+'</p>'+(top?'<h3 style="margin-top:18px">Your top gaps to fix first</h3><ol>'+top+'</ol>':'<p>No gaps flagged — nice work.</p>')+'<div class="cta-row" style="margin-top:18px"><a class="btn btn-primary" href="/contact/">Book a free call to plan your fixes</a></div>';
+ gate.style.display='none';res.style.display='block';res.scrollIntoView({{behavior:'smooth',block:'center'}});
+}}
+document.getElementById('chk-email').onsubmit=function(e){{
+ e.preventDefault();var m=document.getElementById('chk-mail').value.trim();if(!m)return;
+ var d=new FormData();d.append('EMAIL',m);d.append('email_address_check','');d.append('locale','en');
+ try{{fetch({json.dumps(action)},{{method:'POST',mode:'no-cors',body:d}});}}catch(err){{}}
+ try{{if(window.gtag){{gtag('event','generate_lead',{{form_name:'soc2_checklist'}});if(window.SBX_CONV&&SBX_CONV.lead)gtag('event','conversion',{{send_to:SBX_CONV.lead}});}}}}catch(err){{}}
+ show();
+}};
+}})();
+</script>'''
+    return page("/soc-2-readiness-checklist/", "SOC 2 Readiness Checklist & Free Self-Assessment | Secblox",
+        "Free SOC 2 readiness checklist and self-assessment: 15 questions, about 3 minutes, with a readiness score and the top gaps to fix before your audit.",
+        body, schema=[fsch], crumbs=[("/soc-2-readiness-checklist/", "SOC 2 Readiness Checklist")])
+
+PAGES["/soc-2-readiness-checklist/"] = checklist_page()
+
 # ---------------- PRIVACY ----------------
 ADS_PRIVACY = ("<h2>Advertising and analytics</h2><p>We use Google Ads conversion tracking to understand which of our ads lead to enquiries. "
                "When you visit from an ad, Google may set cookies and process technical data such as your IP address, browser and the pages you view, "
@@ -605,13 +690,16 @@ ADS_PRIVACY = ("<h2>Advertising and analytics</h2><p>We use Google Ads conversio
                "<a href=\"https://adssettings.google.com\" rel=\"noopener\">adssettings.google.com</a> or block cookies in your browser.</p>"
                if SITE["google_ads_id"] else "<p>This site does not use tracking cookies or third-party analytics.</p>")
 ADS_PRIVACY += ("<h2>Booking calls</h2><p>Calls are scheduled through Cal.com, which processes the details you enter when booking "
-                "under its own privacy policy.</p>")
+                "under its own privacy policy.</p>"
+                "<h2>Email sign-ups</h2><p>Email addresses entered in our SOC 2 readiness checklist are stored with Brevo, our email service provider, "
+                "under its own privacy policy. We use them to send your results and occasional SOC 2 guidance; every email includes an unsubscribe link, "
+                "and you can ask us to delete your address at any time.</p>")
 PAGES["/privacy-policy/"] = page("/privacy-policy/", "Privacy Policy | Secblox",
  "How Secblox handles personal information shared through this website, our booking calendar, Google Ads measurement and email, and how to contact us.",
  f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<h1>Privacy Policy</h1><p class="lead">Last updated: {TODAY}</p></div></div>
 <section><div class="wrap prose">
 <h2>Who we are</h2><p>This website is operated by Secblox. Contact: <a href="mailto:{SITE["email"]}">{SITE["email"]}</a>.</p>
-<h2>What we collect</h2><p>This site does not use forms. If you email us or book a call, we receive your name, email address and whatever you choose to include.</p>
+<h2>What we collect</h2><p>If you email us or book a call, we receive your name, email address and whatever you choose to include. If you use our SOC 2 readiness checklist, we receive the email address you enter; your checklist answers stay in your browser and are not sent to us.</p>
 {ADS_PRIVACY}
 <h2>How we use it</h2><p>We use information you send only to respond to your enquiry and, if we work together, to deliver our services. We do not sell or rent personal information.</p>
 <h2>Retention</h2><p>We keep correspondence only as long as needed for the purpose it was shared and to meet legal or contractual obligations.</p>

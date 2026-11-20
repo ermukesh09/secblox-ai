@@ -50,6 +50,8 @@ If you only get a spreadsheet of findings with no plan or owners, you've paid fo
 
 For a typical SaaS startup, the assessment itself takes **one to two weeks**: a few working sessions with engineering and leadership, plus a review of your cloud environment and documents. Remediation afterwards usually takes **four to eight weeks**, depending on how much exists already. See [how long SOC 2 takes](/blog/how-long-does-soc-2-take/) for the full timeline.
 
+Want a quick first read? Try our free [SOC 2 readiness checklist](/soc-2-readiness-checklist/) — 15 questions with a score and your top gaps.
+
 ## Signs you're ready for the audit
 
 - Policies are approved and people have actually acknowledged them
