@@ -68,4 +68,4 @@ Usually — more systems, people and vendors to cover. Scope matters more than h
 
 Renewal is continuous: the next observation window starts as soon as the previous one ends. The work is keeping recurring controls running and refreshing evidence.
 
-Want a timeline for your company? [Book a free scoping call](/contact/) or read [SOC 2 Type I vs Type II](/blog/soc-2-type-1-vs-type-2/).
+Your timeline also drives budget: see [SOC 2 cost for startups](/blog/soc-2-cost-for-startups/) and what happens at each stage of the [SOC 2 audit process](/blog/soc-2-audit-process/). Want a timeline for your company? [Book a free scoping call](/contact/) or read [SOC 2 Type I vs Type II](/blog/soc-2-type-1-vs-type-2/).

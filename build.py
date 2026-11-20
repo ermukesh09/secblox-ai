@@ -20,7 +20,7 @@ SITE = {
 }
 OUT = "site"
 TODAY = datetime.date.today().isoformat()
-PAGES_UPDATED = "2026-11-19"  # bump when service/static page content changes (used in sitemap + schema)
+PAGES_UPDATED = "2026-11-20"  # bump when service/static page content changes (used in sitemap + schema)
 
 NAV = [("/soc-2-compliance/", "SOC 2"), ("/ai-governance/", "AI Governance"),
        ("/iso-42001/", "ISO 42001"), ("/soc-2-for-ai-companies/", "SOC 2 for AI"),
@@ -263,6 +263,13 @@ f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow"
 <li><strong>Weeks 3–8:</strong> policy rollout and control implementation</li>
 <li><strong>Weeks 8–10:</strong> Type I audit (optional)</li>
 <li><strong>Months 3–9:</strong> Type II observation window and audit</li></ul>
+
+<h2>SOC 2 guides</h2>
+<ul><li><a href="/blog/soc-2-cost-for-startups/">SOC 2 cost for startups: audit, tools and budget</a></li>
+<li><a href="/blog/soc-2-audit-process/">The SOC 2 audit process, step by step</a></li>
+<li><a href="/blog/how-to-choose-a-soc-2-auditor/">How to choose a SOC 2 auditor</a></li>
+<li><a href="/blog/soc-2-consultant-vs-compliance-platform/">SOC 2 consultant vs compliance platform</a></li>
+<li><a href="/blog/soc-2-readiness-assessment/">What a SOC 2 readiness assessment covers</a></li></ul>
 
 <h2>Frequently asked questions</h2>
 {fh}

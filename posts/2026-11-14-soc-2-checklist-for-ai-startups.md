@@ -69,4 +69,4 @@ Treat production prompts and model configuration like code: version control, pee
 
 Readiness for a typical SaaS startup takes about 6–10 weeks. See [how long SOC 2 takes](/blog/how-long-does-soc-2-take/) for the full timeline.
 
-Need help working through it? Start with a [SOC 2 readiness assessment](/blog/soc-2-readiness-assessment/), see [SOC 2 for AI companies](/soc-2-for-ai-companies/) or [book a call](/contact/).
+Once the checklist is done, follow the [SOC 2 audit process](/blog/soc-2-audit-process/) and [choose a SOC 2 auditor](/blog/how-to-choose-a-soc-2-auditor/). Need help working through it? Start with a [SOC 2 readiness assessment](/blog/soc-2-readiness-assessment/), see [SOC 2 for AI companies](/soc-2-for-ai-companies/) or [book a call](/contact/).

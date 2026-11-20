@@ -68,4 +68,4 @@ There's no formal expiry, but buyers expect a report covering a recent period â€
 
 There's no fixed minimum in the standard, but very short windows carry little weight. Three months is the common floor for a first report.
 
-See the full approach on our [SOC 2 compliance page](/soc-2-compliance/), check [how long SOC 2 takes](/blog/how-long-does-soc-2-take/), start with a [SOC 2 readiness assessment](/blog/soc-2-readiness-assessment/), or [book a free scoping call](/contact/).
+For budgeting, see [what SOC 2 costs for startups](/blog/soc-2-cost-for-startups/), and when you're ready, [how to choose a SOC 2 auditor](/blog/how-to-choose-a-soc-2-auditor/). See the full approach on our [SOC 2 compliance page](/soc-2-compliance/), check [how long SOC 2 takes](/blog/how-long-does-soc-2-take/), start with a [SOC 2 readiness assessment](/blog/soc-2-readiness-assessment/), or [book a free scoping call](/contact/).

@@ -78,4 +78,4 @@ Independence rules generally prevent the CPA firm that audits you from also desi
 
 SOC 2 has no AI-specific criteria, but auditors and customers increasingly ask about LLM vendors, customer data in prompts and model changes. Cover them in your risk assessment and vendor reviews. See [our SOC 2 checklist for AI startups](/blog/soc-2-checklist-for-ai-startups/).
 
-See how we run readiness on our [SOC 2 compliance page](/soc-2-compliance/), or [book a free scoping call](/contact/).
+Next, see the [SOC 2 audit process](/blog/soc-2-audit-process/) and whether you need a [SOC 2 consultant vs a compliance platform](/blog/soc-2-consultant-vs-compliance-platform/). See how we run readiness on our [SOC 2 compliance page](/soc-2-compliance/), or [book a free scoping call](/contact/).

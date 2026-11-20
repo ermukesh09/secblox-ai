@@ -75,4 +75,4 @@ It adds controls to implement and evidence to collect, so expect more preparatio
 
 No. The Privacy criterion is based on AICPA principles and overlaps with GDPR, but neither substitutes for the other.
 
-Not sure which criteria to include? [Book a free scoping call](/contact/), read [how long SOC 2 takes](/blog/how-long-does-soc-2-take/), or see our [SOC 2 compliance service](/soc-2-compliance/).
+Every extra criterion adds audit work; see [SOC 2 cost for startups](/blog/soc-2-cost-for-startups/). Not sure which criteria to include? [Book a free scoping call](/contact/), read [how long SOC 2 takes](/blog/how-long-does-soc-2-take/), or see our [SOC 2 compliance service](/soc-2-compliance/).
