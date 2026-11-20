@@ -25,7 +25,7 @@ PAGES_UPDATED = "2026-11-21"  # bump when service/static page content changes (u
 
 NAV = [("/soc-2-compliance/", "SOC 2"), ("/ai-governance/", "AI Governance"),
        ("/iso-42001/", "ISO 42001"), ("/soc-2-for-ai-companies/", "SOC 2 for AI"),
-       ("/soc-2-readiness-checklist/", "Readiness Check"), ("/blog/", "Blog"), ("/about/", "About")]
+       ("/soc-2-readiness-checklist/", "Readiness Check"), ("/blog/", "Blog"), ("/mukesh-bhakar/", "About")]
 
 def esc(s): return html.escape(s, quote=True)
 
@@ -56,7 +56,7 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 <div><a class="logo" href="/">{LOGO_SVG}<span class="wordmark">Secblox</span></a><p style="margin-top:14px;max-width:340px">SOC 2 and AI governance for SaaS and AI companies. Practitioner-led readiness, implementation and audit support.</p></div>
 <div><h3 class="fh">Services</h3><ul><li><a href="/soc-2-compliance/">SOC 2 Compliance</a></li><li><a href="/soc-2-readiness-checklist/">Free SOC 2 Readiness Check</a></li><li><a href="/ai-governance/">AI Governance</a></li><li><a href="/iso-42001/">ISO 42001 Readiness</a></li><li><a href="/soc-2-for-ai-companies/">SOC 2 for AI Companies</a></li><li><a href="/services/penetration-testing/">Penetration Testing</a></li></ul></div>
 <div><h3 class="fh">Frameworks</h3><ul><li><a href="/ai-governance/#nist-ai-rmf">NIST AI RMF</a></li><li><a href="/ai-governance/#eu-ai-act">EU AI Act</a></li><li><a href="/iso-42001/">ISO/IEC 42001</a></li><li><a href="/soc-2-compliance/#trust-services-criteria">SOC 2 TSC</a></li></ul></div>
-<div><h3 class="fh">Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li><li><a href="{SITE["linkedin"]}" rel="noopener">LinkedIn</a></li></ul></div>
+<div><h3 class="fh">Company</h3><ul><li><a href="/mukesh-bhakar/">About Mukesh Bhakar</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li><li><a href="{SITE["linkedin"]}" rel="noopener">LinkedIn</a></li></ul></div>
 </div>
 <div class="copy"><span>© {yr} Secblox. All rights reserved.</span><span>SOC 2 · ISO/IEC 42001 · NIST AI RMF · EU AI Act</span></div>
 </div></footer>'''
@@ -445,23 +445,62 @@ f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow"
  crumbs=[("/services/cloud-security-assessment/", "Cloud Security Assessment")])
 
 # ---------------- ABOUT ----------------
-PAGES["/about/"] = page("/about/", "About Secblox — Practitioner-Led SOC 2 & AI Governance",
- "Secblox is led by Mukesh Bhakar, a security practitioner with 15+ years building security programs and taking SaaS companies through SOC 2.",
-f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">About</span><h1>Built by a practitioner, <em>for builders</em>.</h1>
-<p class="lead">Secblox exists because compliance should make companies more secure and easier to buy from — not just generate paperwork.</p></div></div>
-<section><div class="wrap layout"><article class="prose">
-<h2>Mukesh Bhakar — Founder & Principal Consultant</h2>
-<p>Mukesh brings <strong>15+ years of security experience</strong> across cloud security architecture, identity, endpoint security and compliance. He has built security programs from zero — deploying EDR, email security, identity controls and MDM where no security tooling existed — and takes SaaS platforms on AWS through SOC 2 end to end, from readiness to report and through annual renewals.</p>
-<p>His work spans <strong>AWS, Azure and GCP</strong>, identity and access management, DLP, endpoint detection and response, email security and SASE/CASB, and hands-on operation of the leading <strong>compliance automation platforms</strong>. Framework experience covers <strong>SOC 2, GDPR and NIST</strong>, with a focus on AI security and governance: <strong>NIST AI RMF, MITRE ATLAS, the EU AI Act and ISO/IEC 42001</strong>.</p>
-<h2>How we work</h2>
-<ul><li><strong>Hands-on implementation</strong> — we configure the controls, not just recommend them.</li>
-<li><strong>Budget discipline</strong> — tooling sized to your stage; we'll tell you when you don't need to buy something.</li>
-<li><strong>Security first, compliance as proof</strong> — controls that actually reduce risk, with evidence as a by-product.</li>
-<li><strong>In-house testing</strong> — penetration testing performed directly, not subcontracted.</li></ul>
-</article>{aside()}</div></section>{cta()}''',
- schema=[{"@type": "Person", "name": "Mukesh Bhakar", "jobTitle": "Founder & Principal Consultant", "worksFor": {"@id": SITE["domain"] + "/#org"},
-          "knowsAbout": ["SOC 2", "AI governance", "ISO/IEC 42001", "NIST AI RMF", "EU AI Act", "Cloud security", "Penetration testing"]}],
- crumbs=[("/about/", "About")], ptype="AboutPage")
+MUKESH_FAQ = [
+ ("Are you a SOC 2 auditor?", "No. Only licensed CPA firms can perform SOC 2 audits and issue reports. I prepare your company for the audit — scoping, implementing controls, policies and evidence — and support you through it with your chosen auditor."),
+ ("Do I need a specific compliance platform to work with you?", "No. I'm platform-agnostic: I work inside the compliance automation platform you already use, or help you choose one sized to your stage and budget — including when you don't need one yet."),
+ ("Which companies do you work with?", "SaaS and AI companies in the US and UK — typically startups and scale-ups that need SOC 2 for enterprise deals, or that are being asked how they govern their AI."),
+ ("What happens on the first call?", "A free 30-minute conversation about your product, cloud, deadline and customer requirements. You leave with a clear scope, a realistic timeline and a budget range — no sales pitch."),
+]
+_mfh, _mfsch = faq_block(MUKESH_FAQ)
+PAGES["/mukesh-bhakar/"] = page("/mukesh-bhakar/", "Mukesh Bhakar — SOC 2 & AI Governance Consultant | Secblox",
+ "Mukesh Bhakar is a hands-on SOC 2 and AI governance consultant helping SaaS and AI companies get audit-ready, stay compliant and pass security reviews.",
+f'''<div class="page-hero"><div class="wrap profile-hero">
+<div><div>{{{{CRUMBS}}}}</div><span class="eyebrow">Founder & Principal Consultant, Secblox</span>
+<h1>Mukesh Bhakar — <em>SOC 2 & AI governance</em> consultant</h1>
+<p class="lead"><strong>I help SaaS and AI companies get SOC 2-ready, keep it running and answer the AI governance questions enterprise buyers now ask.</strong> Hands-on implementation — not slide decks — with tooling sized to your budget.</p>
+<div class="cta-row"><a class="btn btn-primary" href="/contact/">Book a free 30-minute call</a><a class="btn btn-ghost" href="/soc-2-readiness-checklist/">Take the SOC 2 readiness check →</a></div></div>
+<img class="profile-photo" src="/assets/mukesh-bhakar.jpg" srcset="/assets/mukesh-bhakar-320.jpg 320w, /assets/mukesh-bhakar.jpg 600w" sizes="(max-width: 760px) 220px, 320px" width="320" height="320" alt="Mukesh Bhakar, SOC 2 and AI governance consultant and founder of Secblox">
+</div></div>
+<section><div class="wrap"><h2>What I help with</h2><div class="grid g3" style="margin-top:28px">
+<div class="card"><h3>SOC 2, readiness to report</h3><p>Scoping, gap assessment, policies, control implementation and audit support for Type I and Type II.</p></div>
+<div class="card"><h3>Renewals & continuous compliance</h3><p>Keeping controls and evidence running all year so every renewal is routine, not a new project.</p></div>
+<div class="card"><h3>AI governance</h3><p>AI inventory, risk assessments and policies aligned to ISO/IEC 42001, NIST AI RMF and the EU AI Act.</p></div>
+<div class="card"><h3>Cloud security</h3><p>Security assessments and architecture across AWS, Azure and GCP — identity, logging, backups and disaster recovery.</p></div>
+<div class="card"><h3>Penetration testing</h3><p>Performed directly, not subcontracted, so findings feed straight into your SOC 2 evidence.</p></div>
+<div class="card"><h3>Security programs from zero</h3><p>Standing up the core controls — identity, endpoint, email security, device management — where little exists yet.</p></div>
+</div></div></section>
+<section class="alt"><div class="wrap layout"><article class="prose">
+<h2>Experience</h2>
+<ul>
+<li><strong>15+ years in security</strong> across cloud security architecture, identity, endpoint security and compliance.</li>
+<li>Takes <strong>SaaS platforms on AWS through SOC 2 end to end</strong> — readiness, the audit report and annual renewals — including cost savings in the cloud environments along the way.</li>
+<li>Has <strong>built security programs from zero</strong>: EDR, email security, identity controls and device management where no security tooling existed.</li>
+<li>Runs <strong>business continuity and disaster recovery testing</strong> for SOC 2, including cross-region recovery tests with documented RTO/RPO evidence.</li>
+<li>Hands-on with <strong>identity and access management, DLP, EDR, email security and SASE/CASB</strong>, and with the leading compliance automation platforms.</li>
+<li>Framework experience: <strong>SOC 2, GDPR and NIST</strong>, with a focus on AI security and governance — <strong>ISO/IEC 42001, NIST AI RMF, MITRE ATLAS and the EU AI Act</strong>.</li>
+</ul>
+<h2>How I work</h2>
+<ul><li><strong>Hands-on</strong> — I configure the controls, not just recommend them.</li>
+<li><strong>Budget-conscious</strong> — tooling sized to your stage; I'll tell you when you don't need to buy something.</li>
+<li><strong>Security first, compliance as proof</strong> — controls that reduce real risk, with evidence as a by-product.</li>
+<li><strong>Direct</strong> — you work with me, not a rotating team of juniors.</li></ul>
+<h2>Ways to work together</h2>
+<table><thead><tr><th>Engagement</th><th>Best for</th></tr></thead><tbody>
+<tr><td><strong>SOC 2 readiness project</strong></td><td>Getting from "a customer asked for our report" to audit-ready, with controls implemented</td></tr>
+<tr><td><strong>Ongoing compliance support</strong></td><td>Keeping SOC 2 running between audits and handling renewals</td></tr>
+<tr><td><strong>AI governance program</strong></td><td>Answering buyers' AI questions and preparing for ISO/IEC 42001</td></tr>
+<tr><td><strong>One-off assessments</strong></td><td>Penetration tests, cloud security assessments and readiness assessments</td></tr>
+</tbody></table>
+<h2>Writing</h2>
+<p>Practical guides on <a href="/blog/soc-2-cost-for-startups/">what SOC 2 costs</a>, <a href="/blog/soc-2-audit-process/">how the audit works</a>, <a href="/blog/soc-2-consultant-vs-compliance-platform/">consultants vs compliance platforms</a> and <a href="/blog/iso-42001-vs-nist-ai-rmf/">ISO 42001 vs NIST AI RMF</a> — all on the <a href="/blog/">Secblox blog</a>.</p>
+<h2>Frequently asked questions</h2>{_mfh}
+</article>{aside()}</div></section>{cta("Let's talk about your SOC 2 or AI governance plans", "Book a free 30-minute call with me. You'll leave with a clear scope, a realistic timeline and a budget range — no sales pitch.")}''',
+ schema=[{"@type": "ProfilePage", "mainEntity": {"@type": "Person", "@id": SITE["domain"] + "/#mukesh", "name": "Mukesh Bhakar",
+          "jobTitle": "Founder & Principal Consultant", "url": SITE["domain"] + "/mukesh-bhakar/", "image": SITE["domain"] + "/assets/mukesh-bhakar.jpg",
+          "worksFor": {"@id": SITE["domain"] + "/#org"}, "sameAs": [SITE["linkedin"]],
+          "knowsAbout": ["SOC 2", "AI governance", "ISO/IEC 42001", "NIST AI RMF", "EU AI Act", "GDPR", "Cloud security", "Penetration testing"]}},
+         _mfsch],
+ crumbs=[("/mukesh-bhakar/", "Mukesh Bhakar")], ptype="ProfilePage")
 
 
 CAL_EMBED = """<script>
@@ -520,7 +559,7 @@ AUTHOR = {"name": "Mukesh Bhakar", "role": "Founder, Secblox",
 def author_schema():
     d = SITE["domain"]
     return {"@type": "Person", "@id": d + "/#mukesh", "name": AUTHOR["name"], "jobTitle": "Founder",
-            "url": d + "/about/", "worksFor": {"@id": d + "/#org"}, "knowsAbout": AUTHOR["knows"], "description": AUTHOR["bio"]}
+            "url": d + "/mukesh-bhakar/", "image": d + "/assets/mukesh-bhakar.jpg", "worksFor": {"@id": d + "/#org"}, "knowsAbout": AUTHOR["knows"], "description": AUTHOR["bio"]}
 
 def load_posts():
     posts = []
@@ -566,13 +605,13 @@ for i, p in enumerate(POSTS):
           + '</ul></div>') if p["takeaways"] else ""
     refs_html = ('<h2 id="references">References</h2><ul class="refs">' + "".join(
         f'<li><a href="{u}" rel="noopener" target="_blank">{esc(n)}</a></li>' for n, u in p["refs"]) + "</ul>") if p["refs"] else ""
-    author_box = (f'<div class="author-box"><p class="ab-name"><a href="/about/">{AUTHOR["name"]}</a> · {AUTHOR["role"]}</p>'
+    author_box = (f'<div class="author-box"><p class="ab-name"><a href="/mukesh-bhakar/">{AUTHOR["name"]}</a> · {AUTHOR["role"]}</p>'
                   f'<p>{esc(AUTHOR["bio"])}</p><p><a href="{SITE["linkedin"]}" rel="noopener">Secblox on LinkedIn</a> · '
                   f'<a href="/contact/">Book a free scoping call</a></p></div>')
     md_url = p["url"].rstrip("/") + ".md"
     PAGES[p["url"]] = page(p["url"], f'{p["title"]} | Secblox', p["desc"],
         f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}{tags_html}<h1>{esc(p["title"])}</h1><p class="lead">{esc(p["desc"])}</p>
-<p style="color:var(--muted);font-size:14px">By <a href="/about/">{AUTHOR["name"]}</a>, {AUTHOR["role"]} · Published <time datetime="{p["date"]}">{p["date"]}</time>{upd} · {p["mins"]} min read</p></div></div>
+<p style="color:var(--muted);font-size:14px">By <a href="/mukesh-bhakar/">{AUTHOR["name"]}</a>, {AUTHOR["role"]} · Published <time datetime="{p["date"]}">{p["date"]}</time>{upd} · {p["mins"]} min read</p></div></div>
 <section><div class="wrap layout"><article class="prose">{kt}{p["html"]}{refs_html}{author_box}</article>{aside('<div class="card"><h3>More articles</h3><p>' + rel_html + '</p></div>')}</div></section>{cta()}''',
         schema=[{"@type": "BlogPosting", "@id": SITE["domain"] + p["url"] + "#article", "headline": p["title"], "description": p["desc"],
                  "datePublished": p["date"], "dateModified": p["updated"], "keywords": ", ".join(p["tags"]),
@@ -790,6 +829,7 @@ LANDING["/lp/ai-governance/"] = landing("/lp/ai-governance/",
 
 # ---------------- REDIRECTS (old WordPress URLs -> new pages) ----------------
 REDIRECTS = {
+    "/about/": "/mukesh-bhakar/",
     "/contact-us/": "/contact/",
     "/privacy-policy-2/": "/privacy-policy/",
     "/service-post/compliance/": "/soc-2-compliance/",

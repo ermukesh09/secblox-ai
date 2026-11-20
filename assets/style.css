@@ -133,3 +133,8 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 .chk+.chk{border-top:1px solid var(--line)}
 .chk input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--accent)}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.profile-hero{display:grid;grid-template-columns:1fr 320px;gap:48px;align-items:center}
+.profile-photo{width:320px;height:320px;border-radius:50%;object-fit:cover;border:3px solid var(--accent);box-shadow:0 20px 60px rgba(62,230,196,.15)}
+@media(max-width:760px){.profile-hero{grid-template-columns:1fr}.profile-photo{width:220px;height:220px;order:-1}}
+.prose table{width:100%;border-collapse:collapse;margin:16px 0}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
