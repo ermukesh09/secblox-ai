@@ -67,7 +67,7 @@ Spreading annual tasks across the year avoids the end-of-period scramble that ca
 - **Store evidence in one place**, organised by control, as it's created — not reconstructed the week before fieldwork.
 - **Check monthly, not yearly.** A 30-minute monthly review catches a missed task while it can still be fixed.
 
-A right-sized compliance tool helps here, but the calendar and the owners matter more than the software. See [SOC 2 consultant vs compliance platform](/blog/soc-2-consultant-vs-compliance-platform/).
+On AWS, native posture checks can produce much of this evidence automatically — see our [AWS security assessment guide](/blog/aws-security-assessment/). A right-sized compliance tool helps here, but the calendar and the owners matter more than the software. See [SOC 2 consultant vs compliance platform](/blog/soc-2-consultant-vs-compliance-platform/).
 
 ## What breaks continuous compliance?
 

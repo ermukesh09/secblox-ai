@@ -34,6 +34,8 @@ It also answers the questions founders actually ask:
 | Vendors | Vendor inventory, risk reviews, contracts with security terms |
 | AI systems (if you build with AI) | Model and LLM vendors, data used in prompts, AI-specific risks and controls |
 
+On AWS, much of the infrastructure review overlaps with an [AWS security assessment](/blog/aws-security-assessment/).
+
 ## What you should get at the end
 
 A readiness assessment is only useful if it produces something you can act on. Expect:

@@ -446,6 +446,8 @@ f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow"
 <ul><li>Identity and access management, SSO, MFA and privileged access</li><li>Network segmentation, ingress and egress controls</li><li>Logging, monitoring and alerting (CloudTrail, GuardDuty, Defender, Security Command Center)</li><li>Encryption at rest and in transit, key management</li><li>Backup, cross-region recovery, RTO/RPO testing</li><li>Security for AI workloads: Bedrock, Azure OpenAI, Vertex AI</li><li>Cost and resource hygiene that reduces attack surface</li></ul>
 <h2>Deliverables</h2>
 <p>A prioritized findings report, a target architecture, and SOC 2 control mapping — plus hands-on remediation support if you want it.</p>
+<h2>Guides</h2>
+<p>See our <a href="/blog/aws-security-assessment/">AWS security assessment checklist and process</a> for the 10 areas we review in AWS, the native tools we use and how findings map to SOC 2.</p>
 </article>{aside()}</div></section>{cta()}''',
  schema=[service_schema("Cloud Security Assessment", "AWS, Azure and GCP security architecture assessment.", "/services/cloud-security-assessment/", "Cloud security consulting")],
  crumbs=[("/services/cloud-security-assessment/", "Cloud Security Assessment")])
@@ -555,6 +557,10 @@ REFS = [  # official sources auto-cited on posts that mention them (keyword matc
     (("eu ai act", "article 50"), "Regulation (EU) 2024/1689 — the EU Artificial Intelligence Act (EUR-Lex)", "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"),
     (("27001",), "ISO/IEC 27001 — Information security management systems (ISO)", "https://www.iso.org/standard/27001"),
     (("prompt injection",), "OWASP Top 10 for Large Language Model Applications", "https://genai.owasp.org/llm-top-10/"),
+    (("security hub", "cspm", "foundational security best practices"), "AWS Security Hub CSPM — AWS Foundational Security Best Practices standard",
+     "https://docs.aws.amazon.com/securityhub/latest/userguide/fsbp-standard.html"),
+    (("cis aws foundations", "cis amazon web services"), "CIS Amazon Web Services Foundations Benchmark", "https://www.cisecurity.org/benchmark/amazon_web_services"),
+    (("aws penetration testing policy",), "AWS Customer Support Policy for Penetration Testing", "https://aws.amazon.com/security/penetration-testing/"),
 ]
 AUTHOR = {"name": "Mukesh Bhakar", "role": "Founder, Secblox",
           "bio": ("Mukesh Bhakar is the founder of Secblox, with 15+ years in security. He works hands-on with SaaS and AI companies "
