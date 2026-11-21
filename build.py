@@ -45,6 +45,10 @@ def org_schema():
         "sameAs": [SITE["linkedin"]],
     }
 
+def iso_dt(d):
+    """Schema.org dates as full ISO 8601 datetimes (Google flags date-only values on some types)."""
+    return d if "T" in d else f"{d}T09:00:00+05:30"
+
 def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noindex=False, minimal=False, modified=None, alt_md=None):
     yr = datetime.date.today().year
     if minimal:
@@ -65,7 +69,8 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
     graph = [org_schema(), {"@type": "WebSite", "@id": d + "/#website", "url": d + "/", "name": SITE["name"],
                             "publisher": {"@id": d + "/#org"}},
              {"@type": ptype, "@id": url + "#page", "url": url, "name": title, "description": desc,
-              "isPartOf": {"@id": d + "/#website"}, "inLanguage": "en-US", "dateModified": modified or PAGES_UPDATED}]
+              "isPartOf": {"@id": d + "/#website"}, "inLanguage": "en-US", "dateModified": iso_dt(modified or PAGES_UPDATED)}
+             | ({"mainEntity": {"@id": d + "/#mukesh"}} if ptype == "ProfilePage" else {})]
     if crumbs:
         items = [{"@type": "ListItem", "position": 1, "name": "Home", "item": d + "/"}]
         for i, (u, n) in enumerate(crumbs, 2):
@@ -497,10 +502,10 @@ f'''<div class="page-hero"><div class="wrap profile-hero">
 <p>Practical guides on <a href="/blog/soc-2-cost-for-startups/">what SOC 2 costs</a>, <a href="/blog/soc-2-audit-process/">how the audit works</a>, <a href="/blog/soc-2-consultant-vs-compliance-platform/">consultants vs compliance platforms</a> and <a href="/blog/iso-42001-vs-nist-ai-rmf/">ISO 42001 vs NIST AI RMF</a> — all on the <a href="/blog/">Secblox blog</a>.</p>
 <h2>Frequently asked questions</h2>{_mfh}
 </article>{aside()}</div></section>{cta("Let's talk about your SOC 2 or AI governance plans", "Book a free 30-minute call with me. You'll leave with a clear scope, a realistic timeline and a budget range — no sales pitch.")}''',
- schema=[{"@type": "ProfilePage", "mainEntity": {"@type": "Person", "@id": SITE["domain"] + "/#mukesh", "name": "Mukesh Bhakar",
+ schema=[{"@type": "Person", "@id": SITE["domain"] + "/#mukesh", "name": "Mukesh Bhakar",
           "jobTitle": "Founder & Principal Consultant", "url": SITE["domain"] + "/mukesh-bhakar/", "image": SITE["domain"] + "/assets/mukesh-bhakar.jpg",
           "worksFor": {"@id": SITE["domain"] + "/#org"}, "sameAs": [SITE["linkedin_personal"], SITE["linkedin"]],
-          "knowsAbout": ["SOC 2", "AI governance", "ISO/IEC 42001", "NIST AI RMF", "EU AI Act", "GDPR", "Cloud security", "Penetration testing"]}},
+          "knowsAbout": ["SOC 2", "AI governance", "ISO/IEC 42001", "NIST AI RMF", "EU AI Act", "GDPR", "Cloud security", "Penetration testing"]},
          _mfsch],
  crumbs=[("/mukesh-bhakar/", "Mukesh Bhakar")], ptype="ProfilePage")
 
@@ -616,7 +621,7 @@ for i, p in enumerate(POSTS):
 <p style="color:var(--muted);font-size:14px">By <a href="/mukesh-bhakar/">{AUTHOR["name"]}</a>, {AUTHOR["role"]} · Published <time datetime="{p["date"]}">{p["date"]}</time>{upd} · {p["mins"]} min read</p></div></div>
 <section><div class="wrap layout"><article class="prose">{kt}{p["html"]}{refs_html}{author_box}</article>{aside('<div class="card"><h3>More articles</h3><p>' + rel_html + '</p></div>')}</div></section>{cta()}''',
         schema=[{"@type": "BlogPosting", "@id": SITE["domain"] + p["url"] + "#article", "headline": p["title"], "description": p["desc"],
-                 "datePublished": p["date"], "dateModified": p["updated"], "keywords": ", ".join(p["tags"]),
+                 "datePublished": iso_dt(p["date"]), "dateModified": iso_dt(p["updated"]), "keywords": ", ".join(p["tags"]),
                  "about": [{"@type": "Thing", "name": t} for t in p["tags"]], "inLanguage": "en-US",
                  "wordCount": len(re.sub("<[^>]+>", " ", p["html"]).split()),
                  "author": author_schema(), "publisher": {"@id": SITE["domain"] + "/#org"}, "image": SITE["domain"] + "/assets/og-image.png",
@@ -633,7 +638,7 @@ PAGES["/blog/"] = page("/blog/", "SOC 2 & AI Governance Blog | Secblox",
 <p style="font-size:14px;color:var(--muted)">Prefer a feed reader? Add <code>https://secblox.io/feed.xml</code> to Feedly, Inoreader or Outlook.</p></div></div>
 <section><div class="wrap"><h2>All articles</h2><p class="sub">{len(POSTS)} guides and counting.</p><div class="grid g3">{"".join(post_card(p) for p in POSTS)}</div></div></section>''',
  schema=[{"@type": "Blog", "name": "Secblox Blog", "url": SITE["domain"] + "/blog/",
-          "blogPost": [{"@type": "BlogPosting", "headline": p["title"], "url": SITE["domain"] + p["url"], "datePublished": p["date"]} for p in POSTS]}],
+          "blogPost": [{"@type": "BlogPosting", "headline": p["title"], "url": SITE["domain"] + p["url"], "datePublished": iso_dt(p["date"])} for p in POSTS]}],
  crumbs=[("/blog/", "Blog")], ptype="CollectionPage")
 
 def rss():
@@ -971,6 +976,9 @@ def build():
         _t = open(_f).read()
         for _pat in ("{LOGO_SVG}", "{SITE[", "{CRUMBS}", "{{CRUMBS}}", "{yr}", "{LATEST}", "{body}", "{footer_html}"):
             if _pat in _t: leaks.append(f"{_f}: {_pat}")
+        for _j in re.findall(r'<script type="application/ld\+json">(.*?)</script>', _t, re.S):
+            if re.search(r'"date(Published|Modified|Created)": "\d{4}-\d{2}-\d{2}"', _j): leaks.append(f"{_f}: date-only schema value (use iso_dt)")
+            if '"@type": "ProfilePage"' in _j and '"mainEntity"' not in _j: leaks.append(f"{_f}: ProfilePage without mainEntity")
     if leaks:
         raise SystemExit("TEMPLATE PLACEHOLDER LEAKED INTO SITE:\n  - " + "\n  - ".join(leaks[:20]))
     print(f"Built {len(PAGES)} pages into ./{OUT}")
