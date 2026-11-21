@@ -139,11 +139,13 @@ def tracking_head():
     click = f"'{aw}/{SITE['ads_label_click']}'" if SITE["ads_label_click"] else "null"
     book = f"'{aw}/{SITE['ads_label_booking']}'" if SITE["ads_label_booking"] else "null"
     first = ga or aw
+    ga_js = f"'{ga}'" if ga else "null"
     configs = "".join(f"gtag('config','{i}');" for i in (ga, aw) if i)
     return f"""<script async src="https://www.googletagmanager.com/gtag/js?id={first}"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());{configs}
-window.SBX_CONV={{click:{click},book:{book}}};
-var sbxClicked=false;document.addEventListener('click',function(e){{var a=e.target.closest&&e.target.closest('a[href*="cal.com/"],a[href="#book"]');if(a&&SBX_CONV.click&&!sbxClicked){{sbxClicked=true;gtag('event','conversion',{{send_to:SBX_CONV.click}});}}}});</script>"""
+window.SBX_CONV={{click:{click},book:{book},ga:{ga_js}}};
+function sbxGA(n,p){{try{{if(SBX_CONV.ga)gtag('event',n,Object.assign({{send_to:SBX_CONV.ga}},p||{{}}));}}catch(e){{}}}}
+var sbxClicked=false;document.addEventListener('click',function(e){{var a=e.target.closest&&e.target.closest('a[href*="cal.com/"],a[href="#book"]');if(a&&!sbxClicked){{sbxClicked=true;if(SBX_CONV.click)gtag('event','conversion',{{send_to:SBX_CONV.click}});sbxGA('book_call_click',{{link_text:(a.textContent||'').trim().slice(0,60),link_type:a.getAttribute('href')==='#book'?'on_page_calendar':'cal_com'}});}}}});</script>"""
 
 LOGO_SVG = '<img src="/assets/logo-96.png" width="34" height="34" alt="">'
 
@@ -517,7 +519,7 @@ CAL_EMBED = """<script>
 Cal("init", "30min", {origin: "https://app.cal.com"});
 Cal.ns["30min"]("inline", {elementOrSelector: "#cal-inline", config: {layout: "month_view", theme: "dark"}, calLink: "mukesh-bhakar-vzmbyl/30min"});
 Cal.ns["30min"]("ui", {theme: "dark", hideEventTypeDetails: false, layout: "month_view", cssVarsPerTheme: {dark: {"cal-brand": "#3ee6c4"}}});
-var sent=false;function conv(){if(sent)return;sent=true;if(window.gtag&&window.SBX_CONV&&SBX_CONV.book)gtag('event','conversion',{send_to:SBX_CONV.book});}
+var sent=false;function conv(){if(sent)return;sent=true;if(window.gtag&&window.SBX_CONV&&SBX_CONV.book)gtag('event','conversion',{send_to:SBX_CONV.book});if(window.sbxGA)sbxGA('booked_call',{method:'cal_embed'});}
 Cal.ns["30min"]("on", {action: "bookingSuccessfulV2", callback: conv});
 Cal.ns["30min"]("on", {action: "bookingSuccessful", callback: conv});}
 if ("requestIdleCallback" in window) requestIdleCallback(load, {timeout: 2000}); else setTimeout(load, 800);})();
