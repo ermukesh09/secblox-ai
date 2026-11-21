@@ -22,7 +22,7 @@ SITE = {
 }
 OUT = "site"
 TODAY = datetime.date.today().isoformat()
-PAGES_UPDATED = "2026-11-21"  # bump when service/static page content changes (used in sitemap + schema)
+PAGES_UPDATED = "2026-11-22"  # bump when service/static page content changes (used in sitemap + schema)
 
 NAV = [("/soc-2-compliance/", "SOC 2"), ("/ai-governance/", "AI Governance"),
        ("/iso-42001/", "ISO 42001"), ("/soc-2-for-ai-companies/", "SOC 2 for AI"),
@@ -438,20 +438,57 @@ f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow"
  crumbs=[("/services/penetration-testing/", "Penetration Testing")])
 
 # ---------------- CLOUD ----------------
-PAGES["/services/cloud-security-assessment/"] = page("/services/cloud-security-assessment/", "Cloud Security Assessment — AWS, Azure & GCP | Secblox",
- "AWS, Azure and GCP security assessments for SaaS and AI companies: IAM, network, logging, encryption and DR — mapped to SOC 2.",
-f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">AWS · Azure · GCP</span><h1>Cloud security assessments that <em>harden and simplify</em>.</h1>
-<p class="lead">An architecture-level review of your cloud environment, mapped to SOC 2 controls — with practical fixes that frequently reduce spend as well as risk.</p>
+cloud_faqs = [
+ ("What is a cloud security assessment?", "A structured review of how your AWS, Azure or Google Cloud environment is configured, accessed, monitored and recovered. It combines automated posture checks with expert review and ends in a prioritised list of fixes, a target architecture and a mapping to SOC 2 controls."),
+ ("How long does a cloud security assessment take?", "For a typical SaaS startup with a few cloud accounts, about one to two weeks including the report. Larger multi-account environments, or adding a penetration test, extend that."),
+ ("What access do you need?", "Read-only access through a dedicated, time-limited role that is removed when the assessment ends. No write access or long-lived keys are needed for the review."),
+ ("Do you only assess, or do you also fix?", "Both. Cloud security consulting continues after the report if you want it: hands-on remediation, posture management set-up, architecture changes and evidence for your SOC 2 audit."),
+ ("Do we need a commercial cloud security platform?", "Often not at first. For a startup on one cloud provider, the native tools — AWS Security Hub CSPM, Microsoft Defender for Cloud or Google Security Command Center — usually cover the baseline. We help you decide when a platform is worth the cost."),
+ ("How does this help with SOC 2?", "Most SOC 2 security controls for a cloud-native company live in the cloud: access, logging, encryption, change management and backups. Every finding is mapped to the SOC 2 criteria it affects, so fixing it also closes audit gaps."),
+]
+fh, fs = faq_block(cloud_faqs)
+PAGES["/services/cloud-security-assessment/"] = page("/services/cloud-security-assessment/", "Cloud Security Assessment & Consulting | Secblox",
+ "Cloud security assessment and consulting for SaaS and AI companies on AWS, Azure and GCP: posture, IAM, logging, architecture and SOC 2 mapping.",
+f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">AWS · Azure · GCP</span><h1>Cloud security assessment and consulting for <em>SaaS and AI companies</em>.</h1>
+<p class="lead">An architecture-level review of your AWS, Azure or Google Cloud environment, mapped to SOC 2 — then hands-on help fixing what matters, which often reduces your cloud bill as well as your risk.</p>
 <div class="cta-row"><a class="btn btn-primary" href="{SITE["booking"]}" target="_blank" rel="noopener">Book a cloud review</a></div></div></div>
 <section><div class="wrap layout"><article class="prose">
-<h2>Assessment areas</h2>
-<ul><li>Identity and access management, SSO, MFA and privileged access</li><li>Network segmentation, ingress and egress controls</li><li>Logging, monitoring and alerting (CloudTrail, GuardDuty, Defender, Security Command Center)</li><li>Encryption at rest and in transit, key management</li><li>Backup, cross-region recovery, RTO/RPO testing</li><li>Security for AI workloads: Bedrock, Azure OpenAI, Vertex AI</li><li>Cost and resource hygiene that reduces attack surface</li></ul>
+<p><strong>A cloud security assessment is a structured review of how your cloud environment is configured, accessed, monitored and recovered, ending in a prioritised list of fixes.</strong> Our cloud security consulting covers the assessment and the work after it: closing gaps, setting up continuous posture management, improving your architecture and producing evidence your SOC 2 auditor will accept.</p>
+<h2>What does the cloud security assessment cover?</h2>
+<table><thead><tr><th>Area</th><th>What we review</th></tr></thead><tbody>
+<tr><td>Account structure</td><td>Organisation layout, separation of production and non-production, guardrail policies</td></tr>
+<tr><td>Identity and access</td><td>SSO, MFA, privileged access, least privilege, unused users, roles and keys</td></tr>
+<tr><td>Network exposure</td><td>Segmentation, internet-facing services, open admin ports, ingress and egress controls</td></tr>
+<tr><td>Logging and detection</td><td>CloudTrail, AWS Config, GuardDuty, Defender for Cloud, Security Command Center — coverage across every account and region</td></tr>
+<tr><td>Data protection</td><td>Encryption at rest and in transit, key management, public storage, secrets handling</td></tr>
+<tr><td>Backup and recovery</td><td>Cross-region and cross-account backups, tested restores, RTO and RPO evidence</td></tr>
+<tr><td>AI workloads</td><td>Bedrock, Azure OpenAI and Vertex AI access, data flows, prompt and output logging</td></tr>
+<tr><td>Cost and hygiene</td><td>Idle and oversized resources that add cost and attack surface</td></tr>
+</tbody></table>
+<h2>How does the assessment work?</h2>
+<ol><li><strong>Scope</strong> — accounts, regions, workloads and the standard to measure against.</li>
+<li><strong>Read-only access</strong> — a dedicated, time-limited role for the review.</li>
+<li><strong>Automated baseline</strong> — posture checks against the CIS Benchmarks and the provider's best-practice standards.</li>
+<li><strong>Expert review</strong> — IAM policies, architecture, data flows and anything automated checks can't judge.</li>
+<li><strong>Optional penetration test</strong> — of your application and exposed infrastructure, performed in-house.</li>
+<li><strong>Report and walkthrough</strong> — findings ranked by risk, owners, a target architecture and SOC 2 mapping.</li>
+<li><strong>Re-test</strong> — confirm critical and high findings are fixed.</li></ol>
+<h2>Cloud security consulting beyond the assessment</h2>
+<ul><li><strong>Remediation</strong> — hands-on fixes alongside your engineers, not just a report.</li>
+<li><strong>Cloud security posture management</strong> — native tooling enabled organisation-wide, tuned, and routed to an owner.</li>
+<li><strong>Cloud security architecture</strong> — multi-account structure, central identity, private networking and central logging.</li>
+<li><strong>Cloud security compliance</strong> — controls mapped to SOC 2, ISO 27001 and GDPR, with evidence collected automatically.</li></ul>
 <h2>Deliverables</h2>
-<p>A prioritized findings report, a target architecture, and SOC 2 control mapping — plus hands-on remediation support if you want it.</p>
-<h2>Guides</h2>
-<p>See our <a href="/blog/aws-security-assessment/">AWS security assessment checklist and process</a> for the 10 areas we review in AWS, the native tools we use and how findings map to SOC 2.</p>
-</article>{aside()}</div></section>{cta()}''',
- schema=[service_schema("Cloud Security Assessment", "AWS, Azure and GCP security architecture assessment.", "/services/cloud-security-assessment/", "Cloud security consulting")],
+<p>A prioritised findings report with remediation steps, a target architecture, a SOC 2 control mapping and a re-test letter — plus hands-on remediation support if you want it. See also our <a href="/services/penetration-testing/">penetration testing</a> and <a href="/soc-2-compliance/">SOC 2 compliance</a> services.</p>
+<h2>Cloud security guides</h2>
+<ul><li><a href="/blog/aws-security-assessment/">AWS security assessment: checklist and process</a></li>
+<li><a href="/blog/cloud-security-posture-management/">Cloud security posture management (CSPM) for startups</a></li>
+<li><a href="/blog/cloud-security-compliance/">Cloud security compliance for SaaS companies</a></li>
+<li><a href="/blog/cloud-security-architecture/">Cloud security architecture for SaaS startups</a></li></ul>
+<h2>FAQ</h2>
+{fh}
+</article>{aside()}</div></section>{cta("Want a clear view of your cloud risk?", "Book a free 30-minute scoping call. We'll talk through your cloud setup, likely gaps and what an assessment would cover — no obligation.")}''',
+ schema=[service_schema("Cloud Security Assessment and Consulting", "Cloud security assessment and consulting for AWS, Azure and GCP, mapped to SOC 2.", "/services/cloud-security-assessment/", "Cloud security consulting"), fs],
  crumbs=[("/services/cloud-security-assessment/", "Cloud Security Assessment")])
 
 # ---------------- ABOUT ----------------
@@ -562,6 +599,10 @@ REFS = [  # official sources auto-cited on posts that mention them (keyword matc
     (("security hub", "cspm", "foundational security best practices"), "AWS Security Hub CSPM — AWS Foundational Security Best Practices standard",
      "https://docs.aws.amazon.com/securityhub/latest/userguide/fsbp-standard.html"),
     (("cis aws foundations", "cis amazon web services"), "CIS Amazon Web Services Foundations Benchmark", "https://www.cisecurity.org/benchmark/amazon_web_services"),
+    (("shared responsibility",), "AWS Shared Responsibility Model", "https://aws.amazon.com/compliance/shared-responsibility-model/"),
+    (("well-architected",), "AWS Well-Architected Framework — Security Pillar", "https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html"),
+    (("cloud controls matrix",), "Cloud Security Alliance — Cloud Controls Matrix (CCM)", "https://cloudsecurityalliance.org/research/cloud-controls-matrix/"),
+    (("gdpr",), "Regulation (EU) 2016/679 — General Data Protection Regulation (EUR-Lex)", "https://eur-lex.europa.eu/eli/reg/2016/679/oj"),
     (("aws penetration testing policy",), "AWS Customer Support Policy for Penetration Testing", "https://aws.amazon.com/security/penetration-testing/"),
 ]
 AUTHOR = {"name": "Mukesh Bhakar", "role": "Founder, Secblox",

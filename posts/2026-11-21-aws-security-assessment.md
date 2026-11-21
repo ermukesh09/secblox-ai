@@ -2,7 +2,7 @@
 title: AWS Security Assessment: Checklist and Process
 description: How an AWS security assessment works: what to review, a 10-area checklist, AWS-native tools, pen testing rules and how findings map to SOC 2.
 date: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-22
 tags: AWS, cloud security, SOC 2
 keyword: aws security assessment
 takeaways: An AWS security assessment reviews how your AWS accounts are configured, accessed, monitored and recovered, and produces a prioritised list of fixes.|Most findings in startup AWS environments are configuration and access issues — old access keys, over-broad roles, logging gaps and untested backups — not exotic attacks.|AWS-native tools such as Security Hub CSPM, IAM Access Analyzer and the CIS AWS Foundations Benchmark automate much of the baseline; expert review covers the rest.|For SaaS companies, a good AWS security assessment doubles as SOC 2 preparation, because the same controls feed the audit evidence.
@@ -53,7 +53,7 @@ It's sometimes called an **AWS security audit**. The difference is mostly emphas
 
 AWS provides strong native tooling, and it's usually the cheapest place to start:
 
-- **AWS Security Hub CSPM** — cloud security posture management (CSPM) that runs automated best-practice checks; the AWS Foundational Security Best Practices standard is built in, alongside standards such as the CIS AWS Foundations Benchmark.
+- **AWS Security Hub CSPM** — [cloud security posture management (CSPM)](/blog/cloud-security-posture-management/) that runs automated best-practice checks; the AWS Foundational Security Best Practices standard is built in, alongside standards such as the CIS AWS Foundations Benchmark.
 - **IAM Access Analyzer** — finds resources shared outside your account and unused access.
 - **Amazon GuardDuty** — threat detection from logs and network activity.
 - **AWS Config** — records configuration changes and evaluates rules.
@@ -91,4 +91,4 @@ No. The assessment finds and prioritises security gaps in AWS. A SOC 2 audit is 
 
 Run continuous automated checks all year, and a full expert assessment at least annually — or after major architecture changes, new regions or before a SOC 2 audit.
 
-Related: [how long SOC 2 takes](/blog/how-long-does-soc-2-take/) and the [SOC 2 audit checklist for AI startups](/blog/soc-2-checklist-for-ai-startups/). See our [cloud security assessment service](/services/cloud-security-assessment/) or [book a free scoping call](/contact/).
+Related: [cloud security architecture for SaaS startups](/blog/cloud-security-architecture/), [cloud security compliance for SaaS](/blog/cloud-security-compliance/) and [how long SOC 2 takes](/blog/how-long-does-soc-2-take/). See our [cloud security assessment service](/services/cloud-security-assessment/) or [book a free scoping call](/contact/).
