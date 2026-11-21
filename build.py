@@ -603,6 +603,8 @@ REFS = [  # official sources auto-cited on posts that mention them (keyword matc
     (("well-architected",), "AWS Well-Architected Framework — Security Pillar", "https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html"),
     (("cloud controls matrix",), "Cloud Security Alliance — Cloud Controls Matrix (CCM)", "https://cloudsecurityalliance.org/research/cloud-controls-matrix/"),
     (("gdpr",), "Regulation (EU) 2016/679 — General Data Protection Regulation (EUR-Lex)", "https://eur-lex.europa.eu/eli/reg/2016/679/oj"),
+    (("zero trust for ai agents",), "Anthropic — Zero Trust for AI Agents (guide)", "https://claude.com/resources/guides/zero-trust-for-ai-agents"),
+    (("800-207",), "NIST SP 800-207 — Zero Trust Architecture", "https://csrc.nist.gov/pubs/sp/800/207/final"),
     (("aws penetration testing policy",), "AWS Customer Support Policy for Penetration Testing", "https://aws.amazon.com/security/penetration-testing/"),
 ]
 AUTHOR = {"name": "Mukesh Bhakar", "role": "Founder, Secblox",
