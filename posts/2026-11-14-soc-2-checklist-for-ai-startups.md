@@ -3,7 +3,7 @@ title: SOC 2 Audit Checklist for AI Startups (2026)
 description: A practical SOC 2 checklist for AI startups: scoping LLM vendors, prompt change management, RAG data isolation, policies, evidence and audit preparation.
 date: 2026-11-14
 tags: SOC 2, AI startups, checklist
-updated: 2026-11-19
+updated: 2026-11-22
 keyword: soc 2 audit checklist
 takeaways: AI startups need the standard SOC 2 foundations plus a short list of AI-specific controls.|Put AI features and model providers inside the SOC 2 system boundary and treat prompts like code: versioned, peer-reviewed and tested.|Isolate tenant data in vector stores and RAG retrieval, and get no-training or limited-retention terms from model providers.|Include LLM attack paths such as prompt injection in your annual penetration test.
 ---
@@ -55,6 +55,8 @@ takeaways: AI startups need the standard SOC 2 foundations plus a short list of 
 
 - Compliance automation platform connected to cloud, IdP, HR and code repos
 - System description drafted, auditor selected
+
+Want to score yourself first? Take the free [15-question SOC 2 readiness check](/soc-2-readiness-checklist/).
 
 ## FAQ
 

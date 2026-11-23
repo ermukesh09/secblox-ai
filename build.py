@@ -59,7 +59,7 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
         footer_html = f'''<footer><div class="wrap">
 <div class="foot">
 <div><a class="logo" href="/">{LOGO_SVG}<span class="wordmark">Secblox</span></a><p style="margin-top:14px;max-width:340px">SOC 2 and AI governance for SaaS and AI companies. Practitioner-led readiness, implementation and audit support.</p></div>
-<div><h3 class="fh">Services</h3><ul><li><a href="/soc-2-compliance/">SOC 2 Compliance</a></li><li><a href="/soc-2-readiness-checklist/">Free SOC 2 Readiness Check</a></li><li><a href="/ai-governance/">AI Governance</a></li><li><a href="/iso-42001/">ISO 42001 Readiness</a></li><li><a href="/soc-2-for-ai-companies/">SOC 2 for AI Companies</a></li><li><a href="/services/penetration-testing/">Penetration Testing</a></li></ul></div>
+<div><h3 class="fh">Services</h3><ul><li><a href="/soc-2-compliance/">SOC 2 Compliance</a></li><li><a href="/soc-2-readiness-checklist/">Free SOC 2 Readiness Check</a></li><li><a href="/ai-governance/">AI Governance</a></li><li><a href="/iso-42001/">ISO 42001 Readiness</a></li><li><a href="/soc-2-for-ai-companies/">SOC 2 for AI Companies</a></li><li><a href="/services/penetration-testing/">Penetration Testing</a></li><li><a href="/services/cloud-security-assessment/">Cloud Security Assessment</a></li></ul></div>
 <div><h3 class="fh">Frameworks</h3><ul><li><a href="/ai-governance/#nist-ai-rmf">NIST AI RMF</a></li><li><a href="/ai-governance/#eu-ai-act">EU AI Act</a></li><li><a href="/iso-42001/">ISO/IEC 42001</a></li><li><a href="/soc-2-compliance/#trust-services-criteria">SOC 2 TSC</a></li></ul></div>
 <div><h3 class="fh">Company</h3><ul><li><a href="/mukesh-bhakar/">About Mukesh Bhakar</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li><li><a href="{SITE["linkedin"]}" rel="noopener">LinkedIn</a></li></ul></div>
 </div>
@@ -68,7 +68,7 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
     d = SITE["domain"]; url = d + path
     graph = [org_schema(), {"@type": "WebSite", "@id": d + "/#website", "url": d + "/", "name": SITE["name"],
                             "publisher": {"@id": d + "/#org"}},
-             {"@type": ptype, "@id": url + "#page", "url": url, "name": title, "description": desc,
+             {"@type": "WebPage" if ptype == "Article" else ptype, "@id": url + "#page", "url": url, "name": title, "description": desc,
               "isPartOf": {"@id": d + "/#website"}, "inLanguage": "en-US", "dateModified": iso_dt(modified or PAGES_UPDATED)}
              | ({"mainEntity": {"@id": d + "/#mukesh"}} if ptype == "ProfilePage" else {})]
     if crumbs:
@@ -758,7 +758,7 @@ def checklist_page():
 <ul><li><strong>13–15:</strong> close to audit-ready — confirm evidence exists for each control and pick an auditor.</li>
 <li><strong>8–12:</strong> a solid foundation with focused gaps — a readiness project of a few weeks usually closes them.</li>
 <li><strong>0–7:</strong> early stage — start with scope, policies and access control before choosing tools or an auditor.</li></ul>
-<p>Next steps: read <a href="/blog/soc-2-readiness-assessment/">what a SOC 2 readiness assessment covers</a>, <a href="/blog/soc-2-audit-process/">how the SOC 2 audit process works</a> and <a href="/blog/soc-2-cost-for-startups/">what SOC 2 costs for startups</a>.</p>
+<p>Next steps: read <a href="/blog/soc-2-readiness-assessment/">what a SOC 2 readiness assessment covers</a>, <a href="/blog/soc-2-audit-process/">how the SOC 2 audit process works</a> and <a href="/blog/soc-2-cost-for-startups/">what SOC 2 costs for startups</a>. Building an AI product? See the <a href="/blog/soc-2-checklist-for-ai-startups/">SOC 2 checklist for AI startups</a>.</p>
 <h2>Frequently asked questions</h2>{fh}
 </div></section>{cta("Want help closing your gaps?", "Book a free 30-minute scoping call. Bring your score — you'll leave with a clear scope, a realistic timeline and a budget range.")}
 <script>
@@ -887,6 +887,7 @@ LANDING["/lp/ai-governance/"] = landing("/lp/ai-governance/",
 
 # ---------------- REDIRECTS (old WordPress URLs -> new pages) ----------------
 REDIRECTS = {
+    "/feed/": "/feed.xml",
     "/about/": "/mukesh-bhakar/",
     "/contact-us/": "/contact/",
     "/privacy-policy-2/": "/privacy-policy/",
