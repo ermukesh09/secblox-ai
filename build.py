@@ -11,6 +11,7 @@ SITE = {
     "booking": "https://cal.com/mukesh-bhakar-vzmbyl/30min",  # Cal.com booking page
     "linkedin": "https://www.linkedin.com/company/secblox",
     "linkedin_personal": "https://www.linkedin.com/in/mukeshbhakar/",
+    "profiles": ["https://clutch.co/profile/secblox"],  # add GoodFirms/Crunchbase/Sortlist once confirmed live
     "indexnow_key": "2a4b273c96120af49169c533023737c6",  # IndexNow key (public by design; served at /<key>.txt)  # <-- your LinkedIn
     "tagline": "SOC 2 & AI Governance for SaaS and AI Companies",
     # Google Ads conversion tracking — leave blank to disable all tracking.
@@ -22,7 +23,7 @@ SITE = {
 }
 OUT = "site"
 TODAY = datetime.date.today().isoformat()
-PAGES_UPDATED = "2026-11-22"  # bump when service/static page content changes (used in sitemap + schema)
+PAGES_UPDATED = "2026-11-26"  # bump when service/static page content changes (used in sitemap + schema)
 
 NAV = [("/soc-2-compliance/", "SOC 2"), ("/ai-governance/", "AI Governance"),
        ("/iso-42001/", "ISO 42001"), ("/soc-2-for-ai-companies/", "SOC 2 for AI"),
@@ -36,20 +37,23 @@ def org_schema():
         "@type": "ProfessionalService", "@id": d + "/#org", "name": SITE["name"],
         "url": d + "/", "logo": d + "/assets/logo.png",
         "image": d + "/assets/og-image.png", "email": SITE["email"],
-        "description": "Secblox helps SaaS and AI companies achieve SOC 2 and build AI governance programs aligned to ISO/IEC 42001, NIST AI RMF and the EU AI Act.",
+        "description": "Secblox secures and certifies SaaS and AI companies: SOC 2 and GRC, cloud security across AWS, Azure and Google Cloud, and AI governance aligned to ISO/IEC 42001, NIST AI RMF and the EU AI Act.",
         "areaServed": [{"@type": "Country", "name": "United States"}, {"@type": "Country", "name": "United Kingdom"},
                        {"@type": "Place", "name": "European Union"}, {"@type": "Country", "name": "India"}],
-        "knowsAbout": ["SOC 2", "AI governance", "ISO/IEC 42001", "NIST AI RMF", "EU AI Act", "AI risk management",
-                       "Cloud security", "AWS security", "Penetration testing", "Compliance automation"],
-        "founder": {"@type": "Person", "name": "Mukesh Bhakar", "jobTitle": "Founder & Principal Consultant"},
-        "sameAs": [SITE["linkedin"]],
+        "knowsAbout": ["SOC 2", "GRC", "Governance, risk and compliance", "GDPR", "AI governance", "ISO/IEC 42001", "NIST AI RMF", "EU AI Act", "AI risk management",
+                       "Cloud security", "Cloud security architecture", "Cloud security posture management", "AWS security", "Azure security", "Google Cloud security", "Penetration testing", "Compliance automation"],
+        "founder": {"@type": "Person", "@id": d + "/#mukesh", "name": "Mukesh Bhakar", "url": d + "/mukesh-bhakar/", "jobTitle": "Founder & Principal Consultant"},
+        "legalName": "Secblox LLP", "foundingDate": "2022-12",
+        "address": {"@type": "PostalAddress", "streetAddress": "CASA 10, Vaishali Nagar", "addressLocality": "Jaipur",
+                    "addressRegion": "Rajasthan", "addressCountry": "IN"},
+        "sameAs": [SITE["linkedin"]] + SITE["profiles"],
     }
 
 def iso_dt(d):
     """Schema.org dates as full ISO 8601 datetimes (Google flags date-only values on some types)."""
     return d if "T" in d else f"{d}T09:00:00+05:30"
 
-def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noindex=False, minimal=False, modified=None, alt_md=None):
+def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noindex=False, minimal=False, modified=None, alt_md=None, og_image=None):
     yr = datetime.date.today().year
     if minimal:
         footer_html = (f'<footer><div class="wrap"><div class="copy" style="border-top:0;padding-top:0"><span>© {yr} Secblox · '
@@ -61,7 +65,7 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 <div><a class="logo" href="/">{LOGO_SVG}<span class="wordmark">Secblox</span></a><p style="margin-top:14px;max-width:340px">SOC 2 and AI governance for SaaS and AI companies. Practitioner-led readiness, implementation and audit support.</p></div>
 <div><h3 class="fh">Services</h3><ul><li><a href="/soc-2-compliance/">SOC 2 Compliance</a></li><li><a href="/soc-2-readiness-checklist/">Free SOC 2 Readiness Check</a></li><li><a href="/ai-governance/">AI Governance</a></li><li><a href="/iso-42001/">ISO 42001 Readiness</a></li><li><a href="/soc-2-for-ai-companies/">SOC 2 for AI Companies</a></li><li><a href="/services/penetration-testing/">Penetration Testing</a></li><li><a href="/services/cloud-security-assessment/">Cloud Security Assessment</a></li></ul></div>
 <div><h3 class="fh">Frameworks</h3><ul><li><a href="/ai-governance/#nist-ai-rmf">NIST AI RMF</a></li><li><a href="/ai-governance/#eu-ai-act">EU AI Act</a></li><li><a href="/iso-42001/">ISO/IEC 42001</a></li><li><a href="/soc-2-compliance/#trust-services-criteria">SOC 2 TSC</a></li></ul></div>
-<div><h3 class="fh">Company</h3><ul><li><a href="/mukesh-bhakar/">About Mukesh Bhakar</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li><li><a href="{SITE["linkedin"]}" rel="noopener">LinkedIn</a></li></ul></div>
+<div><h3 class="fh">Company</h3><ul><li><a href="/mukesh-bhakar/">About Mukesh Bhakar</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li><li><a href="{SITE["linkedin"]}" rel="noopener">LinkedIn</a></li><li><a href="https://clutch.co/profile/secblox" rel="noopener">Secblox on Clutch</a></li></ul></div>
 </div>
 <div class="copy"><span>© {yr} Secblox. All rights reserved.</span><span>SOC 2 · ISO/IEC 42001 · NIST AI RMF · EU AI Act</span></div>
 </div></footer>'''
@@ -100,13 +104,13 @@ def page(path, title, desc, body, schema=None, crumbs=None, ptype="WebPage", noi
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="{d}/assets/og-image.png">
+<meta property="og:image" content="{d}{og_image or "/assets/og-image.png"}">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{esc(title)}">
 <meta name="twitter:description" content="{esc(desc)}">
-<meta name="twitter:image" content="{d}/assets/og-image.png">
+<meta name="twitter:image" content="{d}{og_image or "/assets/og-image.png"}">
 <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="/assets/favicon-64.png" sizes="64x64" type="image/png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -433,6 +437,8 @@ f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow"
 <li><strong>LLM & AI features</strong> — prompt injection, jailbreaks, system-prompt leakage, insecure output handling, data exfiltration via RAG and excessive agency (OWASP Top 10 for LLM Applications).</li></ul>
 <h2>What you get</h2>
 <ul><li>Executive summary and technical report with risk-rated findings</li><li>Reproduction steps and remediation guidance</li><li>Retest of fixed findings and an attestation letter for customers</li></ul>
+<h2>AI and agent security guides</h2>
+<ul><li><a href="/blog/ai-security-assessment/">AI security assessment: scope and process</a></li><li><a href="/blog/agentic-ai-security/">Agentic AI security: the OWASP Top 10 explained</a></li><li><a href="/blog/zero-trust-for-ai-agents/">Zero trust for AI agents</a></li><li><a href="/blog/prompt-injection-controls-soc-2/">Prompt injection controls for SOC 2</a></li></ul>
 </article>{aside()}</div></section>{cta()}''',
  schema=[service_schema("Penetration Testing", "Web, API, cloud and LLM penetration testing.", "/services/penetration-testing/", "Penetration testing")],
  crumbs=[("/services/penetration-testing/", "Penetration Testing")])
@@ -596,6 +602,8 @@ REFS = [  # official sources auto-cited on posts that mention them (keyword matc
     (("eu ai act", "article 50"), "Regulation (EU) 2024/1689 — the EU Artificial Intelligence Act (EUR-Lex)", "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"),
     (("27001",), "ISO/IEC 27001 — Information security management systems (ISO)", "https://www.iso.org/standard/27001"),
     (("prompt injection",), "OWASP Top 10 for Large Language Model Applications", "https://genai.owasp.org/llm-top-10/"),
+    (("top 10 for agentic", "agentic applications"), "OWASP Top 10 for Agentic Applications (2026)", "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"),
+    (("mitre atlas",), "MITRE ATLAS — Adversarial Threat Landscape for AI Systems", "https://atlas.mitre.org/"),
     (("security hub", "cspm", "foundational security best practices"), "AWS Security Hub CSPM — AWS Foundational Security Best Practices standard",
      "https://docs.aws.amazon.com/securityhub/latest/userguide/fsbp-standard.html"),
     (("cis aws foundations", "cis amazon web services"), "CIS Amazon Web Services Foundations Benchmark", "https://www.cisecurity.org/benchmark/amazon_web_services"),
@@ -629,7 +637,8 @@ def load_posts():
         meta = {k.strip(): v.strip() for k, v in meta.items()}
         if meta.get("draft", "").lower() == "true": continue
         slug = re.sub(r"^\d{4}-\d{2}-\d{2}-", "", os.path.basename(f)[:-3])
-        html_body = _md.markdown(m.group(2), extensions=["tables", "fenced_code", "toc", "sane_lists"])
+        html_body = _md.markdown(m.group(2), extensions=["tables", "fenced_code", "toc", "sane_lists", "attr_list"])
+        html_body = html_body.replace("<img ", '<img loading="lazy" decoding="async" ')
         faqs = []
         fm = re.search(r"^##\s+(FAQ|FAQs|Frequently asked questions)\s*$(.*?)(?=^##\s|\Z)", m.group(2), re.S | re.M | re.I)
         if fm:
@@ -644,13 +653,15 @@ def load_posts():
         posts.append({"slug": slug, "url": f"/blog/{slug}/", "title": meta["title"], "desc": meta["description"],
                       "date": meta["date"], "tags": [t.strip() for t in meta.get("tags", "").split(",") if t.strip()],
                       "html": html_body, "faqs": faqs, "mins": max(1, round(words / 220)),
+                      "cover": f"/assets/blog/{slug}.png" if os.path.exists(f"assets/blog/{slug}.png") else None,
                       "updated": meta.get("updated") or meta["date"], "keyword": meta.get("keyword", ""), "refs": refs, "takeaways": takeaways, "md": m.group(2).strip()})
     return posts
 
 POSTS = load_posts()
 
 def post_card(p):
-    return (f'<a class="card" href="{p["url"]}"><span class="tag">{esc(p["tags"][0]) if p["tags"] else "Guide"}</span>'
+    img = (f'<img class="card-img" src="{p["cover"]}" alt="" width="1200" height="630" loading="lazy" decoding="async">' if p.get("cover") else "")
+    return (f'<a class="card" href="{p["url"]}">{img}<span class="tag">{esc(p["tags"][0]) if p["tags"] else "Guide"}</span>'
             f'<h3>{esc(p["title"])}</h3><p>{esc(p["desc"])}</p>'
             f'<p style="margin-top:12px;font-size:13px">{p["date"]} · {p["mins"]} min read</p></a>')
 
@@ -675,17 +686,18 @@ for i, p in enumerate(POSTS):
                  "datePublished": iso_dt(p["date"]), "dateModified": iso_dt(p["updated"]), "keywords": ", ".join(p["tags"]),
                  "about": [{"@type": "Thing", "name": t} for t in p["tags"]], "inLanguage": "en-US",
                  "wordCount": len(re.sub("<[^>]+>", " ", p["html"]).split()),
-                 "author": author_schema(), "publisher": {"@id": SITE["domain"] + "/#org"}, "image": SITE["domain"] + "/assets/og-image.png",
+                 "author": author_schema(), "publisher": {"@id": SITE["domain"] + "/#org"},
+                 "image": {"@type": "ImageObject", "url": SITE["domain"] + (p["cover"] or "/assets/og-image.png"), "width": 1200, "height": 630},
                  "mainEntityOfPage": SITE["domain"] + p["url"]}
                 | ({"abstract": " ".join(p["takeaways"])} if p["takeaways"] else {})
                 | ({"citation": [{"@type": "CreativeWork", "name": n, "url": u} for n, u in p["refs"]]} if p["refs"] else {})]
                + ([{"@type": "FAQPage", "mainEntity": [
                  {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in p["faqs"]]}] if p["faqs"] else []),
-        crumbs=[("/blog/", "Blog"), (p["url"], p["title"])], ptype="Article", modified=p["updated"], alt_md=md_url)
+        crumbs=[("/blog/", "Blog"), (p["url"], p["title"])], ptype="Article", modified=p["updated"], alt_md=md_url, og_image=p["cover"])
 
-PAGES["/blog/"] = page("/blog/", "SOC 2 & AI Governance Blog | Secblox",
- "Practical guides on SOC 2, ISO 42001, NIST AI RMF and the EU AI Act for SaaS and AI companies: checklists, comparisons, timelines and templates.",
- f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">Blog</span><h1>Guides on SOC 2 and <em>AI governance</em>.</h1><p class="lead">Practical, practitioner-written guidance for founders, CTOs and security leads.</p>
+PAGES["/blog/"] = page("/blog/", "SOC 2, Cloud & AI Security Blog | Secblox",
+ "Practical guides on SOC 2, cloud security, AI security and AI governance (ISO 42001, NIST AI RMF, EU AI Act) for SaaS and AI companies.",
+ f'''<div class="page-hero"><div class="wrap">{{{{CRUMBS}}}}<span class="eyebrow">Blog</span><h1>Guides on SOC 2, cloud and <em>AI security</em>.</h1><p class="lead">Practical, practitioner-written guidance for founders, CTOs and security leads.</p>
 <p style="font-size:14px;color:var(--muted)">Prefer a feed reader? Add <code>https://secblox.io/feed.xml</code> to Feedly, Inoreader or Outlook.</p></div></div>
 <section><div class="wrap"><h2>All articles</h2><p class="sub">{len(POSTS)} guides and counting.</p><div class="grid g3">{"".join(post_card(p) for p in POSTS)}</div></div></section>''',
  schema=[{"@type": "Blog", "name": "Secblox Blog", "url": SITE["domain"] + "/blog/",
@@ -935,6 +947,14 @@ def validate_content():
         if not p["refs"]: errs.append(f"{u}: no official reference matched (add a REFS entry or mention the framework)")
         if len(re.findall(r"^## ", md, re.M)) < 4: errs.append(f"{u}: needs at least 4 H2 sections")
         if re.search(r"^# ", md, re.M): errs.append(f"{u}: no H1 in body (the title is the H1)")
+        if not p["cover"]: errs.append(f"{u}: missing cover image assets/blog/{p['slug']}.png (run: python3 tools/make_covers.py)")
+        imgs = re.findall(r"!\[([^\]]*)\]\(([^)\s]+)", md)
+        for alt, src in imgs:
+            if len(alt.strip()) < 15: errs.append(f"{u}: image {src} needs descriptive alt text (15+ chars)")
+            if src.startswith("/") and not os.path.exists(src.lstrip("/")): errs.append(f"{u}: image {src} not found")
+        if p["date"] >= "2026-11-26" and not imgs: errs.append(f"{u}: new posts need at least one diagram/image in the body")
+        wc = len(re.sub("<[^>]+>", " ", p["html"]).split())
+        if p["date"] >= "2026-11-21" and wc < 1000: errs.append(f"{u}: {wc} words (new posts need 1,000+)")
         for v in VENDOR_BLOCKLIST:
             if re.search(rf"\b{v}\b", low + " " + p["title"].lower() + " " + p["desc"].lower()): errs.append(f"{u}: vendor name '{v}' not allowed")
     seen = {}

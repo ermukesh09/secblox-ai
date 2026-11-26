@@ -2,7 +2,7 @@
 title: Zero Trust for AI Agents: 6 Controls That Matter
 description: Zero trust for AI agents: how to apply identity, least privilege, tool security, isolation, memory security and monitoring to agentic AI, mapped to SOC 2.
 date: 2026-11-22
-updated: 2026-11-22
+updated: 2026-11-26
 tags: AI security, agentic AI, zero trust, AI governance
 keyword: zero trust for ai agents
 takeaways: Zero trust for AI agents means no agent is trusted by default: every action is tied to a known agent identity, scoped to the task, checked and logged.|AI agents interpret instructions, call tools, keep context and act with little human input, so they need controls designed for autonomy rather than for ordinary applications or users.|Six controls cover most of the risk: agent identity, least privilege, tool security, isolation, memory security and continuous monitoring, plus a tested way to stop an agent.|These principles apply to any agent stack — Claude, GPT, Gemini, open-source models or custom frameworks — and map directly to SOC 2, ISO 42001 and the NIST AI RMF.
@@ -109,4 +109,4 @@ For high-impact actions, yes: payments, deleting data, sending messages outside 
 
 Include agents in your penetration testing and red-team exercises: try prompt injection through every input the agent reads, attempt privilege escalation through its tools, and confirm your kill switch actually revokes access. See our [penetration testing service](/services/penetration-testing/).
 
-Related: [AI governance services](/ai-governance/) and [prompt injection controls for SOC 2](/blog/prompt-injection-controls-soc-2/). Want a review of your agent architecture? [Book a free scoping call](/contact/).
+Related: [agentic AI security and the OWASP Top 10](/blog/agentic-ai-security/), [AI security assessment](/blog/ai-security-assessment/), [AI governance services](/ai-governance/) and [prompt injection controls for SOC 2](/blog/prompt-injection-controls-soc-2/). Want a review of your agent architecture? [Book a free scoping call](/contact/).

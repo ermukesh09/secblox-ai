@@ -138,3 +138,6 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 @media(max-width:760px){.profile-hero{grid-template-columns:1fr}.profile-photo{width:220px;height:220px;order:-1}}
 .prose table{width:100%;border-collapse:collapse;margin:16px 0}
 .prose th,.prose td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+.card-img{display:block;max-width:none;width:calc(100% + 56px);height:auto;aspect-ratio:1200/630;object-fit:cover;margin:-28px -28px 18px;border-radius:var(--radius) var(--radius) 0 0;border-bottom:1px solid var(--line)}
+.prose img{display:block;max-width:100%;height:auto;border-radius:14px;border:1px solid var(--line);margin:26px 0 8px}
+.prose img + em,.prose p > img + em{display:block;font-size:13.5px;color:var(--muted);margin-bottom:22px}
